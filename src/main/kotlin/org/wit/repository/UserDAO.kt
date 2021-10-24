@@ -27,7 +27,7 @@ class UserDAO {
 
     fun findById(id: Int): UserDTO?{
         return transaction {
-            Users.select() {
+            Users.select {
                 Users.id eq id}
                 .map{mapToUserDTO(it)}
                 .firstOrNull()
@@ -38,7 +38,13 @@ class UserDAO {
     }
 
     fun findByEmail(email: String) :UserDTO?{
-        return null;
+        return transaction {
+            Users.select {
+                Users.email eq email
+            }
+                .map { mapToUserDTO(it) }
+                .firstOrNull()
+        }
     }
 
     fun delete(id: Int) {
