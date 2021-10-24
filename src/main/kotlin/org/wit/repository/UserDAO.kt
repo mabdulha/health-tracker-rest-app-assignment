@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Users
@@ -25,7 +26,12 @@ class UserDAO {
     }
 
     fun findById(id: Int): UserDTO?{
-        return null;
+        return transaction {
+            Users.select() {
+                Users.id eq id}
+                .map{mapToUserDTO(it)}
+                .firstOrNull()
+        }
     }
 
     fun save(userDTO: UserDTO){
