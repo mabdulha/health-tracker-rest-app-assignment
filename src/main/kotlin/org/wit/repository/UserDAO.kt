@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -28,6 +29,18 @@ class UserDAO {
     }
 
     fun save(userDTO: UserDTO){
+        transaction {
+            Users.insert {
+                it[fname] = userDTO.fname
+                it[lname] = userDTO.lname
+                it[email] = userDTO.email
+                it[password] = userDTO.password
+                it[weight] = userDTO.weight
+                it[height] = userDTO.height
+                it[gender] = userDTO.gender
+                it[age] = userDTO.age
+            }
+        }
     }
 
     fun findByEmail(email: String) :UserDTO?{
