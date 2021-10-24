@@ -11,13 +11,26 @@ object HealthTrackerAPI {
     private val userDao = UserDAO()
 
     fun getAllUsers(ctx: Context) {
-        ctx.json(userDao.getAll())
+        val users = userDao.getAll()
+        if (users.size != 0) {
+            ctx.json(users)
+            ctx.status(200)
+        } else {
+            ctx.status(404)
+            ctx.html("Error 404 - No Users Found!!")
+        }
+
     }
 
     fun getUserByUserId(ctx: Context) {
-        val user = userDao.findById(ctx.pathParam("user-id").toInt())
+        val foundId = ctx.pathParam("user-id").toInt()
+        val user = userDao.findById(foundId)
         if (user != null) {
             ctx.json(user)
+            ctx.status(200)
+        } else {
+            ctx.status(404)
+            ctx.html("No user found with id: $foundId")
         }
     }
 
@@ -29,9 +42,14 @@ object HealthTrackerAPI {
     }
 
     fun getUserByEmail(ctx: Context) {
-        val user = userDao.findByEmail(ctx.pathParam("email"))
+        val foundEmail = ctx.pathParam("email")
+        val user = userDao.findByEmail(foundEmail)
         if (user != null) {
+            ctx.status(200)
             ctx.json(user)
+        } else {
+            ctx.status(404)
+            ctx.html("No user found with email: $foundEmail")
         }
     }
 
