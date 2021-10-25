@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
@@ -53,7 +54,11 @@ class UserDAO {
         }
     }
 
-    fun delete(id: Int) {
+    fun delete(id: Int):Int{
+        return transaction{ Users.deleteWhere{
+            Users.id eq id
+        }
+        }
     }
 
     fun update(id: Int, userDTO: UserDTO){
