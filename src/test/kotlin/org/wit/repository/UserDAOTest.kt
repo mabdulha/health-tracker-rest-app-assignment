@@ -45,4 +45,20 @@ class UserDAOTest {
         }
     }
 
+    @Test
+    fun `getting all users from a populated table returns all rows`() {
+        transaction {
+
+            //Arrange - create and populate table with three users
+            SchemaUtils.create(Users)
+            val userDAO = UserDAO()
+            userDAO.save(user1)
+            userDAO.save(user2)
+            userDAO.save(user3)
+
+            //Act & Assert
+            assertEquals(3, userDAO.getAll().size)
+        }
+    }
+
 }
