@@ -61,4 +61,35 @@ class UserDAOTest {
         }
     }
 
+    @Test
+    fun `get user by id that doesn't exist, results in no user returned`() {
+        transaction {
+
+            //Arrange - create and populate table with three users
+            SchemaUtils.create(Users)
+            val userDAO = UserDAO()
+            userDAO.save(user1)
+            userDAO.save(user2)
+            userDAO.save(user3)
+
+            //Act & Assert
+            assertEquals(null, userDAO.findById(4))
+        }
+    }
+    @Test
+    fun `get user by id that exists, results in a correct user returned`() {
+        transaction {
+            //Arrange - create and populate table with three users
+            SchemaUtils.create(Users)
+            val userDAO = UserDAO()
+            userDAO.save(user1)
+            userDAO.save(user2)
+            userDAO.save(user3)
+
+            //Act & Assert
+            assertEquals(null, userDAO.findById(4))
+        }
+
+    }
+
 }
