@@ -1,9 +1,6 @@
 package org.wit.repository
 
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Users
 import org.wit.domain.UserDTO
@@ -62,6 +59,19 @@ class UserDAO {
     }
 
     fun update(id: Int, userDTO: UserDTO){
+        transaction {
+            Users.update ({
+                Users.id eq id}) {
+                it[fname] = userDTO.fname
+                it[lname] = userDTO.lname
+                it[email] = userDTO.email
+                it[password] = userDTO.password
+                it[weight] = userDTO.weight
+                it[height] = userDTO.height
+                it[gender] = userDTO.gender
+                it[age] = userDTO.age
+            }
+        }
     }
 
 }
