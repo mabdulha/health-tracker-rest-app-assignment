@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Users
+import org.wit.domain.UserDTO
 import org.wit.helpers.nonExistingEmail
 
 //retrieving some test data from Fixtures
@@ -141,6 +142,7 @@ class UserDAOTest {
                 assertEquals(3, userDAO.getAll().size)
             }
         }
+
         @Test
         fun `deleting an existing user in table results in record being deleted`() {
             transaction {
@@ -152,6 +154,40 @@ class UserDAOTest {
                 assertEquals(3, userDAO.getAll().size)
                 userDAO.delete(user3.id)
                 assertEquals(2, userDAO.getAll().size)
+            }
+        }
+
+    }
+
+    @Nested
+    inner class UpdateUsers {
+
+        @Test
+        fun `updating existing user in table results in successful update`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                val user3Updated = UserDTO(3, "new username", "new@email.ie")
+                userDAO.update(user3.id, user3Updated)
+                assertEquals(user3Updated, userDAO.findById(3))
+            }
+        }
+
+        @Test
+        fun `updating non-existant user in table results in no updates`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                val user4Updated = UserDTO(4, "new username", "new@email.ie")
+                userDAO.update(4, user4Updated)
+                assertEquals(null, userDAO.findById(4))
+                assertEquals(3, userDAO.getAll().size)
             }
         }
 
