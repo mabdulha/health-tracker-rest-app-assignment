@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Users
+import org.wit.helpers.nonExistingEmail
 
 //retrieving some test data from Fixtures
 val user1 = users[0]
@@ -59,6 +60,43 @@ class UserDAOTest {
 
                 //Act & Assert
                 assertEquals(3, userDAO.getAll().size)
+            }
+        }
+
+        @Test
+        fun `get all users over empty table returns none`() {
+            transaction {
+
+                //Arrange - create and setup userDAO object
+                SchemaUtils.create(Users)
+                val userDAO = UserDAO()
+
+                //Act & Assert
+                assertEquals(0, userDAO.getAll().size)
+            }
+        }
+
+        @Test
+        fun `get user by email that doesn't exist, results in no user returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                assertEquals(null, userDAO.findByEmail(nonExistingEmail))
+            }
+        }
+
+        @Test
+        fun `get user by email that exists, results in correct user returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                assertEquals(user2, userDAO.findByEmail(user2.email))
             }
         }
 
