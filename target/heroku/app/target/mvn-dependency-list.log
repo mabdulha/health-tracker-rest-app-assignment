@@ -30,6 +30,7 @@ The following files have been resolved:
    org.eclipse.jetty.websocket:websocket-api:jar:9.4.25.v20191220:compile
    org.slf4j:slf4j-simple:jar:1.8.0-beta4:compile
    org.eclipse.jetty:jetty-http:jar:9.4.25.v20191220:compile
+   com.harium:dotenv:jar:1.0.5:compile
    org.jetbrains.kotlin:kotlin-stdlib-jdk8:jar:1.3.61:compile
    org.jetbrains:annotations:jar:13.0:compile
 

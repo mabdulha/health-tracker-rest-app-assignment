@@ -1,8 +1,15 @@
 package org.wit.config
 
+import com.harium.dotenv.Env
 import org.jetbrains.exposed.sql.Database
 import mu.KotlinLogging
 import org.jetbrains.exposed.sql.name
+
+val getHost: String = Env.get("DB_HOST")
+val getPort: String = Env.get("DB_PORT")
+val getDatabase: String = Env.get("DB_DATABASE")
+val getUser: String = Env.get("DB_USER")
+val getPassword: String = Env.get("DB_PASSWORD")
 
 class DbConfig{
 
@@ -13,10 +20,10 @@ class DbConfig{
         logger.info{"Starting DB Connection..."}
 
         val dbConfig = Database.connect(
-            "jdbc:postgresql://ec2-3-231-103-217.compute-1.amazonaws.com:5432/d71v0ptt0jppju?sslmode=require",
+            "jdbc:postgresql://$getHost:$getPort/$getDatabase?sslmode=require",
             driver = "org.postgresql.Driver",
-            user = "wgqkbqgwqbhcta",
-            password = "71801c40346d5f3fe7e367257334859fe984f0b08a01346a55837b6112972958")
+            user = getUser,
+            password = getPassword)
 
         logger.info{"DbConfig name = " + dbConfig.name}
         logger.info{"DbConfig url = " + dbConfig.url}
