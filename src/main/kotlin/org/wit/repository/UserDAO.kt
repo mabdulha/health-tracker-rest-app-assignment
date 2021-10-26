@@ -61,13 +61,14 @@ class UserDAO {
     }
 
     fun update(id: Int, userDTO: UserDTO){
+        val hashed = BCrypt.hashpw(userDTO.password, BCrypt.gensalt())
         transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[fname] = userDTO.fname
                 it[lname] = userDTO.lname
                 it[email] = userDTO.email
-                it[password] = userDTO.password
+                it[password] = hashed
                 it[weight] = userDTO.weight
                 it[height] = userDTO.height
                 it[gender] = userDTO.gender
