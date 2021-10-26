@@ -29,6 +29,7 @@ class UserDAOTest {
 
     @Nested
     inner class CreateUsers {
+
         @Test
         fun `multiple users added to table can be retrieved successfully`() {
             transaction {
@@ -43,6 +44,7 @@ class UserDAOTest {
                 assertEquals(user3, userDAO.findById(user3.id))
             }
         }
+
     }
 
     @Nested
@@ -81,8 +83,40 @@ class UserDAOTest {
                 //Act & Assert
                 assertEquals(null, userDAO.findById(4))
             }
-
         }
+
+    }
+
+    @Nested
+    inner class DeleteUsers {
+
+        @Test
+        fun `deleting a non-existant user in table results in no deletion`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                assertEquals(3, userDAO.getAll().size)
+                userDAO.delete(4)
+                assertEquals(3, userDAO.getAll().size)
+            }
+        }
+        @Test
+        fun `deleting an existing user in table results in record being deleted`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                //Act & Assert
+                assertEquals(3, userDAO.getAll().size)
+                userDAO.delete(user3.id)
+                assertEquals(2, userDAO.getAll().size)
+            }
+        }
+
     }
 
     internal fun populateUserTable(): UserDAO{
