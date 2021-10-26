@@ -2,9 +2,9 @@ package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.mindrot.jbcrypt.BCrypt
 import org.wit.db.Users
 import org.wit.domain.UserDTO
+import org.wit.utilities.hashPassword
 import org.wit.utilities.mapToUserDTO
 
 class UserDAO {
@@ -28,13 +28,12 @@ class UserDAO {
     }
 
     fun save(userDTO: UserDTO){
-        val hashed = BCrypt.hashpw(userDTO.password, BCrypt.gensalt())
         transaction {
             Users.insert {
                 it[fname] = userDTO.fname
                 it[lname] = userDTO.lname
                 it[email] = userDTO.email
-                it[password] = hashed
+                it[password] = hashPassword(userDTO.password)
                 it[weight] = userDTO.weight
                 it[height] = userDTO.height
                 it[gender] = userDTO.gender
@@ -61,14 +60,13 @@ class UserDAO {
     }
 
     fun update(id: Int, userDTO: UserDTO){
-        val hashed = BCrypt.hashpw(userDTO.password, BCrypt.gensalt())
         transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[fname] = userDTO.fname
                 it[lname] = userDTO.lname
                 it[email] = userDTO.email
-                it[password] = hashed
+                it[password] = hashPassword(userDTO.password)
                 it[weight] = userDTO.weight
                 it[height] = userDTO.height
                 it[gender] = userDTO.gender

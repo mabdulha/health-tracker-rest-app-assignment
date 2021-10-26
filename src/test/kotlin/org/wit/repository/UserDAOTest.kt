@@ -41,9 +41,9 @@ class UserDAOTest {
 
                 //Act & Assert
                 assertEquals(3, userDAO.getAll().size)
-                assertEquals(user1, userDAO.findById(user1.id))
-                assertEquals(user2, userDAO.findById(user2.id))
-                assertEquals(user3, userDAO.findById(user3.id))
+                assertEquals(user1.fname, userDAO.findById(user1.id)?.fname)
+                assertEquals(user2.fname, userDAO.findById(user2.id)?.fname)
+                assertEquals(user3.fname, userDAO.findById(user3.id)?.fname)
             }
         }
 
@@ -97,7 +97,7 @@ class UserDAOTest {
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                assertEquals(user2, userDAO.findByEmail(user2.email))
+                assertEquals(user2.email, userDAO.findByEmail(user2.email)?.email)
             }
         }
 
@@ -172,7 +172,7 @@ class UserDAOTest {
                 //Act & Assert
                 val user3Updated = UserDTO(3, "Leroy", "Matthews", "leroy@gmail.com", "supersecret", 90.00, 154f, 'M', 54)
                 userDAO.update(user3.id, user3Updated)
-                assertEquals(user3Updated, userDAO.findById(3))
+                assertEquals(user3Updated.email, userDAO.findById(3)?.email)
             }
         }
 
