@@ -2,9 +2,15 @@ package org.wit.controllers
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.harium.dotenv.Env
 import io.javalin.http.Context
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.security.Keys
+import org.wit.domain.UserAuthDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.UserDAO
+import org.wit.utilities.decryptPassword
+import java.util.*
 
 object HealthTrackerAPI {
 
@@ -65,4 +71,24 @@ object HealthTrackerAPI {
             userDTO=user)
     }
 
+    fun login (ctx: Context) {
+        val mapper = jacksonObjectMapper()
+        val user = mapper.readValue<UserAuthDTO>(ctx.body())
+        val existingUser = userDao.findByEmail(user.email)
+        val secret = Base64.getDecoder().decode(Env.get("JWT_SECRET"))
+        if (existingUser != null) {
+            if(decryptPassword(user.password, existingUser.password)) {
+                val jwt = Jwts.builder().claim("User Object", existingUser).signWith(Keys.hmacShaKeyFor(secret)).compact()
+                ctx.json(jwt)
+                ctx.status(200)
+            } else {
+                ctx.status(401)
+                print("Invalid pass")
+            }
+        } else {
+            ctx.status(401)
+            print(ctx.res.sendError(401, "Invalid email or password"))
+            print("No user found")
+        }
+    }
 }

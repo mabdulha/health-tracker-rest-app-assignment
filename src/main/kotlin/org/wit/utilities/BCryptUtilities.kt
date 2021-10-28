@@ -2,8 +2,8 @@ package org.wit.utilities
 
 import org.mindrot.jbcrypt.BCrypt
 
-fun hashPassword(plaintext: String, genSaltRounds: Int = 10): String {
-    return BCrypt.hashpw(plaintext, BCrypt.gensalt(genSaltRounds))
+fun hashPassword(plaintext: String): String {
+    return BCrypt.hashpw(plaintext, BCrypt.gensalt())
 }
 
 fun decryptPassword(plaintext: String, hashedtext: String): Boolean {
