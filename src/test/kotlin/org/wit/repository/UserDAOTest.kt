@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test
 import org.wit.db.Users
 import org.wit.domain.UserDTO
 import org.wit.helpers.nonExistingEmail
+import kotlin.test.assertNotEquals
+import kotlin.test.assertNotSame
 
 //retrieving some test data from Fixtures
 val user1 = users[0]
@@ -170,9 +172,10 @@ class UserDAOTest {
                 val userDAO = populateUserTable()
 
                 //Act & Assert
-                val user3Updated = UserDTO(3, "Leroy", "Matthews", "leroy@gmail.com", "supersecret", 90.00, 154f, 'M', 54)
+                val user3Updated = UserDTO(3, "Leroy", "Matthews", "leroy@gmail.com", "secretpass", 90.00, 154f, 'M', 54)
                 userDAO.update(user3.id, user3Updated)
                 assertEquals(user3Updated.email, userDAO.findById(3)?.email)
+                assertNotEquals(user3Updated.password, userDAO.findById(3)?.password)
             }
         }
 

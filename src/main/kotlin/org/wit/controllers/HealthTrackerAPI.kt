@@ -43,8 +43,14 @@ object HealthTrackerAPI {
     fun addUser(ctx: Context) {
         val mapper = jacksonObjectMapper()
         val user = mapper.readValue<UserDTO>(ctx.body())
-        userDao.save(user)
-        ctx.json(user)
+        if (userDao.findByEmail(user.email) == null) {
+            userDao.save(user)
+            ctx.json(user)
+            ctx.status(201)
+        } else {
+            ctx.status(409)
+            ctx.json("The email: ${user.email}, already exists")
+        }
     }
 
     fun getUserByEmail(ctx: Context) {
@@ -86,12 +92,12 @@ object HealthTrackerAPI {
                 ctx.status(200)
             } else {
                 ctx.status(401)
-                print("Invalid pass")
+                ctx.json("Invalid email or password")
             }
         } else {
             ctx.status(401)
             // print(ctx.res.sendError(401, "Invalid email or password"))
-            print("No user found")
+            ctx.json("Invalid email or password")
         }
     }
 }
