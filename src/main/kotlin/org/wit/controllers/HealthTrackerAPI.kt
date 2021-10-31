@@ -6,7 +6,6 @@ import com.harium.dotenv.Env
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.wit.domain.UserAuthDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
@@ -79,7 +78,7 @@ object HealthTrackerAPI {
 
     fun login (ctx: Context) {
         val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<UserAuthDTO>(ctx.body())
+        val user = mapper.readValue<UserDTO>(ctx.body())
         val existingUser = userDao.findByEmail(user.email)
         val secret = Base64.getDecoder().decode(Env.get("JWT_SECRET"))
         if (existingUser != null) {

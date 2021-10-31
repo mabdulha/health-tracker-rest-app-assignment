@@ -10,4 +10,5 @@
 /target/
 *.class
 *.jar
+*.env
 .env
