@@ -2,6 +2,7 @@ package org.wit.controllers
 
 import kong.unirest.Unirest
 import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
@@ -14,10 +15,15 @@ class HealthTrackerAPITest {
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
-    @Test
-    fun `get all users from the database returns 200 or 404 response`() {
-        val response = Unirest.get("$origin/api/users/").asString()
-        assertEquals(200, response.status)
+    @Nested
+    inner class ReadUsers {
+
+        @Test
+        fun `get all users from the database returns 200 or 404 response`() {
+            val response = Unirest.get("$origin/api/users/").asString()
+            assertEquals(200, response.status)
+        }
+
     }
 
 }
