@@ -43,9 +43,9 @@ class UserDAOTest {
 
                 //Act & Assert
                 assertEquals(3, userDAO.getAll().size)
-                assertEquals(user1.fname, userDAO.findById(user1.id)?.fname)
-                assertEquals(user2.fname, userDAO.findById(user2.id)?.fname)
-                assertEquals(user3.fname, userDAO.findById(user3.id)?.fname)
+                assertEquals(user1.email, userDAO.findById(user1.id)?.email)
+                assertEquals(user2.email, userDAO.findById(user2.id)?.email)
+                assertEquals(user3.email, userDAO.findById(user3.id)?.email)
             }
         }
 
@@ -174,8 +174,14 @@ class UserDAOTest {
                 //Act & Assert
                 val user3Updated = UserDTO(3, "Leroy", "Matthews", "leroy@gmail.com", "secretpass", 90.00, 154f, 'M', 54)
                 userDAO.update(user3.id, user3Updated)
+                assertEquals(user3Updated.id, userDAO.findById(3)?.id)
+                assertEquals(user3Updated.fname, userDAO.findById(3)?.fname)
+                assertEquals(user3Updated.lname, userDAO.findById(3)?.lname)
                 assertEquals(user3Updated.email, userDAO.findById(3)?.email)
-                assertNotEquals(user3Updated.password, userDAO.findById(3)?.password)
+                assertNotEquals(user3Updated.password, userDAO.findById(3)?.password) // not equal because of the password hashing
+                assertEquals(user3Updated.weight, userDAO.findById(3)?.weight)
+                assertEquals(user3Updated.height, userDAO.findById(3)?.height)
+                assertEquals(user3Updated.age, userDAO.findById(3)?.age)
             }
         }
 
