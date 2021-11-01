@@ -65,7 +65,14 @@ object HealthTrackerAPI {
     }
 
     fun deleteUser(ctx: Context){
-        userDao.delete(ctx.pathParam("user-id").toInt())
+        val foundId = ctx.pathParam("user-id").toInt()
+        if (userDao.findById(foundId) != null) {
+            userDao.delete(foundId)
+            ctx.html("User with id: ${foundId}, deleted successfully")
+            ctx.status(200)
+        } else {
+            ctx.status(404).json("User with id ${foundId}, does not exist")
+        }
     }
 
     fun updateUser(ctx: Context){
