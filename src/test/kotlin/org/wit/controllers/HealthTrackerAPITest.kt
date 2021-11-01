@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
 import org.wit.helpers.ServerContainer
+import org.wit.helpers.nonExistingEmail
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HealthTrackerAPITest {
@@ -22,6 +23,27 @@ class HealthTrackerAPITest {
         fun `get all users from the database returns 200 or 404 response`() {
             val response = Unirest.get("$origin/api/users/").asString()
             assertEquals(200, response.status)
+        }
+
+        @Test
+        fun `get user by id when user does not exist returns 404 response`() {
+
+            //Arrange - test data for user id
+            val id = Integer.MIN_VALUE
+
+            // Act - attempt to retrieve the non-existent user from the database
+            val retrieveResponse = Unirest.get(origin + "/api/users/${id}").asString()
+
+            // Assert -  verify return code
+            assertEquals(404, retrieveResponse.status)
+        }
+
+        @Test
+        fun `get user by email when user does not exist returns 404 response`() {
+            // Arrange & Act - attempt to retrieve the non-existent user from the database
+            val retrieveResponse = Unirest.get(origin + "/api/users/email/${nonExistingEmail}").asString()
+            // Assert -  verify return code
+            assertEquals(404, retrieveResponse.status)
         }
 
     }
