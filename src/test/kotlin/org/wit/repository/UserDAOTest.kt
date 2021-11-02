@@ -12,7 +12,6 @@ import org.wit.db.Users
 import org.wit.domain.UserDTO
 import org.wit.helpers.nonExistingEmail
 import kotlin.test.assertNotEquals
-import kotlin.test.assertNotSame
 
 //retrieving some test data from Fixtures
 val user1 = users[0]
