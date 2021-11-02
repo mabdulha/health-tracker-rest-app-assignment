@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavalinConfig.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">org.wit healthtrackerrest</a> &gt; <a href="index.source.html" class="el_package">org.wit.config</a> &gt; <span class="el_source">JavalinConfig.kt</span></div><h1>JavalinConfig.kt</h1><pre class="source lang-java linenums">package org.wit.config
+
+import io.javalin.Javalin
+import io.javalin.apibuilder.ApiBuilder.*
+import org.wit.controllers.HealthTrackerAPI
+
+<span class="fc" id="L7">class JavalinConfig {</span>
+
+    fun startJavalinService(): Javalin {
+
+<span class="fc" id="L11">        val app = Javalin.create().apply {</span>
+<span class="pc" id="L12">            exception(Exception::class.java) { e, ctx -&gt; e.printStackTrace() }</span>
+<span class="fc" id="L13">            error(404) { ctx -&gt; ctx.json(&quot;404 - Not Found&quot;) }</span>
+<span class="fc" id="L14">        }.start(getHerokuAssignedPort())</span>
+
+<span class="fc" id="L16">        registerRoutes(app)</span>
+<span class="fc" id="L17">        return app</span>
+    }
+
+    private fun getHerokuAssignedPort(): Int {
+<span class="fc" id="L21">        val herokuPort = System.getenv(&quot;PORT&quot;)</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        return if (herokuPort != null) {</span>
+<span class="nc" id="L23">            Integer.parseInt(herokuPort)</span>
+<span class="fc" id="L24">        } else 7000</span>
+    }
+
+    private fun registerRoutes(app: Javalin){
+<span class="fc" id="L28">        app.routes {</span>
+<span class="fc" id="L29">            get(&quot;/api/users&quot;, HealthTrackerAPI::getAllUsers)</span>
+<span class="fc" id="L30">            get(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::getUserByUserId)</span>
+<span class="fc" id="L31">            post(&quot;/api/users&quot;, HealthTrackerAPI::addUser)</span>
+<span class="fc" id="L32">            get(&quot;/api/users/email/:email&quot;, HealthTrackerAPI::getUserByEmail)</span>
+<span class="fc" id="L33">            delete(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::deleteUser)</span>
+<span class="fc" id="L34">            patch(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::updateUser)</span>
+<span class="fc" id="L35">            post(&quot;/api/users/login/&quot;, HealthTrackerAPI::login)</span>
+<span class="fc" id="L36">        }</span>
+<span class="fc" id="L37">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
