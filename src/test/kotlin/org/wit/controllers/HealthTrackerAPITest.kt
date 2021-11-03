@@ -186,4 +186,30 @@ class HealthTrackerAPITest {
 
     }
 
+    @Nested
+    inner class DeleteUsers {
+
+        @Test
+        fun `deleting a user when it doesn't exist, returns a 404 response`() {
+            //Act & Assert - attempt to delete a user that doesn't exist
+            assertEquals(404, deleteUser(-1).status)
+        }
+
+        @Test
+        fun `deleting a user when it exists, returns a 204 response`() {
+
+            //Arrange - add the user that we plan to do a delete on
+            val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
+
+            //Act & Assert - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+
+            //Act & Assert - attempt to retrieve the deleted user --> 404 response
+            assertEquals(404, retrieveUserById(addedUser.id).status)
+        }
+
+    }
+
 }
