@@ -2,9 +2,15 @@ package org.wit.helpers
 
 import org.wit.domain.UserDTO
 
-val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
-val validFName = "Michael"
-val validEmail = "testuser1@test.com"
+const val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
+const val validFName = "Michael"
+const val validLName = "Hogan"
+const val validEmail = "testuser2@test.com"
+const val validPassword = "secret"
+const val validWeight = 65.2
+const val validHeight = 164f
+const val validAge = 25
+const val validGender = 'M'
 
 val users = arrayListOf(
     UserDTO(fname = "Alice", lname = "Cullen", email = "alice@cullen.com", password = "secret", weight = 2.0, height = 170f, gender = 'M', age = 25, id = 1),

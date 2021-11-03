@@ -9,6 +9,7 @@ import io.jsonwebtoken.security.Keys
 import org.wit.domain.UserDTO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
+import org.wit.utilities.jsonToObject
 import java.util.*
 
 object HealthTrackerAPI {
@@ -40,16 +41,18 @@ object HealthTrackerAPI {
     }
 
     fun addUser(ctx: Context) {
-        val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<UserDTO>(ctx.body())
+        val user : UserDTO = jsonToObject(ctx.body())
         if (userDao.findByEmail(user.email) == null) {
-            userDao.save(user)
-            ctx.json(user)
-            ctx.status(201)
+            val userId = userDao.save(user)
+            if (userId != null) {
+                user.id = userId
+                ctx.json(user)
+                ctx.status(201)
+            }
         } else {
-            ctx.status(409)
-            ctx.json("The email: ${user.email}, already exists")
+            ctx.status(404).json("The email: ${user.email}, already exists")
         }
+
     }
 
     fun getUserByEmail(ctx: Context) {
@@ -69,7 +72,7 @@ object HealthTrackerAPI {
         if (userDao.findById(foundId) != null) {
             userDao.delete(foundId)
             ctx.html("User with id: ${foundId}, deleted successfully")
-            ctx.status(200)
+            ctx.status(204)
         } else {
             ctx.status(404).json("User with id ${foundId}, does not exist")
         }

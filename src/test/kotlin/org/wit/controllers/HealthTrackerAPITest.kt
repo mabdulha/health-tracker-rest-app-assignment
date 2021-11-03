@@ -1,15 +1,18 @@
 package org.wit.controllers
 
+import kong.unirest.HttpResponse
+import kong.unirest.JsonNode
 import kong.unirest.Unirest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
+import org.wit.controllers.HealthTrackerAPI.updateUser
 import org.wit.domain.UserDTO
-import org.wit.helpers.ServerContainer
-import org.wit.helpers.nonExistingEmail
+import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -19,15 +22,37 @@ class HealthTrackerAPITest {
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
+    //helper function to add a test user to the database
+    private fun addUser (fname: String, lname: String, email: String, password: String, weight: Double, height: Float, age: Int, gender: Char): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/users")
+            .body("{\"fname\":\"$fname\", \"lname\":\"$lname\", \"email\":\"$email\", \"password\":\"$password\", \"weight\":\"$weight\", \"height\":\"$height\", \"age\":\"$age\", \"gender\":\"$gender\"}")
+            .asJson()
+    }
+
+    //helper function to delete a test user from the database
+    private fun deleteUser (id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/users/$id").asString()
+    }
+
+    //helper function to retrieve a test user from the database by email
+    private fun retrieveUserByEmail(email : String) : HttpResponse<String> {
+        return Unirest.get("$origin/api/users/email/${email}").asString()
+    }
+
+    //helper function to retrieve a test user from the database by id
+    private fun retrieveUserById(id: Int) : HttpResponse<String> {
+        return Unirest.get("$origin/api/users/${id}").asString()
+    }
+
     @Nested
     inner class ReadUsers {
 
         @Test
         fun `get all users from the database returns 200 or 404 response`() {
-            val response = Unirest.get("$origin/api/users/").asString()
+            val response = Unirest.get(origin + "/api/users/").asString()
             if (response.status == 200) {
                 val retrievedUsers: ArrayList<UserDTO> = jsonToObject(response.body.toString())
-                Assertions.assertNotEquals(0, retrievedUsers.size)
+                Assert.assertNotEquals(0, retrievedUsers.size)
             }
             else {
                 assertEquals(404, response.status)
@@ -53,6 +78,66 @@ class HealthTrackerAPITest {
             val retrieveResponse = Unirest.get(origin + "/api/users/email/${nonExistingEmail}").asString()
             // Assert -  verify return code
             assertEquals(404, retrieveResponse.status)
+        }
+
+        @Test
+        fun `getting a user by id when id exists, returns a 200 response`() {
+
+            //Arrange - add the user
+            val addResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addResponse.body.toString())
+
+            //Assert - retrieve the added user from the database and verify return code
+            val retrieveResponse = retrieveUserById(addedUser.id)
+            assertEquals(200, retrieveResponse.status)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `getting a user by email when email exists, returns a 200 response`() {
+
+            //Arrange - add the user
+            addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+
+            //Assert - retrieve the added user from the database and verify return code
+            val retrieveResponse = retrieveUserByEmail(validEmail)
+            assertEquals(200, retrieveResponse.status)
+
+            //After - restore the db to previous state by deleting the added user
+            val retrievedUser : UserDTO = jsonToObject(retrieveResponse.body.toString())
+            deleteUser(retrievedUser.id)
+        }
+
+    }
+
+    @Nested
+    inner class CreateUsers {
+
+        @Test
+        fun `add a user with correct details returns a 201 response`() {
+
+            //Arrange & Act & Assert
+            //    add the user and verify return code (using fixture data)
+            val addResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            assertEquals(201, addResponse.status)
+
+            //Assert - retrieve the added user from the database and verify return code
+            val retrieveResponse= retrieveUserByEmail(validEmail)
+            assertEquals(200, retrieveResponse.status)
+
+            //Assert - verify the contents of the retrieved user
+            val retrievedUser : UserDTO = jsonToObject(addResponse.body.toString())
+            assertEquals(validEmail, retrievedUser.email)
+            assertEquals(validFName, retrievedUser.fname)
+
+            //After - restore the db to previous state by deleting the added user
+            val deleteResponse = deleteUser(retrievedUser.id)
+            assertEquals(204, deleteResponse.status)
         }
 
     }
