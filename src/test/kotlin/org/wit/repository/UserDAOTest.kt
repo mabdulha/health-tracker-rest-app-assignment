@@ -4,10 +4,8 @@ import org.wit.helpers.users
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
 import org.wit.db.Users
 import org.wit.domain.UserDTO
 import org.wit.helpers.nonExistingEmail
@@ -18,6 +16,7 @@ val user1 = users[0]
 val user2 = users[1]
 val user3 = users[2]
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserDAOTest {
 
     companion object {
@@ -209,5 +208,10 @@ class UserDAOTest {
         userDAO.save(user2)
         userDAO.save(user3)
         return userDAO
+    }
+
+    @AfterAll
+    fun cleanUp() {
+        transaction { SchemaUtils.drop(Users) }
     }
 }

@@ -18,12 +18,12 @@ import java.util.*
 
     fun getAllUsers(ctx: Context) {
 <span class="fc" id="L20">        val users = userDao.getAll()</span>
-<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (users.size != 0) {</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (users.size != 0) {</span>
 <span class="fc" id="L22">            ctx.json(users)</span>
 <span class="fc" id="L23">            ctx.status(200)</span>
         } else {
-<span class="nc" id="L25">            ctx.status(404)</span>
-<span class="nc" id="L26">            ctx.html(&quot;Error 404 - No Users Found!!&quot;)</span>
+<span class="fc" id="L25">            ctx.status(404)</span>
+<span class="fc" id="L26">            ctx.html(&quot;Error 404 - No Users Found!!&quot;)</span>
         }
 
 <span class="fc" id="L29">    }</span>

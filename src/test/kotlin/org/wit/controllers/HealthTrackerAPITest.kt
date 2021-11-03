@@ -44,6 +44,10 @@ class HealthTrackerAPITest {
         return Unirest.get("$origin/api/users/${id}").asString()
     }
 
+    private fun retrieveAllUsers () : HttpResponse<String> {
+        return Unirest.get("$origin/api/users").asString()
+    }
+
     //helper function to add a test user to the database
     private fun updateUser (id: Int, name: String, email: String, password: String): HttpResponse<JsonNode> {
         return Unirest.patch(origin + "/api/users/$id")
@@ -123,6 +127,13 @@ class HealthTrackerAPITest {
             //After - restore the db to previous state by deleting the added user
             val retrievedUser : UserDTO = jsonToObject(retrieveResponse.body.toString())
             deleteUser(retrievedUser.id)
+        }
+
+        @Test
+        fun `get all users when none exist in database, returns a 404 response` () {
+
+            assertEquals(404, retrieveAllUsers().status)
+
         }
 
     }
