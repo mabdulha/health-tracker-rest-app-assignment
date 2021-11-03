@@ -59,8 +59,8 @@ class UserDAO {
         }
     }
 
-    fun update(id: Int, userDTO: UserDTO){
-        transaction {
+    fun update(id: Int, userDTO: UserDTO) : Int {
+        return transaction {
             Users.update ({
                 Users.id eq id}) {
                 it[fname] = userDTO.fname

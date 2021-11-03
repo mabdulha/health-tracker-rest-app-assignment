@@ -79,11 +79,11 @@ object HealthTrackerAPI {
     }
 
     fun updateUser(ctx: Context){
-        val mapper = jacksonObjectMapper()
-        val user = mapper.readValue<UserDTO>(ctx.body())
-        userDao.update(
-            id = ctx.pathParam("user-id").toInt(),
-            userDTO=user)
+        val user : UserDTO = jsonToObject(ctx.body())
+        if ((userDao.update(id = ctx.pathParam("user-id").toInt(), userDTO=user)) != 0)
+            ctx.status(204)
+        else
+            ctx.status(404)
     }
 
     fun login (ctx: Context) {

@@ -44,6 +44,13 @@ class HealthTrackerAPITest {
         return Unirest.get("$origin/api/users/${id}").asString()
     }
 
+    //helper function to add a test user to the database
+    private fun updateUser (id: Int, name: String, email: String, password: String): HttpResponse<JsonNode> {
+        return Unirest.patch(origin + "/api/users/$id")
+            .body("{\"fname\":\"$name\", \"email\":\"$email\", \"password\":\"$password\"}")
+            .asJson()
+    }
+
     @Nested
     inner class ReadUsers {
 
@@ -138,6 +145,35 @@ class HealthTrackerAPITest {
             //After - restore the db to previous state by deleting the added user
             val deleteResponse = deleteUser(retrievedUser.id)
             assertEquals(204, deleteResponse.status)
+        }
+
+    }
+
+    @Nested
+    inner class UpdateUsers {
+
+        @Test
+        fun `updating a user when it exists, returns a 204 response`() {
+
+            //Arrange - add the user that we plan to do an update on
+            val updatedName = "Updated Name"
+            val updatedEmail = "updatedemail@gmail.com"
+            val updatedPassword = "newsecret"
+            val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
+
+            //Act & Assert - update the email and name of the retrieved user and assert 204 is returned
+            assertEquals(204, updateUser(addedUser.id, updatedName, updatedEmail, updatedPassword).status)
+
+            //Act & Assert - retrieve updated user and assert details are correct
+            val updatedUserResponse = retrieveUserById(addedUser.id)
+            val updatedUser : UserDTO = jsonToObject(updatedUserResponse.body.toString())
+            assertEquals(updatedName, updatedUser.fname)
+            assertEquals(updatedEmail, updatedUser.email)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
         }
 
     }

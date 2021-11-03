@@ -5,7 +5,7 @@ import org.wit.domain.UserDTO
 const val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
 const val validFName = "Michael"
 const val validLName = "Hogan"
-const val validEmail = "testuser2@test.com"
+const val validEmail = "testuser@test.com"
 const val validPassword = "secret"
 const val validWeight = 65.2
 const val validHeight = 164f
