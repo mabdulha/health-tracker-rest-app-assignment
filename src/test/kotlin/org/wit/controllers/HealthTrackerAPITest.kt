@@ -51,6 +51,12 @@ class HealthTrackerAPITest {
             .asJson()
     }
 
+    private fun loginUser (email: String, password: String): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/users/login")
+            .body("{\"email\":\"$email\", \"password\":\"$password\"}")
+            .asJson()
+    }
+
     @Nested
     inner class ReadUsers {
 
@@ -208,6 +214,23 @@ class HealthTrackerAPITest {
 
             //Act & Assert - attempt to retrieve the deleted user --> 404 response
             assertEquals(404, retrieveUserById(addedUser.id).status)
+        }
+
+    }
+
+    @Nested
+    inner class LoginUser {
+
+        @Test
+        fun `Logging in a user with correct credentials` () {
+
+            //Arrange - add the user that we plan to do a login on
+            val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
+
+            assertEquals(200, loginUser(addedUser.email, addedUser.password).status)
+
         }
 
     }
