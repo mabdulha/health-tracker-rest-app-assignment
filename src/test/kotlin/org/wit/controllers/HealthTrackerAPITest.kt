@@ -152,28 +152,36 @@ class HealthTrackerAPITest {
     @Nested
     inner class UpdateUsers {
 
+        private val updatedFName = "Updated FName"
+        private val updatedEmail = "updatedemail@gmail.com"
+        private val updatedPassword = "newsecret"
+
         @Test
         fun `updating a user when it exists, returns a 204 response`() {
 
             //Arrange - add the user that we plan to do an update on
-            val updatedName = "Updated Name"
-            val updatedEmail = "updatedemail@gmail.com"
-            val updatedPassword = "newsecret"
             val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
                 validAge, validGender)
             val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
 
             //Act & Assert - update the email and name of the retrieved user and assert 204 is returned
-            assertEquals(204, updateUser(addedUser.id, updatedName, updatedEmail, updatedPassword).status)
+            assertEquals(204, updateUser(addedUser.id, updatedFName, updatedEmail, updatedPassword).status)
 
             //Act & Assert - retrieve updated user and assert details are correct
             val updatedUserResponse = retrieveUserById(addedUser.id)
             val updatedUser : UserDTO = jsonToObject(updatedUserResponse.body.toString())
-            assertEquals(updatedName, updatedUser.fname)
+            assertEquals(updatedFName, updatedUser.fname)
             assertEquals(updatedEmail, updatedUser.email)
 
             //After - restore the db to previous state by deleting the added user
             deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `updating a user when it doesn't exist, returns a 404 response`() {
+
+            //Act & Assert - attempt to update the email and name of user that doesn't exist
+            assertEquals(404, updateUser(-1, updatedFName, updatedEmail, updatedPassword).status)
         }
 
     }
