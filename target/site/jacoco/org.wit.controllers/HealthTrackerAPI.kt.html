@@ -9,102 +9,105 @@ import io.jsonwebtoken.security.Keys
 import org.wit.domain.UserDTO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
+import org.wit.utilities.jsonToObject
 import java.util.*
 
-<span class="fc" id="L14">object HealthTrackerAPI {</span>
+<span class="fc" id="L15">object HealthTrackerAPI {</span>
 
-<span class="fc" id="L16">    private val userDao = UserDAO()</span>
+<span class="fc" id="L17">    private val userDao = UserDAO()</span>
 
     fun getAllUsers(ctx: Context) {
-<span class="fc" id="L19">        val users = userDao.getAll()</span>
-<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (users.size != 0) {</span>
-<span class="fc" id="L21">            ctx.json(users)</span>
-<span class="fc" id="L22">            ctx.status(200)</span>
+<span class="fc" id="L20">        val users = userDao.getAll()</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (users.size != 0) {</span>
+<span class="nc" id="L22">            ctx.json(users)</span>
+<span class="nc" id="L23">            ctx.status(200)</span>
         } else {
-<span class="nc" id="L24">            ctx.status(404)</span>
-<span class="nc" id="L25">            ctx.html(&quot;Error 404 - No Users Found!!&quot;)</span>
+<span class="fc" id="L25">            ctx.status(404)</span>
+<span class="fc" id="L26">            ctx.html(&quot;Error 404 - No Users Found!!&quot;)</span>
         }
 
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L29">    }</span>
 
     fun getUserByUserId(ctx: Context) {
-<span class="fc" id="L31">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
-<span class="fc" id="L32">        val user = userDao.findById(foundId)</span>
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (user != null) {</span>
-<span class="nc" id="L34">            ctx.json(user)</span>
-<span class="nc" id="L35">            ctx.status(200)</span>
+<span class="fc" id="L32">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="fc" id="L33">        val user = userDao.findById(foundId)</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (user != null) {</span>
+<span class="fc" id="L35">            ctx.json(user)</span>
+<span class="fc" id="L36">            ctx.status(200)</span>
         } else {
-<span class="fc" id="L37">            ctx.status(404)</span>
-<span class="fc" id="L38">            ctx.html(&quot;No user found with id: $foundId&quot;)</span>
+<span class="fc" id="L38">            ctx.status(404)</span>
+<span class="fc" id="L39">            ctx.html(&quot;No user found with id: $foundId&quot;)</span>
         }
-<span class="fc" id="L40">    }</span>
+<span class="fc" id="L41">    }</span>
 
     fun addUser(ctx: Context) {
-<span class="nc" id="L43">        val mapper = jacksonObjectMapper()</span>
-<span class="nc" id="L44">        val user = mapper.readValue&lt;UserDTO&gt;(ctx.body())</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (userDao.findByEmail(user.email) == null) {</span>
-<span class="nc" id="L46">            userDao.save(user)</span>
-<span class="nc" id="L47">            ctx.json(user)</span>
-<span class="nc" id="L48">            ctx.status(201)</span>
+<span class="fc" id="L44">        val user : UserDTO = jsonToObject(ctx.body())</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (userDao.findByEmail(user.email) == null) {</span>
+<span class="fc" id="L46">            val userId = userDao.save(user)</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">            if (userId != null) {</span>
+<span class="fc" id="L48">                user.id = userId</span>
+<span class="fc" id="L49">                ctx.json(user)</span>
+<span class="fc" id="L50">                ctx.status(201)</span>
+            }
         } else {
-<span class="nc" id="L50">            ctx.status(409)</span>
-<span class="nc" id="L51">            ctx.json(&quot;The email: ${user.email}, already exists&quot;)</span>
+<span class="nc" id="L53">            ctx.status(404).json(&quot;The email: ${user.email}, already exists&quot;)</span>
         }
-<span class="nc" id="L53">    }</span>
+
+<span class="fc" id="L56">    }</span>
 
     fun getUserByEmail(ctx: Context) {
-<span class="fc" id="L56">        val foundEmail = ctx.pathParam(&quot;email&quot;)</span>
-<span class="fc" id="L57">        val user = userDao.findByEmail(foundEmail)</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (user != null) {</span>
-<span class="nc" id="L59">            ctx.status(200)</span>
-<span class="nc" id="L60">            ctx.json(user)</span>
+<span class="fc" id="L59">        val foundEmail = ctx.pathParam(&quot;email&quot;)</span>
+<span class="fc" id="L60">        val user = userDao.findByEmail(foundEmail)</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (user != null) {</span>
+<span class="fc" id="L62">            ctx.status(200)</span>
+<span class="fc" id="L63">            ctx.json(user)</span>
         } else {
-<span class="fc" id="L62">            ctx.status(404)</span>
-<span class="fc" id="L63">            ctx.html(&quot;No user found with email: $foundEmail&quot;)</span>
+<span class="fc" id="L65">            ctx.status(404)</span>
+<span class="fc" id="L66">            ctx.html(&quot;No user found with email: $foundEmail&quot;)</span>
         }
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L68">    }</span>
 
     fun deleteUser(ctx: Context){
-<span class="nc" id="L68">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (userDao.findById(foundId) != null) {</span>
-<span class="nc" id="L70">            userDao.delete(foundId)</span>
-<span class="nc" id="L71">            ctx.html(&quot;User with id: ${foundId}, deleted successfully&quot;)</span>
-<span class="nc" id="L72">            ctx.status(200)</span>
+<span class="fc" id="L71">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (userDao.findById(foundId) != null) {</span>
+<span class="fc" id="L73">            userDao.delete(foundId)</span>
+<span class="fc" id="L74">            ctx.html(&quot;User with id: ${foundId}, deleted successfully&quot;)</span>
+<span class="fc" id="L75">            ctx.status(204)</span>
         } else {
-<span class="nc" id="L74">            ctx.status(404).json(&quot;User with id ${foundId}, does not exist&quot;)</span>
+<span class="fc" id="L77">            ctx.status(404).json(&quot;User with id ${foundId}, does not exist&quot;)</span>
         }
-<span class="nc" id="L76">    }</span>
+<span class="fc" id="L79">    }</span>
 
     fun updateUser(ctx: Context){
-<span class="nc" id="L79">        val mapper = jacksonObjectMapper()</span>
-<span class="nc" id="L80">        val user = mapper.readValue&lt;UserDTO&gt;(ctx.body())</span>
-<span class="nc" id="L81">        userDao.update(</span>
-<span class="nc" id="L82">            id = ctx.pathParam(&quot;user-id&quot;).toInt(),</span>
-<span class="nc" id="L83">            userDTO=user)</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L82">        val user : UserDTO = jsonToObject(ctx.body())</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if ((userDao.update(id = ctx.pathParam(&quot;user-id&quot;).toInt(), userDTO=user)) != 0)</span>
+<span class="fc" id="L84">            ctx.status(204)</span>
+        else
+<span class="fc" id="L86">            ctx.status(404)</span>
+<span class="fc" id="L87">    }</span>
 
     fun login (ctx: Context) {
-<span class="nc" id="L87">        val mapper = jacksonObjectMapper()</span>
-<span class="nc" id="L88">        val user = mapper.readValue&lt;UserDTO&gt;(ctx.body())</span>
-<span class="nc" id="L89">        val existingUser = userDao.findByEmail(user.email)</span>
-<span class="nc" id="L90">        val secret = Base64.getDecoder().decode(Env.get(&quot;JWT_SECRET&quot;))</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (existingUser != null) {</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">            if(decryptPassword(user.password, existingUser.password)) {</span>
-<span class="nc" id="L93">                val jwt = Jwts.builder()</span>
-<span class="nc" id="L94">                    .claim(&quot;User&quot;, existingUser)</span>
-<span class="nc" id="L95">                    .signWith(Keys.hmacShaKeyFor(secret))</span>
-<span class="nc" id="L96">                    .compact()</span>
-<span class="nc" id="L97">                ctx.json(jwt)</span>
-<span class="nc" id="L98">                ctx.status(200)</span>
+<span class="fc" id="L90">        val mapper = jacksonObjectMapper()</span>
+<span class="fc" id="L91">        val user = mapper.readValue&lt;UserDTO&gt;(ctx.body())</span>
+<span class="fc" id="L92">        val existingUser = userDao.findByEmail(user.email)</span>
+<span class="fc" id="L93">        val secret = Base64.getDecoder().decode(Env.get(&quot;JWT_SECRET&quot;))</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (existingUser != null) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if(decryptPassword(user.password, existingUser.password)) {</span>
+<span class="fc" id="L96">                val jwt = Jwts.builder()</span>
+<span class="fc" id="L97">                    .claim(&quot;User&quot;, existingUser)</span>
+<span class="fc" id="L98">                    .signWith(Keys.hmacShaKeyFor(secret))</span>
+<span class="fc" id="L99">                    .compact()</span>
+<span class="fc" id="L100">                ctx.json(jwt)</span>
+<span class="fc" id="L101">                ctx.status(200)</span>
             } else {
-<span class="nc" id="L100">                ctx.status(401)</span>
-<span class="nc" id="L101">                ctx.json(&quot;Invalid email or password&quot;)</span>
-<span class="nc" id="L102">            }</span>
+<span class="fc" id="L103">                ctx.status(401)</span>
+<span class="fc" id="L104">                ctx.json(&quot;Invalid email or password&quot;)</span>
+<span class="fc" id="L105">            }</span>
         } else {
-<span class="nc" id="L104">            ctx.status(401)</span>
+<span class="fc" id="L107">            ctx.status(401)</span>
             // print(ctx.res.sendError(401, &quot;Invalid email or password&quot;))
-<span class="nc" id="L106">            ctx.json(&quot;Invalid email or password&quot;)</span>
+<span class="fc" id="L109">            ctx.json(&quot;Invalid email or password&quot;)</span>
         }
-<span class="nc" id="L108">    }</span>
+<span class="fc" id="L111">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

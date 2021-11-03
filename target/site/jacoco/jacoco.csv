@@ -1,33 +1,43 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-org.wit healthtrackerrest,org.wit.config,DbConfig.logger.new Function0() {...},1,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.new EndpointGroup() {...},0,92,0,0,0,8,0,1,0,1
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.sam.io_javalin_http_Handler.new Handler() {...},0,6,0,0,0,0,0,1,0,1
+org.wit healthtrackerrest,org.wit.config,DbConfig.logger.new Function0() {...},1,9,0,0,1,0,1,2,1,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.new EndpointGroup() {...},0,100,0,0,0,8,0,3,0,3
 org.wit healthtrackerrest,org.wit.config,JavalinConfig,3,52,1,1,1,12,1,4,0,4
 org.wit healthtrackerrest,org.wit.config,DbConfig,0,60,0,0,0,11,0,2,0,2
-org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new ExceptionHandler() {...},9,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,11,0,0,0,1,0,1,0,1
-org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new Handler() {...},0,8,0,0,0,1,0,1,0,1
-org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,2,0,0,0,1,0,1,0,1
-org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,11,0,0,0,1,0,1,0,1
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new ExceptionHandler() {...},9,8,0,0,1,0,1,2,1,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.1.new Function1() {...},7,14,0,0,0,1,3,2,3,2
+org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,18,0,0,0,1,0,2,0,2
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new Handler() {...},0,16,0,0,0,1,0,3,0,3
+org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,11,0,0,0,1,0,3,0,3
+org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,18,0,0,0,1,0,2,0,2
 org.wit healthtrackerrest,org.wit.config,DbConfigKt,0,41,0,0,0,5,0,6,0,6
-org.wit healthtrackerrest,org.wit.domain,UserDTO,42,63,0,0,0,10,9,10,9,10
-org.wit healthtrackerrest,org.wit.repository,UserDAO.findByEmail.new Function1() {...},0,31,0,0,0,4,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.delete.1.new Function1() {...},0,13,0,0,0,1,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.delete.new Function1() {...},0,16,0,0,0,2,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.getAll.new Function1() {...},0,22,0,0,0,2,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.findById.new Function1() {...},0,32,0,0,0,4,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.update.1.new Function2() {...},0,72,0,0,0,9,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.update.1.new Function1() {...},0,13,0,0,0,1,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.update.new Function1() {...},0,20,0,0,0,3,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.save.new Function1() {...},0,12,0,0,0,2,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO.save.1.new Function2() {...},0,72,0,0,0,9,0,1,0,1
-org.wit healthtrackerrest,org.wit.repository,UserDAO,0,87,0,0,0,11,0,7,0,7
+org.wit healthtrackerrest,org.wit.domain,UserDTO,293,67,38,0,0,10,40,11,21,11
+org.wit healthtrackerrest,org.wit.repository,UserDAO.findByEmail.new Function1() {...},0,75,0,2,0,9,0,3,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.delete.1.new Function1() {...},0,20,0,0,0,1,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.delete.new Function1() {...},0,23,0,0,0,2,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.getAll.new Function1() {...},0,60,0,2,0,6,0,3,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.findById.new Function1() {...},0,76,0,2,0,9,0,3,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.update.1.new Function2() {...},0,79,0,0,0,9,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.update.1.new Function1() {...},0,20,0,0,0,1,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.update.new Function1() {...},0,30,0,0,0,3,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.save.new Function1() {...},0,23,0,0,0,2,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO.save.1.new Function2() {...},0,79,0,0,0,9,0,2,0,2
+org.wit healthtrackerrest,org.wit.repository,UserDAO,0,88,0,0,0,9,0,7,0,7
 org.wit healthtrackerrest,org.wit.utilities,JSONUtilitiesKt.jsonToObject..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.utilities,BCryptUtilitiesKt,10,10,0,0,1,1,1,1,1,1
+org.wit healthtrackerrest,org.wit.utilities,BCryptUtilitiesKt,0,20,0,0,0,2,0,2,0,2
 org.wit healthtrackerrest,org.wit.utilities,JSONUtilitiesKt,42,0,0,0,2,0,2,0,2,0
 org.wit healthtrackerrest,org.wit.utilities,DbUtilitiesKt,0,62,0,0,0,11,0,1,0,1
-org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.login..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.addUser..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.updateUser..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI,226,93,11,3,46,19,11,4,4,4
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.addUser..inlined.jsonToObject.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.updateUser..inlined.jsonToObject.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.login..inlined.readValue.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.jsonToObject..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.jsonToObject..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI,25,368,3,15,3,72,3,15,0,9
 org.wit healthtrackerrest,org.wit,AppKt,11,0,0,0,3,0,1,0,1,0
 org.wit healthtrackerrest,org.wit.db,Users,0,108,0,0,0,10,0,11,0,11

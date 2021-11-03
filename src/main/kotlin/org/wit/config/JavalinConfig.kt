@@ -9,7 +9,7 @@ class JavalinConfig {
     fun startJavalinService(): Javalin {
 
         val app = Javalin.create().apply {
-            exception(Exception::class.java) { e, ctx -> e.printStackTrace() }
+            exception(Exception::class.java) { e, _ -> e.printStackTrace() }
             error(404) { ctx -> ctx.json("404 - Not Found") }
         }.start(getHerokuAssignedPort())
 

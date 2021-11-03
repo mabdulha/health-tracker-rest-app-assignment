@@ -9,7 +9,7 @@ import org.wit.controllers.HealthTrackerAPI
     fun startJavalinService(): Javalin {
 
 <span class="fc" id="L11">        val app = Javalin.create().apply {</span>
-<span class="pc" id="L12">            exception(Exception::class.java) { e, ctx -&gt; e.printStackTrace() }</span>
+<span class="pc" id="L12">            exception(Exception::class.java) { e, _ -&gt; e.printStackTrace() }</span>
 <span class="fc" id="L13">            error(404) { ctx -&gt; ctx.json(&quot;404 - Not Found&quot;) }</span>
 <span class="fc" id="L14">        }.start(getHerokuAssignedPort())</span>
 
@@ -37,4 +37,4 @@ import org.wit.controllers.HealthTrackerAPI
 <span class="fc" id="L37">    }</span>
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
