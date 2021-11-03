@@ -50,7 +50,7 @@ object HealthTrackerAPI {
                 ctx.status(201)
             }
         } else {
-            ctx.status(404).json("The email: ${user.email}, already exists")
+            ctx.status(409).json("The email: ${user.email}, already exists")
         }
 
     }

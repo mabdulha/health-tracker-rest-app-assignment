@@ -153,6 +153,24 @@ class HealthTrackerAPITest {
             assertEquals(204, deleteResponse.status)
         }
 
+        @Test
+        fun `add a user where email already exists, returns a 409` () {
+
+            //Arrange & Act & Assert
+            //    add the user and verify return code (using fixture data)
+            //Arrange - add the user that we plan to do a login on
+            val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
+
+            assertEquals(409, addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender).status)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
+
+        }
+
     }
 
     @Nested
