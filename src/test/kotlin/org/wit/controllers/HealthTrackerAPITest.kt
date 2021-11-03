@@ -219,10 +219,10 @@ class HealthTrackerAPITest {
     }
 
     @Nested
-    inner class LoginUser {
+    inner class LoginUsers {
 
         @Test
-        fun `Logging in a user with correct credentials` () {
+        fun `logging in a user with correct credentials, returns a 200 response` () {
 
             //Arrange - add the user that we plan to do a login on
             val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
@@ -230,6 +230,27 @@ class HealthTrackerAPITest {
             val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
 
             assertEquals(200, loginUser(addedUser.email, addedUser.password).status)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
+
+        }
+
+        @Test
+        fun `logging in a user with incorrect credentials, returns a 404 response` () {
+
+            val inValidEmail = "bwefubef@ugfrb.ie"
+            val inValidPassword = "iuhwefnr"
+
+            //Arrange - add the user that we plan to do a login on
+            val addedResponse = addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addedResponse.body.toString())
+
+            assertEquals(401, loginUser(inValidEmail, inValidPassword).status)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
 
         }
 
