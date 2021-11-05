@@ -5,12 +5,10 @@ import kong.unirest.JsonNode
 import kong.unirest.Unirest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
-import org.wit.controllers.HealthTrackerAPI.updateUser
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
@@ -55,7 +53,7 @@ class HealthTrackerAPITest {
             .asJson()
     }
 
-    private fun loginUser (email: String, password: String): HttpResponse<JsonNode> {
+    private fun loginUser (email: String, password: String?): HttpResponse<JsonNode> {
         return Unirest.post("$origin/api/users/login")
             .body("{\"email\":\"$email\", \"password\":\"$password\"}")
             .asJson()

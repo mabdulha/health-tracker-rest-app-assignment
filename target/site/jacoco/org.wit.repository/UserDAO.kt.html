@@ -63,15 +63,23 @@ import org.wit.utilities.mapToUserDTO
 <span class="fc" id="L63">        return transaction {</span>
 <span class="fc" id="L64">            Users.update ({</span>
 <span class="fc" id="L65">                Users.id eq id}) {</span>
-<span class="fc" id="L66">                it[fname] = userDTO.fname</span>
-<span class="fc" id="L67">                it[lname] = userDTO.lname</span>
-<span class="fc" id="L68">                it[email] = userDTO.email</span>
-<span class="fc" id="L69">                it[password] = hashPassword(userDTO.password)</span>
-<span class="fc" id="L70">                it[weight] = userDTO.weight</span>
-<span class="fc" id="L71">                it[height] = userDTO.height</span>
-<span class="fc" id="L72">                it[gender] = userDTO.gender</span>
-<span class="fc" id="L73">                it[age] = userDTO.age</span>
-<span class="fc" id="L74">            }</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                if (userDTO.fname != null)</span>
+<span class="fc" id="L67">                    it[fname] = userDTO.fname</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                if (userDTO.lname != null)</span>
+<span class="fc" id="L69">                    it[lname] = userDTO.lname</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                if (userDTO.email != null)</span>
+<span class="fc" id="L71">                    it[email] = userDTO.email</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">                if (userDTO.password != null)</span>
+<span class="fc" id="L73">                    it[password] = hashPassword(userDTO.password)</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                if (userDTO.weight != null)</span>
+<span class="fc" id="L75">                    it[weight] = userDTO.weight</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                if (userDTO.height != null)</span>
+<span class="fc" id="L77">                    it[height] = userDTO.height</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">                if (userDTO.gender != null)</span>
+<span class="fc" id="L79">                    it[gender] = userDTO.gender</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">                if (userDTO.age != null)</span>
+<span class="fc" id="L81">                    it[age] = userDTO.age</span>
+<span class="fc" id="L82">            }</span>
         }
     }
 

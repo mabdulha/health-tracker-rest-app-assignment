@@ -63,14 +63,22 @@ class UserDAO {
         return transaction {
             Users.update ({
                 Users.id eq id}) {
-                it[fname] = userDTO.fname
-                it[lname] = userDTO.lname
-                it[email] = userDTO.email
-                it[password] = hashPassword(userDTO.password)
-                it[weight] = userDTO.weight
-                it[height] = userDTO.height
-                it[gender] = userDTO.gender
-                it[age] = userDTO.age
+                if (userDTO.fname != null)
+                    it[fname] = userDTO.fname
+                if (userDTO.lname != null)
+                    it[lname] = userDTO.lname
+                if (userDTO.email != null)
+                    it[email] = userDTO.email
+                if (userDTO.password != null)
+                    it[password] = hashPassword(userDTO.password)
+                if (userDTO.weight != null)
+                    it[weight] = userDTO.weight
+                if (userDTO.height != null)
+                    it[height] = userDTO.height
+                if (userDTO.gender != null)
+                    it[gender] = userDTO.gender
+                if (userDTO.age != null)
+                    it[age] = userDTO.age
             }
         }
     }

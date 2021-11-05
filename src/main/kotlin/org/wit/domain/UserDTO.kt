@@ -5,7 +5,7 @@ data class UserDTO (
     var fname: String?,
     var lname: String?,
     var email: String,
-    var password: String,
+    var password: String?,
     var weight: Double?,
     var height: Float?,
     var gender: Char?,

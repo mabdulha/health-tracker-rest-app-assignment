@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.Table
 <span class="fc" id="L10">    val fname = varchar(&quot;fname&quot;, 50).nullable()</span>
 <span class="fc" id="L11">    val lname = varchar(&quot;lname&quot;, 50).nullable()</span>
 <span class="fc" id="L12">    val email = varchar(&quot;email&quot;, 255).uniqueIndex()</span>
-<span class="fc" id="L13">    val password = varchar(&quot;password&quot;, 255)</span>
+<span class="fc" id="L13">    val password = varchar(&quot;password&quot;, 255).nullable()</span>
 <span class="fc" id="L14">    val weight = double(&quot;weight&quot;).nullable()</span>
 <span class="fc" id="L15">    val height = float(&quot;height&quot;).nullable()</span>
 <span class="fc" id="L16">    val gender = char(&quot;gender&quot;).nullable()</span>

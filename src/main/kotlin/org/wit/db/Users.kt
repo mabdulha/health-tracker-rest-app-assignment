@@ -10,7 +10,7 @@ object Users : Table("users") {
     val fname = varchar("fname", 50).nullable()
     val lname = varchar("lname", 50).nullable()
     val email = varchar("email", 255).uniqueIndex()
-    val password = varchar("password", 255)
+    val password = varchar("password", 255).nullable()
     val weight = double("weight").nullable()
     val height = float("height").nullable()
     val gender = char("gender").nullable()

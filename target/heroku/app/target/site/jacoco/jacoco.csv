@@ -3,7 +3,7 @@ org.wit healthtrackerrest,org.wit.config,DbConfig.logger.new Function0() {...},1
 org.wit healthtrackerrest,org.wit.config,JavalinConfig.registerRoutes.new EndpointGroup() {...},0,92,0,0,0,8,0,1,0,1
 org.wit healthtrackerrest,org.wit.config,JavalinConfig,3,52,1,1,1,12,1,4,0,4
 org.wit healthtrackerrest,org.wit.config,DbConfig,0,60,0,0,0,11,0,2,0,2
-org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new ExceptionHandler() {...},9,0,0,0,1,0,1,0,1,0
+org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new ExceptionHandler() {...},0,9,0,0,0,1,0,1,0,1
 org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,11,0,0,0,1,0,1,0,1
 org.wit healthtrackerrest,org.wit.config,JavalinConfig.startJavalinService.app.1.new Handler() {...},0,8,0,0,0,1,0,1,0,1
 org.wit healthtrackerrest,org.wit.config,DbConfig.getDbConnection.new Function0() {...},0,2,0,0,0,1,0,1,0,1
@@ -30,6 +30,6 @@ org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.updateUser..inlin
 org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.login..inlined.readValue.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
 org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.jsonToObject..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
 org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI.jsonToObject..inlined.readValue.new TypeReference() {...},3,0,0,0,1,0,1,0,1,0
-org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI,8,322,2,16,2,62,2,15,0,8
+org.wit healthtrackerrest,org.wit.controllers,HealthTrackerAPI,0,330,1,17,0,64,1,16,0,8
 org.wit healthtrackerrest,org.wit,AppKt,11,0,0,0,3,0,1,0,1,0
 org.wit healthtrackerrest,org.wit.db,Users,0,108,0,0,0,10,0,11,0,11
