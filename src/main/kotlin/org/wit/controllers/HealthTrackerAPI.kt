@@ -123,4 +123,16 @@ object HealthTrackerAPI {
     fun getAllExercises (ctx: Context) {
         ctx.json(exerciseDAO.getAll())
     }
+
+    fun getExercisesByUserId (ctx: Context) {
+        if (userDao.findById(ctx.pathParam("user_id").toInt()) != null) {
+            val exercises = exerciseDAO.findExerciseByUserId(ctx.pathParam("user_id").toInt())
+            if (exercises.isNotEmpty()) {
+                ctx.json(exercises)
+                ctx.status(200)
+            }
+        } else {
+            ctx.status(404).json("No exercises associated with user")
+        }
+    }
 }

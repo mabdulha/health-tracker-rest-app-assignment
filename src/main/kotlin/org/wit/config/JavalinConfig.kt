@@ -37,6 +37,7 @@ class JavalinConfig {
 
             //Exercise routes
             get("/api/exercises", HealthTrackerAPI::getAllExercises)
+            get("/api/exercises/:user_id", HealthTrackerAPI::getExercisesByUserId)
         }
     }
 
