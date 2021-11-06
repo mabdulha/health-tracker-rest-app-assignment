@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Exercises
@@ -16,6 +17,16 @@ class ExerciseDAO {
                 exercisesList.add(mapToExerciseDTO(it)) }
         }
         return exercisesList
+    }
+
+    //Find a specific exercise by exercise id
+    fun findByExerciseId(id: Int): ExerciseDTO?{
+        return transaction {
+            Exercises
+                .select() { Exercises.id eq id}
+                .map{ mapToExerciseDTO(it)}
+                .firstOrNull()
+        }
     }
 
 }
