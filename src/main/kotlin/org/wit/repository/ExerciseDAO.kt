@@ -38,8 +38,8 @@ class ExerciseDAO {
     }
 
     //Save an exercise to the database
-    fun save(exerciseDTO: ExerciseDTO){
-        transaction {
+    fun save(exerciseDTO: ExerciseDTO): Int? {
+        return transaction {
             Exercises.insert {
                 it[name] = exerciseDTO.name
                 it[description] = exerciseDTO.description
@@ -47,7 +47,7 @@ class ExerciseDAO {
                 it[duration] = exerciseDTO.duration
                 it[muscle] = exerciseDTO.muscle
                 it[userId] = exerciseDTO.userId
-            }
+            } get Exercises.id
         }
     }
 

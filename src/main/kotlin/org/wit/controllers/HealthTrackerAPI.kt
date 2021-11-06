@@ -6,6 +6,7 @@ import com.harium.dotenv.Env
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
+import org.wit.domain.ExerciseDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ExerciseDAO
 import org.wit.repository.UserDAO
@@ -141,6 +142,17 @@ object HealthTrackerAPI {
             ctx.status(200).json(exercise)
         } else {
             ctx.status(404).html("No exercises found")
+        }
+    }
+
+    fun addExercise (ctx: Context) {
+        val exercise : ExerciseDTO = jsonToObject(ctx.body())
+        val exerciseId = exerciseDAO.save(exercise)
+        if (exerciseId != null) {
+            exercise.id = exerciseId
+            ctx.status(201).json(exercise)
+        } else {
+            ctx.status(404).json("No exercise found with id: $exerciseId")
         }
     }
 }

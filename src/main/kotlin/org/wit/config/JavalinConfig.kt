@@ -39,6 +39,7 @@ class JavalinConfig {
             get("/api/exercises", HealthTrackerAPI::getAllExercises)
             get("/api/exercises/user/:user-id", HealthTrackerAPI::getExercisesByUserId)
             get("/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
+            post("/api/exercises", HealthTrackerAPI::addExercise)
         }
     }
 
