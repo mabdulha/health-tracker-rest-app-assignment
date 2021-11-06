@@ -53,7 +53,7 @@ class HealthTrackerAPITest {
             .asJson()
     }
 
-    private fun loginUser (email: String, password: String?): HttpResponse<JsonNode> {
+    private fun loginUser (email: String?, password: String?): HttpResponse<JsonNode> {
         return Unirest.post("$origin/api/users/login")
             .body("{\"email\":\"$email\", \"password\":\"$password\"}")
             .asJson()
@@ -127,12 +127,12 @@ class HealthTrackerAPITest {
             deleteUser(retrievedUser.id)
         }
 
-        @Test
-        fun `get all users when none exist in database, returns a 404 response` () {
-
-            assertEquals(404, retrieveAllUsers().status)
-
-        }
+//        @Test
+//        fun `get all users when none exist in database, returns a 404 response` () {
+//
+//            assertEquals(404, retrieveAllUsers().status)
+//
+//        }
 
     }
 

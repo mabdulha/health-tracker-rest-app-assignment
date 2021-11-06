@@ -18,7 +18,7 @@ import org.wit.utilities.mapToUserDTO
 <span class="fc" id="L18">        return userList</span>
     }
 
-    fun findById(id: Int): UserDTO?{
+    fun findById(id: Int): UserDTO? {
 <span class="fc" id="L22">        return transaction {</span>
 <span class="fc" id="L23">            Users.select {</span>
 <span class="fc" id="L24">                Users.id eq id}</span>
@@ -42,7 +42,7 @@ import org.wit.utilities.mapToUserDTO
         }
     }
 
-    fun findByEmail(email: String) :UserDTO?{
+    fun findByEmail(email: String?): UserDTO? {
 <span class="fc" id="L46">        return transaction {</span>
 <span class="fc" id="L47">            Users.select {</span>
 <span class="fc" id="L48">                Users.email eq email</span>
@@ -52,7 +52,7 @@ import org.wit.utilities.mapToUserDTO
         }
     }
 
-    fun delete(id: Int):Int{
+    fun delete(id: Int): Int {
 <span class="fc" id="L56">        return transaction{ Users.deleteWhere{</span>
 <span class="fc" id="L57">            Users.id eq id</span>
 <span class="fc" id="L58">        }</span>

@@ -9,7 +9,7 @@ object Users : Table("users") {
     val id = integer("id").autoIncrement().primaryKey()
     val fname = varchar("fname", 50).nullable()
     val lname = varchar("lname", 50).nullable()
-    val email = varchar("email", 255).uniqueIndex()
+    val email = varchar("email", 255).uniqueIndex().nullable()
     val password = varchar("password", 255).nullable()
     val weight = double("weight").nullable()
     val height = float("height").nullable()

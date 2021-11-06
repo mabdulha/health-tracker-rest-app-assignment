@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.wit.db.Users
 import org.wit.domain.UserDTO
 import org.wit.helpers.nonExistingEmail
+import org.wit.helpers.populateUserTable
 import kotlin.test.assertNotEquals
 
 //retrieving some test data from Fixtures
@@ -41,9 +42,9 @@ class UserDAOTest {
 
                 //Act & Assert
                 assertEquals(3, userDAO.getAll().size)
-                assertEquals(user1.email, userDAO.findById(user1.id)?.email)
-                assertEquals(user2.email, userDAO.findById(user2.id)?.email)
-                assertEquals(user3.email, userDAO.findById(user3.id)?.email)
+                assertEquals(user1.email, userDAO.findByEmail(user1.email)?.email)
+                assertEquals(user2.email, userDAO.findByEmail(user2.email)?.email)
+                assertEquals(user3.email, userDAO.findByEmail(user3.email)?.email)
             }
         }
 
@@ -200,18 +201,4 @@ class UserDAOTest {
 
     }
 
-    internal fun populateUserTable(): UserDAO{
-        SchemaUtils.drop(Users)
-        SchemaUtils.create(Users)
-        val userDAO = UserDAO()
-        userDAO.save(user1)
-        userDAO.save(user2)
-        userDAO.save(user3)
-        return userDAO
-    }
-
-    @AfterAll
-    fun cleanUp() {
-        transaction { SchemaUtils.drop(Users) }
-    }
 }

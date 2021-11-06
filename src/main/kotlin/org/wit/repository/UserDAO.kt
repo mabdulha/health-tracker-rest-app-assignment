@@ -18,7 +18,7 @@ class UserDAO {
         return userList
     }
 
-    fun findById(id: Int): UserDTO?{
+    fun findById(id: Int): UserDTO? {
         return transaction {
             Users.select {
                 Users.id eq id}
@@ -42,7 +42,7 @@ class UserDAO {
         }
     }
 
-    fun findByEmail(email: String) :UserDTO?{
+    fun findByEmail(email: String?): UserDTO? {
         return transaction {
             Users.select {
                 Users.email eq email
@@ -52,7 +52,7 @@ class UserDAO {
         }
     }
 
-    fun delete(id: Int):Int{
+    fun delete(id: Int): Int {
         return transaction{ Users.deleteWhere{
             Users.id eq id
         }
