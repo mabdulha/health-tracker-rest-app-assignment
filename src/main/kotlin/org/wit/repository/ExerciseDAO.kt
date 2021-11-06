@@ -79,4 +79,11 @@ class ExerciseDAO {
         }
     }
 
+    //Delete exercise by passing the user id
+    fun deleteByUserId (userId: Int): Int{
+        return transaction{
+            Exercises.deleteWhere { Exercises.userId eq userId }
+        }
+    }
+
 }
