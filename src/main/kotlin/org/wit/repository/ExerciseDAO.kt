@@ -52,8 +52,8 @@ class ExerciseDAO {
     }
 
     //Update an exercise by passing in the exercise id
-    fun updateByExerciseId(exerciseId: Int, exerciseDTO: ExerciseDTO){
-        transaction {
+    fun updateByExerciseId(exerciseId: Int, exerciseDTO: ExerciseDTO): Int {
+        return transaction {
             Exercises.update ({
                 Exercises.id eq exerciseId}) {
                 if (exerciseDTO.name != null)
@@ -73,14 +73,14 @@ class ExerciseDAO {
     }
 
     //Delete exercise by passing the exercise id
-    fun deleteByExerciseId (exerciseId: Int): Int{
+    fun deleteByExerciseId (exerciseId: Int): Int {
         return transaction{
             Exercises.deleteWhere { Exercises.id eq exerciseId }
         }
     }
 
     //Delete exercise by passing the user id
-    fun deleteByUserId (userId: Int): Int{
+    fun deleteByUserId (userId: Int): Int {
         return transaction{
             Exercises.deleteWhere { Exercises.userId eq userId }
         }

@@ -17,7 +17,7 @@ import java.util.*
 object HealthTrackerAPI {
 
     private val userDao = UserDAO()
-    private val exerciseDAO = ExerciseDAO()
+    private val exerciseDao = ExerciseDAO()
 
     //--------------------------------------------------------------
     // UserDAO specifics
@@ -122,12 +122,12 @@ object HealthTrackerAPI {
     //-------------------------------------------------------------
 
     fun getAllExercises (ctx: Context) {
-        ctx.json(exerciseDAO.getAll())
+        ctx.json(exerciseDao.getAll())
     }
 
     fun getExercisesByUserId (ctx: Context) {
         if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
-            val exercises = exerciseDAO.findExerciseByUserId(ctx.pathParam("user-id").toInt())
+            val exercises = exerciseDao.findExerciseByUserId(ctx.pathParam("user-id").toInt())
             if (exercises.isNotEmpty()) {
                 ctx.status(200).json(exercises)
             }
@@ -137,7 +137,7 @@ object HealthTrackerAPI {
     }
 
     fun getExercisesByExerciseId (ctx: Context) {
-        val exercise = exerciseDAO.findByExerciseId(ctx.pathParam("exercise-id").toInt())
+        val exercise = exerciseDao.findByExerciseId(ctx.pathParam("exercise-id").toInt())
         if (exercise != null) {
             ctx.status(200).json(exercise)
         } else {
@@ -147,12 +147,21 @@ object HealthTrackerAPI {
 
     fun addExercise (ctx: Context) {
         val exercise : ExerciseDTO = jsonToObject(ctx.body())
-        val exerciseId = exerciseDAO.save(exercise)
+        val exerciseId = exerciseDao.save(exercise)
         if (exerciseId != null) {
             exercise.id = exerciseId
             ctx.status(201).json(exercise)
         } else {
             ctx.status(404).json("No exercise found with id: $exerciseId")
+        }
+    }
+
+    fun updateExercise (ctx: Context) {
+        val exercise : ExerciseDTO = jsonToObject(ctx.body())
+        if (exerciseDao.updateByExerciseId(exerciseId = ctx.pathParam("exercise-id").toInt(), exerciseDTO = exercise) != 0) {
+            ctx.status(204)
+        } else {
+            ctx.status(404)
         }
     }
 }
