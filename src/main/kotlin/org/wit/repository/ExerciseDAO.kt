@@ -1,10 +1,7 @@
 package org.wit.repository
 
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 import org.wit.db.Exercises
 import org.wit.domain.ExerciseDTO
 import org.wit.utilities.mapToExerciseDTO
@@ -72,6 +69,13 @@ class ExerciseDAO {
                 if (exerciseDTO.userId != null)
                     it[userId] = exerciseDTO.userId
             }
+        }
+    }
+
+    //Delete exercise by passing the exercise id
+    fun deleteByExerciseId (exerciseId: Int): Int{
+        return transaction{
+            Exercises.deleteWhere { Exercises.id eq exerciseId }
         }
     }
 
