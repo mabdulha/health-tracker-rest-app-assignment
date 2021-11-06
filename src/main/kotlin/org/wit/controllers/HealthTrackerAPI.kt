@@ -7,6 +7,7 @@ import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.wit.domain.UserDTO
+import org.wit.repository.ExerciseDAO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
@@ -15,6 +16,11 @@ import java.util.*
 object HealthTrackerAPI {
 
     private val userDao = UserDAO()
+    private val exerciseDAO = ExerciseDAO()
+
+    //--------------------------------------------------------------
+    // UserDAO specifics
+    //-------------------------------------------------------------
 
     fun getAllUsers(ctx: Context) {
         val users = userDao.getAll()
@@ -108,5 +114,13 @@ object HealthTrackerAPI {
             // print(ctx.res.sendError(401, "Invalid email or password"))
             ctx.json("Invalid email or password")
         }
+    }
+
+    //--------------------------------------------------------------
+    // ExerciseDAO specifics
+    //-------------------------------------------------------------
+
+    fun getAllExercises (ctx: Context) {
+        ctx.json(exerciseDAO.getAll())
     }
 }

@@ -16,11 +16,11 @@ inline fun &lt;reified T: Any&gt; jsonToObject(json: String) : T
     .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
     .readValue&lt;T&gt;(json)
 
-inline fun &lt;T&gt; jsonToObjectWithDate(json : HttpResponse&lt;JsonNode&gt;, valueType: Class&lt;T&gt;) : T {
+fun &lt;T&gt; jsonToObjectWithDate(json : HttpResponse&lt;JsonNode&gt;, valueType: Class&lt;T&gt;) : T {
 <span class="nc" id="L20">    return GsonBuilder().create().fromJson(json.body.toString(), valueType)</span>
 }
 
-inline fun &lt;T&gt; jsonToArrayWithDate(json : HttpResponse&lt;JsonNode&gt;, valueType: Class&lt;Array&lt;T&gt;&gt;) : List&lt;T&gt; {
+fun &lt;T&gt; jsonToArrayWithDate(json : HttpResponse&lt;JsonNode&gt;, valueType: Class&lt;Array&lt;T&gt;&gt;) : List&lt;T&gt; {
 <span class="nc" id="L24">    return Gson().fromJson(json.body.toString(), valueType).toList()</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

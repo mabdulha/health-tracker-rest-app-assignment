@@ -2,11 +2,11 @@
 
 import org.mindrot.jbcrypt.BCrypt
 
-fun hashPassword(plaintext: String): String {
+fun hashPassword(plaintext: String?): String {
 <span class="fc" id="L6">    return BCrypt.hashpw(plaintext, BCrypt.gensalt())</span>
 }
 
-fun decryptPassword(plaintext: String, hashedtext: String): Boolean {
+fun decryptPassword(plaintext: String?, hashedtext: String?): Boolean {
 <span class="fc" id="L10">    return BCrypt.checkpw(plaintext, hashedtext)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,105 @@
+# Created at 2021-11-06T16:47:27.502
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:831)
+
+
+# Created at 2021-11-06T16:47:29.551
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$ReadUsers,getting a user by id when id exists\002C returns a 200 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:30.635
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$ReadUsers,get user by email when user does not exist returns 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:31.560
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$ReadUsers,get user by email when user does not exist returns 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:31.572
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$CreateUsers,add a user with correct details returns a 201 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:36.383
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$CreateUsers,add a user with correct details returns a 201 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:36.387
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$CreateUsers,add a user where email already exists\002C returns a 409,null,null,null
+
+
+# Created at 2021-11-06T16:47:41.219
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$CreateUsers,add a user where email already exists\002C returns a 409,null,null,null
+
+
+# Created at 2021-11-06T16:47:41.227
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$UpdateUsers,updating a user when it exists\002C returns a 204 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:47.791
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$UpdateUsers,updating a user when it exists\002C returns a 204 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:47.796
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$UpdateUsers,updating a user when it doesn't exist\002C returns a 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:48.888
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$UpdateUsers,updating a user when it doesn't exist\002C returns a 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:48.896
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$DeleteUsers,deleting a user when it doesn't exist\002C returns a 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:49.868
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$DeleteUsers,deleting a user when it doesn't exist\002C returns a 404 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:49.871
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$DeleteUsers,deleting a user when it exists\002C returns a 204 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:54.859
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$DeleteUsers,deleting a user when it exists\002C returns a 204 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:54.861
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with correct credentials\002C returns a 200 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:59.683
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with correct credentials\002C returns a 200 response,null,null,null
+
+
+# Created at 2021-11-06T16:47:59.685
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with correct email and incorrect password\002C returns a 401 response,null,null,null
+
+
+# Created at 2021-11-06T16:48:04.425
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with correct email and incorrect password\002C returns a 401 response,null,null,null
+
+
+# Created at 2021-11-06T16:48:04.426
+Unexpected IOException: 5,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with incorrect email and password\002C returns a 401 response,null,null,null
+
+
+# Created at 2021-11-06T16:48:09.093
+Unexpected IOException: 6,1,org.wit.controllers.HealthTrackerAPITest$LoginUsers,logging in a user with incorrect email and password\002C returns a 401 response,null,null,null
+
+
+# Created at 2021-11-06T16:48:09.094
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,org.wit.controllers.HealthTrackerAPITest,null,null,null
+
+
+# Created at 2021-11-06T16:48:09.571
+Unexpected IOException: 1,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,org.wit.repository.UserDAOTest,null,null,null
+
+
+# Created at 2021-11-06T16:48:09.612
+Unexpected IOException: 5,1,org.wit.repository.UserDAOTest$CreateUsers,multiple users added to table can be retrieved successfully,null,null,null
+
+
