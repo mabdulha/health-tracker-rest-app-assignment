@@ -125,14 +125,22 @@ object HealthTrackerAPI {
     }
 
     fun getExercisesByUserId (ctx: Context) {
-        if (userDao.findById(ctx.pathParam("user_id").toInt()) != null) {
-            val exercises = exerciseDAO.findExerciseByUserId(ctx.pathParam("user_id").toInt())
+        if (userDao.findById(ctx.pathParam("user-id").toInt()) != null) {
+            val exercises = exerciseDAO.findExerciseByUserId(ctx.pathParam("user-id").toInt())
             if (exercises.isNotEmpty()) {
-                ctx.json(exercises)
-                ctx.status(200)
+                ctx.status(200).json(exercises)
             }
         } else {
             ctx.status(404).json("No exercises associated with user")
+        }
+    }
+
+    fun getExercisesByExerciseId (ctx: Context) {
+        val exercise = exerciseDAO.findByExerciseId(ctx.pathParam("exercise-id").toInt())
+        if (exercise != null) {
+            ctx.status(200).json(exercise)
+        } else {
+            ctx.status(404).html("No exercises found")
         }
     }
 }
