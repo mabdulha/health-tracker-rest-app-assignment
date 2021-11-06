@@ -42,6 +42,7 @@ class JavalinConfig {
             post("/api/exercises", HealthTrackerAPI::addExercise)
             patch("/api/exercises/:exercise-id", HealthTrackerAPI::updateExercise)
             delete("/api/exercises/:exercise-id", HealthTrackerAPI::deleteExerciseByExerciseId)
+            delete("/api/exercises/user/:user-id", HealthTrackerAPI::deleteExerciseByUserId)
         }
     }
 

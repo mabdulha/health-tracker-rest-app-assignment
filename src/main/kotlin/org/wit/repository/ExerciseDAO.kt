@@ -19,7 +19,7 @@ class ExerciseDAO {
     }
 
     //Find a specific exercise by exercise id
-    fun findByExerciseId(id: Int): ExerciseDTO?{
+    fun findByExerciseId(id: Int): ExerciseDTO? {
         return transaction {
             Exercises
                 .select() { Exercises.id eq id}
@@ -29,7 +29,7 @@ class ExerciseDAO {
     }
 
     //Find all exercises for a specific user id
-    fun findExerciseByUserId(userId: Int): List<ExerciseDTO>{
+    fun findExerciseByUserId(userId: Int): List<ExerciseDTO> {
         return transaction {
             Exercises
                 .select {Exercises.userId eq userId}
