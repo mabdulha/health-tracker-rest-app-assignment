@@ -91,7 +91,7 @@ class ExerciseDAOTest {
         fun `get all exercises over empty table returns none`() {
             transaction {
 
-                //Arrange - create and setup activityDAO object
+                //Arrange - create and setup exerciseDAO object
                 SchemaUtils.create(Exercises)
                 val exerciseDAO = ExerciseDAO()
 
@@ -150,7 +150,7 @@ class ExerciseDAOTest {
         fun `updating non-existant exercise in table results in no updates`() {
             transaction {
 
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
@@ -172,7 +172,7 @@ class ExerciseDAOTest {
         fun `deleting a non-existant exercise (by id) in table results in no deletion`() {
             transaction {
 
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
@@ -187,7 +187,7 @@ class ExerciseDAOTest {
         fun `deleting an existing exercise (by id) in table results in record being deleted`() {
             transaction {
 
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
@@ -202,7 +202,7 @@ class ExerciseDAOTest {
         fun `deleting exercises when none exist for user id results in no deletion`() {
             transaction {
 
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
@@ -210,6 +210,21 @@ class ExerciseDAOTest {
                 assertEquals(3, exerciseDAO.getAll().size)
                 exerciseDAO.deleteByUserId(3)
                 assertEquals(3, exerciseDAO.getAll().size)
+            }
+        }
+
+        @Test
+        fun `deleting exercises when 1 or more exist for user id results in deletion`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three exercises
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                assertEquals(3, exerciseDAO.getAll().size)
+                exerciseDAO.deleteByUserId(1)
+                assertEquals(1, exerciseDAO.getAll().size)
             }
         }
 
