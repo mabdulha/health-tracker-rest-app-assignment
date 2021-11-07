@@ -297,7 +297,7 @@ class HealthTrackerAPITest {
 
     @Nested
     inner class ReadExercises {
-        //   get(   "/api/users/:user-id/exercises", HealthTrackerAPI::getExercisesByUserId)
+
         @Test
         fun `get all exercises from the database returns 200 or 404 response`() {
             val response = retrieveAllExercises()
@@ -310,9 +310,27 @@ class HealthTrackerAPITest {
             }
         }
 
+        @Test
+        fun `get all exercises by user id when user and exercise exists returns 200 response`() {
+            //Arrange - add a user and 3 associated exercises that we plan to retrieve
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            addExercise(exercises[1].name ,exercises[1].description,
+                exercises[1].calories, exercises[1].duration, exercises[1].muscle, addedUser.id)
+            addExercise(exercises[2].name ,exercises[2].description,
+                exercises[2].calories, exercises[2].duration, exercises[2].muscle, addedUser.id)
 
-        //   get(   "/api/exercises", HealthTrackerAPI::getAllExercises)
-        //   get(   "/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
+            //Assert and Act - retrieve the three added exercises by user id
+            val response = retrieveExercisesByUserId(addedUser.id)
+            assertEquals(200, response.status)
+            val retrievedExercises : ArrayList<ExerciseDTO> = jsonToObject(response.body.toString())
+            assertEquals(3, retrievedExercises.size)
+
+            //After - delete the added user and assert a 204 is returned (activities are cascade deleted)
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
     }
 
     @Nested
@@ -358,7 +376,7 @@ class HealthTrackerAPITest {
 
     //helper function to add a test user to the database
     private fun updateUser (id: Int, name: String, email: String, password: String): HttpResponse<JsonNode> {
-        return Unirest.patch(origin + "/api/users/$id")
+        return Unirest.patch("$origin/api/users/$id")
             .body("{\"fname\":\"$name\", \"email\":\"$email\", \"password\":\"$password\"}")
             .asJson()
     }
