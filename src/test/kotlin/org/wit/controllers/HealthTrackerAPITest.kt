@@ -331,6 +331,19 @@ class HealthTrackerAPITest {
             assertEquals(204, deleteUser(addedUser.id).status)
         }
 
+        @Test
+        fun `get all exercises by user id when no exercises exist returns 404 response`() {
+            //Arrange - add a user
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+
+            //Assert and Act - retrieve the exerxises by user id
+            val response = retrieveExercisesByUserId(addedUser.id)
+            assertEquals(404, response.status)
+
+            //After - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
     }
 
     @Nested
