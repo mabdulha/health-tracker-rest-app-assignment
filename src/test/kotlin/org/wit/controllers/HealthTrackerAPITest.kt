@@ -363,6 +363,23 @@ class HealthTrackerAPITest {
             assertEquals(404, response.status)
         }
 
+        @Test
+        fun `get exercise by exercise id when exercise exists returns 200 response`() {
+            //Arrange - add a user and associated exercise
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse.status)
+            val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
+
+            //Act & Assert - retrieve the exercise by exercise id
+            val response = retrieveExerciseByExerciseId(addedExercise.id)
+            assertEquals(200, response.status)
+
+            //After - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
     }
 
     @Nested
