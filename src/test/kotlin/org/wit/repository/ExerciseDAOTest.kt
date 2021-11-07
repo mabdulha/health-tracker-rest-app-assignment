@@ -76,7 +76,7 @@ class ExerciseDAOTest {
         @Test
         fun `get exercise by user id that exists, results in a correct exercise(s) returned`() {
             transaction {
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
                 //Act & Assert
@@ -102,11 +102,23 @@ class ExerciseDAOTest {
         @Test
         fun `get exercise by exercise id that has no records, results in no record returned`() {
             transaction {
-                //Arrange - create and populate tables with three users and three activities
+                //Arrange - create and populate tables with three users and three exercises
                 val userDAO = populateUserTable()
                 val exerciseDAO = populateExerciseTable()
                 //Act & Assert
                 assertEquals(null, exerciseDAO.findByExerciseId(4))
+            }
+        }
+
+        @Test
+        fun `get exercise by exercise id that exists, results in a correct exercise returned`() {
+            transaction {
+                //Arrange - create and populate tables with three users and three exercises
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+                //Act & Assert
+                assertEquals(exercise1, exerciseDAO.findByExerciseId(1))
+                assertEquals(exercise3, exerciseDAO.findByExerciseId(3))
             }
         }
 
