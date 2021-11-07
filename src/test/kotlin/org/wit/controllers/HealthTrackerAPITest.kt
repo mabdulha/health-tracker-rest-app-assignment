@@ -266,9 +266,9 @@ class HealthTrackerAPITest {
     inner class CreateExercises {
         //   post(  "/api/exercises", HealthTrackerAPI::addExercise)
         @Test
-        fun `add an activity when a user exists for it, returns a 201 response`() {
+        fun `add an exercise when a user exists for it, returns a 201 response`() {
 
-            //Arrange - add a user and an associated activity that we plan to do a delete on
+            //Arrange - add a user and an associated exercise that we plan to do a delete on
             val addedUser: UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
 
             val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
@@ -327,7 +327,7 @@ class HealthTrackerAPITest {
             val retrievedExercises : ArrayList<ExerciseDTO> = jsonToObject(response.body.toString())
             assertEquals(3, retrievedExercises.size)
 
-            //After - delete the added user and assert a 204 is returned (activities are cascade deleted)
+            //After - delete the added user and assert a 204 is returned (exercises are cascade deleted)
             assertEquals(204, deleteUser(addedUser.id).status)
         }
 
@@ -342,6 +342,25 @@ class HealthTrackerAPITest {
 
             //After - delete the added user and assert a 204 is returned
             assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
+        @Test
+        fun `get all exercises by user id when no user exists returns 404 response`() {
+            //Arrange
+            val userId = -1
+
+            //Assert and Act - retrieve exercises by user id
+            val response = retrieveExercisesByUserId(userId)
+            assertEquals(404, response.status)
+        }
+
+        @Test
+        fun `get exercise by exercise id when no exercise exists returns 404 response`() {
+            //Arrange
+            val exerciseId = -1
+            //Assert and Act - attempt to retrieve the exercise by exercise id
+            val response = retrieveExerciseByExerciseId(exerciseId)
+            assertEquals(404, response.status)
         }
 
     }
