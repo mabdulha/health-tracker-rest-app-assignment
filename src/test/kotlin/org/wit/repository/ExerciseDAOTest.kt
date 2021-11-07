@@ -165,4 +165,24 @@ class ExerciseDAOTest {
 
     }
 
+    @Nested
+    inner class DeleteExercises {
+
+        @Test
+        fun `deleting a non-existant exercise (by id) in table results in no deletion`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                assertEquals(3, exerciseDAO.getAll().size)
+                exerciseDAO.deleteByExerciseId(4)
+                assertEquals(3, exerciseDAO.getAll().size)
+            }
+        }
+
+    }
+
 }
