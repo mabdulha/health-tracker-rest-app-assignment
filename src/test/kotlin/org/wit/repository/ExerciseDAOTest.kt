@@ -183,6 +183,21 @@ class ExerciseDAOTest {
             }
         }
 
+        @Test
+        fun `deleting an existing exercise (by id) in table results in record being deleted`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                assertEquals(3, exerciseDAO.getAll().size)
+                exerciseDAO.deleteByExerciseId(exercise3.id)
+                assertEquals(2, exerciseDAO.getAll().size)
+            }
+        }
+
     }
 
 }
