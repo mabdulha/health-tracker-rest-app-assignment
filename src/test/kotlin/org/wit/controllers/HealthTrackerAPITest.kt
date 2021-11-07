@@ -20,45 +20,6 @@ class HealthTrackerAPITest {
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
-    //helper function to add a test user to the database
-    private fun addUser (fname: String, lname: String, email: String, password: String, weight: Double, height: Float, age: Int, gender: Char): HttpResponse<JsonNode> {
-        return Unirest.post("$origin/api/users")
-            .body("{\"fname\":\"$fname\", \"lname\":\"$lname\", \"email\":\"$email\", \"password\":\"$password\", \"weight\":\"$weight\", \"height\":\"$height\", \"age\":\"$age\", \"gender\":\"$gender\"}")
-            .asJson()
-    }
-
-    //helper function to delete a test user from the database
-    private fun deleteUser (id: Int): HttpResponse<String> {
-        return Unirest.delete("$origin/api/users/$id").asString()
-    }
-
-    //helper function to retrieve a test user from the database by email
-    private fun retrieveUserByEmail(email : String) : HttpResponse<String> {
-        return Unirest.get("$origin/api/users/email/${email}").asString()
-    }
-
-    //helper function to retrieve a test user from the database by id
-    private fun retrieveUserById(id: Int) : HttpResponse<String> {
-        return Unirest.get("$origin/api/users/${id}").asString()
-    }
-
-    private fun retrieveAllUsers () : HttpResponse<String> {
-        return Unirest.get("$origin/api/users").asString()
-    }
-
-    //helper function to add a test user to the database
-    private fun updateUser (id: Int, name: String, email: String, password: String): HttpResponse<JsonNode> {
-        return Unirest.patch(origin + "/api/users/$id")
-            .body("{\"fname\":\"$name\", \"email\":\"$email\", \"password\":\"$password\"}")
-            .asJson()
-    }
-
-    private fun loginUser (email: String?, password: String?): HttpResponse<JsonNode> {
-        return Unirest.post("$origin/api/users/login")
-            .body("{\"email\":\"$email\", \"password\":\"$password\"}")
-            .asJson()
-    }
-
     @Nested
     inner class ReadUsers {
 
@@ -297,5 +258,110 @@ class HealthTrackerAPITest {
         }
 
     }
+
+    //--------------------------------------------------------------
+    // User Helper Classes
+    //-------------------------------------------------------------
+
+    //helper function to add a test user to the database
+    private fun addUser (fname: String, lname: String, email: String, password: String, weight: Double, height: Float, age: Int, gender: Char): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/users")
+            .body("{\"fname\":\"$fname\", \"lname\":\"$lname\", \"email\":\"$email\", \"password\":\"$password\", \"weight\":\"$weight\", \"height\":\"$height\", \"age\":\"$age\", \"gender\":\"$gender\"}")
+            .asJson()
+    }
+
+    //helper function to delete a test user from the database
+    private fun deleteUser (id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/users/$id").asString()
+    }
+
+    //helper function to retrieve a test user from the database by email
+    private fun retrieveUserByEmail(email : String) : HttpResponse<String> {
+        return Unirest.get("$origin/api/users/email/${email}").asString()
+    }
+
+    //helper function to retrieve a test user from the database by id
+    private fun retrieveUserById(id: Int) : HttpResponse<String> {
+        return Unirest.get("$origin/api/users/${id}").asString()
+    }
+
+    private fun retrieveAllUsers () : HttpResponse<String> {
+        return Unirest.get("$origin/api/users").asString()
+    }
+
+    //helper function to add a test user to the database
+    private fun updateUser (id: Int, name: String, email: String, password: String): HttpResponse<JsonNode> {
+        return Unirest.patch(origin + "/api/users/$id")
+            .body("{\"fname\":\"$name\", \"email\":\"$email\", \"password\":\"$password\"}")
+            .asJson()
+    }
+
+    private fun loginUser (email: String?, password: String?): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/users/login")
+            .body("{\"email\":\"$email\", \"password\":\"$password\"}")
+            .asJson()
+    }
+
+    //--------------------------------------------------------------
+    // Exercise Helper Classes
+    //-------------------------------------------------------------
+
+    //helper function to retrieve all exercises
+    private fun retrieveAllExercises(): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/exercises").asJson()
+    }
+
+    //helper function to retrieve exercises by user id
+    private fun retrieveExercisesByUserId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/users/${id}/exercises").asJson()
+    }
+
+    //helper function to retrieve exercise by exercise id
+    private fun retrieveExerciseByExerciseId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get(origin + "/api/exercises/${id}").asJson()
+    }
+
+    //helper function to delete an exercise by exercise id
+    private fun deleteExercisesByExerciseId(id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/exercises/$id").asString()
+    }
+
+    //helper function to delete an exercise by user id
+    private fun deleteExercisesByUserId(id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/users/$id/exercises").asString()
+    }
+
+    //helper function to update a test exercise to the database
+    private fun updateExercise(id: Int, name: String, description: String, calories: Int, duration: Double,
+                               muscle: String, userId: Int): HttpResponse<JsonNode> {
+        return Unirest.patch("$origin/api/exercises/$id")
+            .body("""
+                {
+                  "name:":"$name",
+                  "description":"$description",
+                  "calories:$calories,
+                  "duration":$duration,
+                  "muscle":"$muscle",
+                  "userId":$userId
+                }
+            """.trimIndent()).asJson()
+    }
+
+    //helper function to add an exercise
+    private fun addExercise(name: String, description: String, calories: Int, duration: Double,
+                            muscle: String, userId: Int): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/exercises")
+            .body("""
+                {
+                  "name:":"$name",
+                  "description":"$description",
+                  "calories:$calories,
+                  "duration":$duration,
+                  "muscle":"$muscle",
+                  "userId":$userId
+                }
+            """.trimIndent()).asJson()
+    }
+
 
 }

@@ -130,6 +130,8 @@ object HealthTrackerAPI {
             val exercises = exerciseDao.findExerciseByUserId(ctx.pathParam("user-id").toInt())
             if (exercises.isNotEmpty()) {
                 ctx.status(200).json(exercises)
+            } else {
+                ctx.status(404).json("No exercises found")
             }
         } else {
             ctx.status(404).json("No exercises associated with user")

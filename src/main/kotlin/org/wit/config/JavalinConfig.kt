@@ -37,12 +37,12 @@ class JavalinConfig {
 
             //Exercise routes
             get("/api/exercises", HealthTrackerAPI::getAllExercises)
-            get("/api/exercises/user/:user-id", HealthTrackerAPI::getExercisesByUserId)
+            get("/api/users/:user-id/exercises", HealthTrackerAPI::getExercisesByUserId)
             get("/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
             post("/api/exercises", HealthTrackerAPI::addExercise)
             patch("/api/exercises/:exercise-id", HealthTrackerAPI::updateExercise)
             delete("/api/exercises/:exercise-id", HealthTrackerAPI::deleteExerciseByExerciseId)
-            delete("/api/exercises/user/:user-id", HealthTrackerAPI::deleteExerciseByUserId)
+            delete("/api/users/:user-id/exercises", HealthTrackerAPI::deleteExerciseByUserId)
         }
     }
 
