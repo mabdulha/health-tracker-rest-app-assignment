@@ -138,11 +138,28 @@ class ExerciseDAOTest {
 
                 //Act & Assert
                 val exercise3updated = ExerciseDTO(
-                    id = 3, name = "", description = "Cardio", duration = 42.0,
-                    calories = 220, muscle = "", userId = 2
+                    id = 3, name = "Running", description = "Cardio", duration = 42.0,
+                    calories = 220, muscle = "Body", userId = 2
                 )
                 exerciseDAO.updateByExerciseId(exercise3updated.id, exercise3updated)
                 assertEquals(exercise3updated, exerciseDAO.findByExerciseId(3))
+            }
+        }
+
+        @Test
+        fun `updating non-existant exercise in table results in no updates`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                val exercise4updated = ExerciseDTO(id = 4, name = "Running", description = "Cardio", duration = 42.0,
+                    calories = 220, muscle = "Body", userId = 2)
+                exerciseDAO.updateByExerciseId(4, exercise4updated)
+                assertEquals(null, exerciseDAO.findByExerciseId(4))
+                assertEquals(3, exerciseDAO.getAll().size)
             }
         }
 
