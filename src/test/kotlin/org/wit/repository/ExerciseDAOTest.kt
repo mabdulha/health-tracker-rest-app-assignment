@@ -99,6 +99,17 @@ class ExerciseDAOTest {
             }
         }
 
+        @Test
+        fun `get exercise by exercise id that has no records, results in no record returned`() {
+            transaction {
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+                //Act & Assert
+                assertEquals(null, exerciseDAO.findByExerciseId(4))
+            }
+        }
+
     }
 
 
