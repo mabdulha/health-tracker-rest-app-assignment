@@ -384,7 +384,47 @@ class HealthTrackerAPITest {
 
     @Nested
     inner class UpdateExercises {
-        //  patch( "/api/exercises/:exercise-id", HealthTrackerAPI::updateExercise)
+
+        @Test
+        fun `updating an exercise by exercise id when it doesn't exist, returns a 404 response`() {
+            val userId = -1
+            val exerciseID = -1
+
+            //Arrange - check there is no user for -1 id
+            assertEquals(404, retrieveUserById(userId).status)
+
+            //Act & Assert - attempt to update the details of an exercise/user that doesn't exist
+            assertEquals(404, updateExercise(exerciseID, updatedName, updatedDescription,
+                updatedCalories, updatedDuration, updatedMuscle, userId).status)
+        }
+
+        @Test
+        fun `updating an exercise by exercise id when it exists, returns 204 response`() {
+
+            //Arrange - add a user and an associated exercise that we plan to do an update on
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse.status)
+            val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
+
+            //Act & Assert - update the added exercise and assert a 204 is returned
+            val updatedExerciseResponse = updateExercise(addedExercise.id, updatedName, updatedDescription,
+                updatedCalories, updatedDuration, updatedMuscle, addedUser.id)
+            assertEquals(204, updatedExerciseResponse.status)
+
+            //Assert that the individual fields were all updated as expected
+            val retrievedExerciseResponse = retrieveExerciseByExerciseId(addedExercise.id)
+            val updatedExercise : ExerciseDTO = jsonToObject(retrievedExerciseResponse.body.toString())
+            assertEquals(updatedName, updatedExercise.name)
+            assertEquals(updatedDescription, updatedExercise.description)
+            assertEquals(updatedDuration, updatedExercise.duration)
+            assertEquals(updatedCalories, updatedExercise.calories)
+            assertEquals(updatedMuscle, updatedExercise.muscle)
+
+            //After - delete the user
+            deleteUser(addedUser.id)
+        }
     }
 
     @Nested

@@ -19,11 +19,11 @@ const val validAge = 25
 const val validGender = 'M'
 
 //Exercises
-const val validName = "Calf Raises"
-const val validDescription = "Calf raises are a method of exercising the gastrocnemius, tibialis posterior, peroneals and soleus muscles of the lower leg."
-const val validCalories = 65
-const val validDuration = 25.00
-const val validMuscle = "Calf"
+const val updatedName = "Calf Raises"
+const val updatedDescription = "Calf raises are a method of exercising the gastrocnemius, tibialis posterior, peroneals and soleus muscles of the lower leg."
+const val updatedCalories = 65
+const val updatedDuration = 25.00
+const val updatedMuscle = "Calf"
 
 val users = arrayListOf(
     UserDTO(fname = "Alice", lname = "Cullen", email = "alice@cullen.com", password = "secret", weight = 2.0, height = 170f, gender = 'F', age = 25, id = 1),
