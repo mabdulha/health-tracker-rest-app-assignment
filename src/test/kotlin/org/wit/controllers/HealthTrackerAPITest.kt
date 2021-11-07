@@ -5,10 +5,12 @@ import kong.unirest.JsonNode
 import kong.unirest.Unirest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
+import org.wit.domain.ExerciseDTO
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
@@ -29,7 +31,7 @@ class HealthTrackerAPITest {
 
         @Test
         fun `get all users from the database returns 200 or 404 response`() {
-            val response = Unirest.get(origin + "/api/users/").asString()
+            val response = Unirest.get("$origin/api/users/").asString()
             if (response.status == 200) {
                 val retrievedUsers: ArrayList<UserDTO> = jsonToObject(response.body.toString())
                 Assert.assertNotEquals(0, retrievedUsers.size)
@@ -91,13 +93,6 @@ class HealthTrackerAPITest {
             val retrievedUser : UserDTO = jsonToObject(retrieveResponse.body.toString())
             deleteUser(retrievedUser.id)
         }
-
-//        @Test
-//        fun `get all users when none exist in database, returns a 404 response` () {
-//
-//            assertEquals(404, retrieveAllUsers().status)
-//
-//        }
 
     }
 
@@ -303,6 +298,19 @@ class HealthTrackerAPITest {
     @Nested
     inner class ReadExercises {
         //   get(   "/api/users/:user-id/exercises", HealthTrackerAPI::getExercisesByUserId)
+        @Test
+        fun `get all exercises from the database returns 200 or 404 response`() {
+            val response = retrieveAllExercises()
+            if (response.status == 200){
+                val retrievedExercises : ArrayList<ExerciseDTO> = jsonToObject(response.body.toString())
+                assertNotEquals(0, retrievedExercises.size)
+            }
+            else{
+                assertEquals(404, response.status)
+            }
+        }
+
+
         //   get(   "/api/exercises", HealthTrackerAPI::getAllExercises)
         //   get(   "/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
     }
