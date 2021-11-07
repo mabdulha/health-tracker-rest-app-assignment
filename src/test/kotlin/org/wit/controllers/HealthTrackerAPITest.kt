@@ -20,6 +20,10 @@ class HealthTrackerAPITest {
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
+    //--------------------------------------------------------------
+    // User Tests
+    //-------------------------------------------------------------
+
     @Nested
     inner class ReadUsers {
 
@@ -260,6 +264,46 @@ class HealthTrackerAPITest {
     }
 
     //--------------------------------------------------------------
+    // Exercises Tests
+    //-------------------------------------------------------------
+
+    @Nested
+    inner class CreateExercises {
+        //   post(  "/api/exercises", HealthTrackerAPI::addExercise)
+        @Test
+        fun `add an activity when a user exists for it, returns a 201 response`() {
+
+            //Arrange - add a user and an associated activity that we plan to do a delete on
+            val addedUser: UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+
+            val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse.status)
+
+            //After - delete the user (Activity will cascade delete in the database)
+            deleteUser(addedUser.id)
+        }
+    }
+
+    @Nested
+    inner class ReadExercises {
+        //   get(   "/api/users/:user-id/exercises", HealthTrackerAPI::getExercisesByUserId)
+        //   get(   "/api/exercises", HealthTrackerAPI::getAllExercises)
+        //   get(   "/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
+    }
+
+    @Nested
+    inner class UpdateExercises {
+        //  patch( "/api/exercises/:exercise-id", HealthTrackerAPI::updateExercise)
+    }
+
+    @Nested
+    inner class DeleteExercises {
+        //   delete("/api/exercises/:exercise-id", HealthTrackerAPI::deleteExerciseByExerciseId)
+        //   delete("/api/users/:user-id/exercises", HealthTrackerAPI::deleteExerciseByUserId)
+    }
+
+    //--------------------------------------------------------------
     // User Helper Classes
     //-------------------------------------------------------------
 
@@ -332,35 +376,19 @@ class HealthTrackerAPITest {
     }
 
     //helper function to update a test exercise to the database
-    private fun updateExercise(id: Int, name: String, description: String, calories: Int, duration: Double,
-                               muscle: String, userId: Int): HttpResponse<JsonNode> {
+    private fun updateExercise(id: Int?, name: String?, description: String?, calories: Int?, duration: Double?,
+                               muscle: String?, userId: Int?): HttpResponse<JsonNode> {
         return Unirest.patch("$origin/api/exercises/$id")
-            .body("""
-                {
-                  "name:":"$name",
-                  "description":"$description",
-                  "calories:$calories,
-                  "duration":$duration,
-                  "muscle":"$muscle",
-                  "userId":$userId
-                }
-            """.trimIndent()).asJson()
+            .body("{\"name\":\"$name\", \"description\":\"$description\", \"calories\":\"$calories\", \"duration\":\"$duration\", \"muscle\":\"$muscle\", \"userId\":\"$userId\"}")
+            .asJson()
     }
 
     //helper function to add an exercise
-    private fun addExercise(name: String, description: String, calories: Int, duration: Double,
-                            muscle: String, userId: Int): HttpResponse<JsonNode> {
+    private fun addExercise(name: String?, description: String?, calories: Int?, duration: Double?,
+                            muscle: String?, userId: Int?): HttpResponse<JsonNode> {
         return Unirest.post("$origin/api/exercises")
-            .body("""
-                {
-                  "name:":"$name",
-                  "description":"$description",
-                  "calories:$calories,
-                  "duration":$duration,
-                  "muscle":"$muscle",
-                  "userId":$userId
-                }
-            """.trimIndent()).asJson()
+            .body("{\"name\":\"$name\", \"description\":\"$description\", \"calories\":\"$calories\", \"duration\":\"$duration\", \"muscle\":\"$muscle\", \"userId\":\"$userId\"}")
+            .asJson()
     }
 
 
