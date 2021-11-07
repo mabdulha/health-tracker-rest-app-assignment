@@ -1,12 +1,14 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.wit.db.Exercises
 import org.wit.helpers.exercises
 import org.wit.helpers.populateExerciseTable
 import org.wit.helpers.populateUserTable
@@ -81,6 +83,19 @@ class ExerciseDAOTest {
                 assertEquals(exercise1, exerciseDAO.findExerciseByUserId(1)[0])
                 assertEquals(exercise2, exerciseDAO.findExerciseByUserId(1)[1])
                 assertEquals(exercise3, exerciseDAO.findExerciseByUserId(2)[0])
+            }
+        }
+
+        @Test
+        fun `get all exercises over empty table returns none`() {
+            transaction {
+
+                //Arrange - create and setup activityDAO object
+                SchemaUtils.create(Exercises)
+                val exerciseDAO = ExerciseDAO()
+
+                //Act & Assert
+                assertEquals(0, exerciseDAO.getAll().size)
             }
         }
 
