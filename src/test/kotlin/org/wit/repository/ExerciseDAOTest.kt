@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.db.Exercises
+import org.wit.domain.ExerciseDTO
 import org.wit.helpers.exercises
 import org.wit.helpers.populateExerciseTable
 import org.wit.helpers.populateUserTable
@@ -124,5 +125,27 @@ class ExerciseDAOTest {
 
     }
 
+    @Nested
+    inner class UpdateExercises {
+
+        @Test
+        fun `updating existing exercise in table results in successful update`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three exercises
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                val exercise3updated = ExerciseDTO(
+                    id = 3, name = "", description = "Cardio", duration = 42.0,
+                    calories = 220, muscle = "", userId = 2
+                )
+                exerciseDAO.updateByExerciseId(exercise3updated.id, exercise3updated)
+                assertEquals(exercise3updated, exerciseDAO.findByExerciseId(3))
+            }
+        }
+
+    }
 
 }
