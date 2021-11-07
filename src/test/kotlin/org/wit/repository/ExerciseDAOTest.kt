@@ -71,6 +71,19 @@ class ExerciseDAOTest {
             }
         }
 
+        @Test
+        fun `get exercise by user id that exists, results in a correct exercise(s) returned`() {
+            transaction {
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+                //Act & Assert
+                assertEquals(exercise1, exerciseDAO.findExerciseByUserId(1)[0])
+                assertEquals(exercise2, exerciseDAO.findExerciseByUserId(1)[1])
+                assertEquals(exercise3, exerciseDAO.findExerciseByUserId(2)[0])
+            }
+        }
+
     }
 
 
