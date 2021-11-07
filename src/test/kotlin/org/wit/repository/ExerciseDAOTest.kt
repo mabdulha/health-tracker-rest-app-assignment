@@ -46,4 +46,20 @@ class ExerciseDAOTest {
         }
     }
 
+    @Nested
+    inner class ReadExercises {
+
+        @Test
+        fun `getting all exercises from a populated table returns all rows`() {
+            transaction {
+                //Arrange - create and populate tables with three users and three exercises
+                val userDAO = populateUserTable()
+                val activityDAO = populateExerciseTable()
+                //Act & Assert
+                assertEquals(3, activityDAO.getAll().size)
+            }
+        }
+    }
+
+
 }
