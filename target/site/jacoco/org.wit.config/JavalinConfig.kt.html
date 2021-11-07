@@ -26,15 +26,25 @@ import org.wit.controllers.HealthTrackerAPI
 
     private fun registerRoutes(app: Javalin){
 <span class="fc" id="L28">        app.routes {</span>
-<span class="fc" id="L29">            get(&quot;/api/users&quot;, HealthTrackerAPI::getAllUsers)</span>
-<span class="fc" id="L30">            get(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::getUserByUserId)</span>
-<span class="fc" id="L31">            post(&quot;/api/users&quot;, HealthTrackerAPI::addUser)</span>
-<span class="fc" id="L32">            get(&quot;/api/users/email/:email&quot;, HealthTrackerAPI::getUserByEmail)</span>
-<span class="fc" id="L33">            delete(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::deleteUser)</span>
-<span class="fc" id="L34">            patch(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::updateUser)</span>
-<span class="fc" id="L35">            post(&quot;/api/users/login/&quot;, HealthTrackerAPI::login)</span>
-<span class="fc" id="L36">        }</span>
-<span class="fc" id="L37">    }</span>
+            //User routes
+<span class="fc" id="L30">            get(&quot;/api/users&quot;, HealthTrackerAPI::getAllUsers)</span>
+<span class="fc" id="L31">            get(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::getUserByUserId)</span>
+<span class="fc" id="L32">            post(&quot;/api/users&quot;, HealthTrackerAPI::addUser)</span>
+<span class="fc" id="L33">            get(&quot;/api/users/email/:email&quot;, HealthTrackerAPI::getUserByEmail)</span>
+<span class="fc" id="L34">            delete(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::deleteUser)</span>
+<span class="fc" id="L35">            patch(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::updateUser)</span>
+<span class="fc" id="L36">            post(&quot;/api/users/login/&quot;, HealthTrackerAPI::login)</span>
+
+            //Exercise routes
+<span class="fc" id="L39">            get(&quot;/api/exercises&quot;, HealthTrackerAPI::getAllExercises)</span>
+<span class="fc" id="L40">            get(&quot;/api/exercises/user/:user-id&quot;, HealthTrackerAPI::getExercisesByUserId)</span>
+<span class="fc" id="L41">            get(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::getExercisesByExerciseId)</span>
+<span class="fc" id="L42">            post(&quot;/api/exercises&quot;, HealthTrackerAPI::addExercise)</span>
+<span class="fc" id="L43">            patch(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::updateExercise)</span>
+<span class="fc" id="L44">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
+<span class="fc" id="L45">            delete(&quot;/api/exercises/user/:user-id&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

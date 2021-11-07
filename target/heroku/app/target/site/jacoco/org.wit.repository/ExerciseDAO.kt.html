@@ -6,7 +6,7 @@ import org.wit.db.Exercises
 import org.wit.domain.ExerciseDTO
 import org.wit.utilities.mapToExerciseDTO
 
-<span class="nc" id="L9">class ExerciseDAO {</span>
+<span class="fc" id="L9">class ExerciseDAO {</span>
 
     //Get all the exercises in the database regardless of user id
     fun getAll(): ArrayList&lt;ExerciseDTO&gt; {
@@ -19,7 +19,7 @@ import org.wit.utilities.mapToExerciseDTO
     }
 
     //Find a specific exercise by exercise id
-    fun findByExerciseId(id: Int): ExerciseDTO?{
+    fun findByExerciseId(id: Int): ExerciseDTO? {
 <span class="nc" id="L23">        return transaction {</span>
 <span class="nc" id="L24">            Exercises</span>
 <span class="nc" id="L25">                .select() { Exercises.id eq id}</span>
@@ -29,7 +29,7 @@ import org.wit.utilities.mapToExerciseDTO
     }
 
     //Find all exercises for a specific user id
-    fun findExerciseByUserId(userId: Int): List&lt;ExerciseDTO&gt;{
+    fun findExerciseByUserId(userId: Int): List&lt;ExerciseDTO&gt; {
 <span class="nc" id="L33">        return transaction {</span>
 <span class="nc" id="L34">            Exercises</span>
 <span class="nc" id="L35">                .select {Exercises.userId eq userId}</span>
@@ -38,8 +38,8 @@ import org.wit.utilities.mapToExerciseDTO
     }
 
     //Save an exercise to the database
-    fun save(exerciseDTO: ExerciseDTO){
-<span class="nc" id="L42">        transaction {</span>
+    fun save(exerciseDTO: ExerciseDTO): Int? {
+<span class="nc" id="L42">        return transaction {</span>
 <span class="nc" id="L43">            Exercises.insert {</span>
 <span class="nc" id="L44">                it[name] = exerciseDTO.name</span>
 <span class="nc" id="L45">                it[description] = exerciseDTO.description</span>
@@ -47,13 +47,13 @@ import org.wit.utilities.mapToExerciseDTO
 <span class="nc" id="L47">                it[duration] = exerciseDTO.duration</span>
 <span class="nc" id="L48">                it[muscle] = exerciseDTO.muscle</span>
 <span class="nc" id="L49">                it[userId] = exerciseDTO.userId</span>
-<span class="nc" id="L50">            }</span>
+<span class="nc" id="L50">            } get Exercises.id</span>
         }
-<span class="nc" id="L52">    }</span>
+    }
 
     //Update an exercise by passing in the exercise id
-    fun updateByExerciseId(exerciseId: Int, exerciseDTO: ExerciseDTO){
-<span class="nc" id="L56">        transaction {</span>
+    fun updateByExerciseId(exerciseId: Int, exerciseDTO: ExerciseDTO): Int {
+<span class="nc" id="L56">        return transaction {</span>
 <span class="nc" id="L57">            Exercises.update ({</span>
 <span class="nc" id="L58">                Exercises.id eq exerciseId}) {</span>
 <span class="nc bnc" id="L59" title="All 2 branches missed.">                if (exerciseDTO.name != null)</span>
@@ -70,17 +70,17 @@ import org.wit.utilities.mapToExerciseDTO
 <span class="nc" id="L70">                    it[userId] = exerciseDTO.userId</span>
 <span class="nc" id="L71">            }</span>
         }
-<span class="nc" id="L73">    }</span>
+    }
 
     //Delete exercise by passing the exercise id
-    fun deleteByExerciseId (exerciseId: Int): Int{
+    fun deleteByExerciseId (exerciseId: Int): Int {
 <span class="nc" id="L77">        return transaction{</span>
 <span class="nc" id="L78">            Exercises.deleteWhere { Exercises.id eq exerciseId }</span>
         }
     }
 
     //Delete exercise by passing the user id
-    fun deleteByUserId (userId: Int): Int{
+    fun deleteByUserId (userId: Int): Int {
 <span class="nc" id="L84">        return transaction{</span>
 <span class="nc" id="L85">            Exercises.deleteWhere { Exercises.userId eq userId }</span>
         }
