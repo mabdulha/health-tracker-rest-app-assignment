@@ -198,6 +198,21 @@ class ExerciseDAOTest {
             }
         }
 
+        @Test
+        fun `deleting exercises when none exist for user id results in no deletion`() {
+            transaction {
+
+                //Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val exerciseDAO = populateExerciseTable()
+
+                //Act & Assert
+                assertEquals(3, exerciseDAO.getAll().size)
+                exerciseDAO.deleteByUserId(3)
+                assertEquals(3, exerciseDAO.getAll().size)
+            }
+        }
+
     }
 
 }
