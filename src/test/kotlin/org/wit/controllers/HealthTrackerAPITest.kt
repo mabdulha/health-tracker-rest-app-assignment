@@ -425,12 +425,67 @@ class HealthTrackerAPITest {
             //After - delete the user
             deleteUser(addedUser.id)
         }
+
     }
 
     @Nested
     inner class DeleteExercises {
-        //   delete("/api/exercises/:exercise-id", HealthTrackerAPI::deleteExerciseByExerciseId)
-        //   delete("/api/users/:user-id/exercises", HealthTrackerAPI::deleteExerciseByUserId)
+
+        @Test
+        fun `deleting an exercise by exercise id when it doesn't exist, returns a 404 response`() {
+            //Act & Assert - attempt to delete a user that doesn't exist
+            assertEquals(404, deleteExercisesByExerciseId(-1).status)
+        }
+
+        @Test
+        fun `deleting exercises by user id when it doesn't exist, returns a 404 response`() {
+            //Act & Assert - attempt to delete a user that doesn't exist
+            assertEquals(404, deleteExercisesByUserId(-1).status)
+        }
+
+        @Test
+        fun `deleting an exercise by id when it exists, returns a 204 response`() {
+
+            //Arrange - add a user and an associated exercise that we plan to do a deleted on
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse.status)
+
+            //Act & Assert - delete the added exercise and assert a 204 is returned
+            val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
+            assertEquals(204, deleteExercisesByExerciseId(addedExercise.id).status)
+
+            //After - delete the user
+            deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `deleting all exercises by userid when it exists, returns a 204 response`() {
+
+            //Arrange - add a user and 3 associated exercises that we plan to do a cascade delete
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addExerciseResponse1 = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse1.status)
+            val addExerciseResponse2 = addExercise(exercises[1].name ,exercises[1].description,
+                exercises[1].calories, exercises[1].duration, exercises[1].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse2.status)
+            val addExerciseResponse3 = addExercise(exercises[2].name ,exercises[2].description,
+                exercises[2].calories, exercises[2].duration, exercises[2].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse3.status)
+
+            //Act & Assert - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+
+            //Act & Assert - attempt to retrieve the deleted exercises
+            val addedExercise1 : ExerciseDTO = jsonToObject(addExerciseResponse1.body.toString())
+            val addedExercise2 : ExerciseDTO = jsonToObject(addExerciseResponse2.body.toString())
+            val addedExercise3 : ExerciseDTO = jsonToObject(addExerciseResponse3.body.toString())
+            assertEquals(404, retrieveExerciseByExerciseId(addedExercise1.id).status)
+            assertEquals(404, retrieveExerciseByExerciseId(addedExercise2.id).status)
+            assertEquals(404, retrieveExerciseByExerciseId(addedExercise3.id).status)
+        }
     }
 
     //--------------------------------------------------------------
