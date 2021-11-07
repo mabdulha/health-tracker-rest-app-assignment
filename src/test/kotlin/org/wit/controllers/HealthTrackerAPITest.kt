@@ -283,6 +283,21 @@ class HealthTrackerAPITest {
             //After - delete the user (Activity will cascade delete in the database)
             deleteUser(addedUser.id)
         }
+
+        @Test
+        fun `add an exercise when no user exists for it, returns a 404 response`() {
+
+            //Arrange - check there is no user for -1 id
+            val userId = -1
+            assertEquals(404, retrieveUserById(userId).status)
+
+            val addExerciseResponse = addExercise(
+                exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].muscle, userId
+            )
+            assertEquals(404, addExerciseResponse.status)
+        }
+
     }
 
     @Nested

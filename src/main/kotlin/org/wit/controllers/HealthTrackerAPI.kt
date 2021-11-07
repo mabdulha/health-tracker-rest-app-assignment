@@ -148,13 +148,16 @@ object HealthTrackerAPI {
     }
 
     fun addExercise (ctx: Context) {
-        val exercise : ExerciseDTO = jsonToObject(ctx.body())
-        val exerciseId = exerciseDao.save(exercise)
-        if (exerciseId != null) {
-            exercise.id = exerciseId
-            ctx.status(201).json(exercise)
+        val exerciseDTO : ExerciseDTO = jsonToObject(ctx.body())
+        val userId = exerciseDTO.userId?.let { userDao.findById(it) }
+        if (userId != null) {
+            val exerciseId = exerciseDao.save(exerciseDTO)
+            if (exerciseId != null) {
+                exerciseDTO.id = exerciseId
+                ctx.status(201).json(exerciseDTO)
+            }
         } else {
-            ctx.status(404).json("No exercise found with id: $exerciseId")
+            ctx.status(404).json("Cannot add exercise to userid: $userId")
         }
     }
 
