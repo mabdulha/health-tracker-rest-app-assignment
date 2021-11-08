@@ -45,44 +45,47 @@ import org.wit.utilities.mapToExerciseDTO
 <span class="fc" id="L45">                it[description] = exerciseDTO.description</span>
 <span class="fc" id="L46">                it[calories] = exerciseDTO.calories</span>
 <span class="fc" id="L47">                it[duration] = exerciseDTO.duration</span>
-<span class="fc" id="L48">                it[muscle] = exerciseDTO.muscle</span>
-<span class="fc" id="L49">                it[userId] = exerciseDTO.userId</span>
-<span class="fc" id="L50">            } get Exercises.id</span>
+<span class="fc" id="L48">                it[views] = exerciseDTO.views</span>
+<span class="fc" id="L49">                it[muscle] = exerciseDTO.muscle</span>
+<span class="fc" id="L50">                it[userId] = exerciseDTO.userId</span>
+<span class="fc" id="L51">            } get Exercises.id</span>
         }
     }
 
     //Update an exercise by passing in the exercise id
     fun updateByExerciseId(exerciseId: Int, exerciseDTO: ExerciseDTO): Int {
-<span class="fc" id="L56">        return transaction {</span>
-<span class="fc" id="L57">            Exercises.update ({</span>
-<span class="fc" id="L58">                Exercises.id eq exerciseId}) {</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">                if (exerciseDTO.name != null)</span>
-<span class="fc" id="L60">                    it[name] = exerciseDTO.name</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">                if (exerciseDTO.description != null)</span>
-<span class="fc" id="L62">                    it[description] = exerciseDTO.description</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">                if (exerciseDTO.calories != null)</span>
-<span class="fc" id="L64">                    it[calories] = exerciseDTO.calories</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if (exerciseDTO.duration != null)</span>
-<span class="fc" id="L66">                    it[duration] = exerciseDTO.duration</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">                if (exerciseDTO.muscle != null)</span>
-<span class="fc" id="L68">                    it[muscle] = exerciseDTO.muscle</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">                if (exerciseDTO.userId != null)</span>
-<span class="fc" id="L70">                    it[userId] = exerciseDTO.userId</span>
-<span class="fc" id="L71">            }</span>
+<span class="fc" id="L57">        return transaction {</span>
+<span class="fc" id="L58">            Exercises.update ({</span>
+<span class="fc" id="L59">                Exercises.id eq exerciseId}) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                if (exerciseDTO.name != null)</span>
+<span class="fc" id="L61">                    it[name] = exerciseDTO.name</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                if (exerciseDTO.description != null)</span>
+<span class="fc" id="L63">                    it[description] = exerciseDTO.description</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                if (exerciseDTO.calories != null)</span>
+<span class="fc" id="L65">                    it[calories] = exerciseDTO.calories</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                if (exerciseDTO.duration != null)</span>
+<span class="fc" id="L67">                    it[duration] = exerciseDTO.duration</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                if (exerciseDTO.muscle != null)</span>
+<span class="fc" id="L69">                    it[muscle] = exerciseDTO.muscle</span>
+<span class="fc" id="L70">                if (exerciseDTO.views != null)</span>
+<span class="fc" id="L71">                    it[views] = exerciseDTO.views</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                if (exerciseDTO.userId != null)</span>
+<span class="fc" id="L73">                    it[userId] = exerciseDTO.userId</span>
+<span class="fc" id="L74">            }</span>
         }
     }
 
     //Delete exercise by passing the exercise id
     fun deleteByExerciseId (exerciseId: Int): Int {
-<span class="fc" id="L77">        return transaction{</span>
-<span class="fc" id="L78">            Exercises.deleteWhere { Exercises.id eq exerciseId }</span>
+<span class="fc" id="L80">        return transaction{</span>
+<span class="fc" id="L81">            Exercises.deleteWhere { Exercises.id eq exerciseId }</span>
         }
     }
 
     //Delete exercise by passing the user id
     fun deleteByUserId (userId: Int): Int {
-<span class="fc" id="L84">        return transaction{</span>
-<span class="fc" id="L85">            Exercises.deleteWhere { Exercises.userId eq userId }</span>
+<span class="fc" id="L87">        return transaction{</span>
+<span class="fc" id="L88">            Exercises.deleteWhere { Exercises.userId eq userId }</span>
         }
     }
 

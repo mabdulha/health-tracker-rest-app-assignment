@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.Table
 <span class="fc" id="L13">    val calories = integer(&quot;calories&quot;).nullable()</span>
 <span class="fc" id="L14">    val duration = double(&quot;duration&quot;).nullable()</span>
 <span class="fc" id="L15">    val muscle = varchar(&quot;muscle&quot;, 50).nullable()</span>
-<span class="fc" id="L16">    val userId = integer(&quot;user_id&quot;).references(Users.id, onDelete = ReferenceOption.CASCADE).nullable()</span>
+<span class="fc" id="L16">    val views = integer(&quot;views&quot;).default(0)</span>
+<span class="fc" id="L17">    val userId = integer(&quot;user_id&quot;).references(Users.id, onDelete = ReferenceOption.CASCADE).nullable()</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -272,7 +272,7 @@ class HealthTrackerAPITest {
             val addedUser: UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
 
             val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse.status)
 
             //After - delete the user (Activity will cascade delete in the database)
@@ -288,7 +288,7 @@ class HealthTrackerAPITest {
 
             val addExerciseResponse = addExercise(
                 exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, userId
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, userId
             )
             assertEquals(404, addExerciseResponse.status)
         }
@@ -315,11 +315,11 @@ class HealthTrackerAPITest {
             //Arrange - add a user and 3 associated exercises that we plan to retrieve
             val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
             addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             addExercise(exercises[1].name ,exercises[1].description,
-                exercises[1].calories, exercises[1].duration, exercises[1].muscle, addedUser.id)
+                exercises[1].calories, exercises[1].duration, exercises[0].views, exercises[1].muscle, addedUser.id)
             addExercise(exercises[2].name ,exercises[2].description,
-                exercises[2].calories, exercises[2].duration, exercises[2].muscle, addedUser.id)
+                exercises[2].calories, exercises[2].duration, exercises[0].views, exercises[2].muscle, addedUser.id)
 
             //Assert and Act - retrieve the three added exercises by user id
             val response = retrieveExercisesByUserId(addedUser.id)
@@ -368,7 +368,7 @@ class HealthTrackerAPITest {
             //Arrange - add a user and associated exercise
             val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
             val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse.status)
             val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
 
@@ -404,7 +404,7 @@ class HealthTrackerAPITest {
             //Arrange - add a user and an associated exercise that we plan to do an update on
             val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
             val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse.status)
             val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
 
@@ -424,6 +424,43 @@ class HealthTrackerAPITest {
 
             //After - delete the user
             deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `incrementing an exercises view by exercise id when it doesn't exist, returns a 404 response`() {
+            val userId = -1
+            val exerciseID = -1
+
+            //Arrange - check there is no user for -1 id
+            assertEquals(404, retrieveUserById(userId).status)
+
+            //Act & Assert - attempt to update the details of an exercise/user that doesn't exist
+            assertEquals(404, incrementView(exerciseID).status)
+        }
+
+        @Test
+        fun `incrementing an exercises view by exercise id when it exists, returns 204 response` () {
+
+            //Arrange - add a user and an associated exercise that we plan to do an update on
+            val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
+            assertEquals(201, addExerciseResponse.status)
+            val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
+
+            //Assert that the value of a newly added exercise's view = 0
+            assertEquals(25, addedExercise.views)
+
+            //Act & Assert - update the exercise view by 1 and assert a 204 is returned
+            assertEquals(204, incrementView(addedExercise.id).status)
+
+            //Assert that the individual fields were all updated as expected
+            val retrievedExerciseResponse = retrieveExerciseByExerciseId(addedExercise.id)
+            val updatedExercise : ExerciseDTO = jsonToObject(retrievedExerciseResponse.body.toString())
+            assertEquals(26, updatedExercise.views)
+
+            //After - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
         }
 
     }
@@ -449,7 +486,7 @@ class HealthTrackerAPITest {
             //Arrange - add a user and an associated exercise that we plan to do a deleted on
             val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
             val addExerciseResponse = addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse.status)
 
             //Act & Assert - delete the added exercise and assert a 204 is returned
@@ -466,13 +503,13 @@ class HealthTrackerAPITest {
             //Arrange - add a user and 3 associated exercises that we plan to do a cascade delete
             val addedUser : UserDTO = jsonToObject(addUser(validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
             val addExerciseResponse1 = addExercise(exercises[0].name ,exercises[0].description,
-                exercises[0].calories, exercises[0].duration, exercises[0].muscle, addedUser.id)
+                exercises[0].calories, exercises[0].duration, exercises[0].views, exercises[0].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse1.status)
             val addExerciseResponse2 = addExercise(exercises[1].name ,exercises[1].description,
-                exercises[1].calories, exercises[1].duration, exercises[1].muscle, addedUser.id)
+                exercises[1].calories, exercises[1].duration, exercises[0].views, exercises[1].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse2.status)
             val addExerciseResponse3 = addExercise(exercises[2].name ,exercises[2].description,
-                exercises[2].calories, exercises[2].duration, exercises[2].muscle, addedUser.id)
+                exercises[2].calories, exercises[2].duration, exercises[0].views, exercises[2].muscle, addedUser.id)
             assertEquals(201, addExerciseResponse3.status)
 
             //Act & Assert - delete the added user and assert a 204 is returned
@@ -569,12 +606,15 @@ class HealthTrackerAPITest {
     }
 
     //helper function to add an exercise
-    private fun addExercise(name: String?, description: String?, calories: Int?, duration: Double?,
+    private fun addExercise(name: String?, description: String?, calories: Int?, duration: Double?, views: Int?,
                             muscle: String?, userId: Int?): HttpResponse<JsonNode> {
         return Unirest.post("$origin/api/exercises")
-            .body("{\"name\":\"$name\", \"description\":\"$description\", \"calories\":\"$calories\", \"duration\":\"$duration\", \"muscle\":\"$muscle\", \"userId\":\"$userId\"}")
+            .body("{\"name\":\"$name\", \"description\":\"$description\", \"calories\":\"$calories\", \"duration\":\"$duration\", \"views\":\"$views\", \"muscle\":\"$muscle\", \"userId\":\"$userId\"}")
             .asJson()
     }
 
+    private fun incrementView (id: Int): HttpResponse<String> {
+        return Unirest.put("$origin/api/exercises/$id/increment-view").asString()
+    }
 
 }

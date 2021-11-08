@@ -177,7 +177,7 @@ object HealthTrackerAPI {
             val increment = foundExercise.views + 1
             val exercise: ExerciseDTO = jsonToObject("{\"views\":\"$increment\"}")
             if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {
-                ctx.status(200).json("Successfully incremented view, new value = $increment")
+                ctx.status(204).json("Successfully incremented view, new value = $increment")
             }
         } else {
             ctx.status(404).json("Could not find the exercise with id: $foundId")

@@ -45,6 +45,7 @@ class ExerciseDAO {
                 it[description] = exerciseDTO.description
                 it[calories] = exerciseDTO.calories
                 it[duration] = exerciseDTO.duration
+                it[views] = exerciseDTO.views
                 it[muscle] = exerciseDTO.muscle
                 it[userId] = exerciseDTO.userId
             } get Exercises.id
