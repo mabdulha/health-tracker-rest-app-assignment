@@ -41,10 +41,11 @@ import org.wit.controllers.HealthTrackerAPI
 <span class="fc" id="L41">            get(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::getExercisesByExerciseId)</span>
 <span class="fc" id="L42">            post(&quot;/api/exercises&quot;, HealthTrackerAPI::addExercise)</span>
 <span class="fc" id="L43">            patch(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::updateExercise)</span>
-<span class="fc" id="L44">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
-<span class="fc" id="L45">            delete(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
-<span class="fc" id="L46">        }</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L44">            put(&quot;/api/exercises/:exercise-id/increment-view&quot;, HealthTrackerAPI::incrementView)</span>
+<span class="fc" id="L45">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
+<span class="fc" id="L46">            delete(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
+<span class="fc" id="L47">        }</span>
+<span class="fc" id="L48">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

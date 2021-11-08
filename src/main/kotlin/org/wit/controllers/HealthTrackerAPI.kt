@@ -188,18 +188,18 @@ object HealthTrackerAPI {
         val foundId = ctx.pathParam("exercise-id").toInt()
         if (exerciseDao.findByExerciseId(foundId) != null) {
             exerciseDao.deleteByExerciseId(foundId)
-            ctx.status(204).html("Exercise with id: ${foundId}, deleted successfully")
+            ctx.status(204).html("Exercise with id: $foundId, deleted successfully")
         } else {
-            ctx.status(404).json("Exercise with id ${foundId}, does not exist")
+            ctx.status(404).json("Exercise with id $foundId, does not exist")
         }
     }
 
     fun deleteExerciseByUserId (ctx: Context) {
         val foundId = ctx.pathParam("user-id").toInt()
         if (exerciseDao.deleteByExerciseId(foundId) != 0) {
-            ctx.status(204).html("Exercises belonging to user, deleted successfully")
+            ctx.status(204).html("Exercises belonging to user with id: $foundId, deleted successfully")
         } else {
-            ctx.status(404).json("No Exercises found")
+            ctx.status(404).json("No Exercises found for user with id: $foundId")
         }
     }
 

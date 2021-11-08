@@ -170,24 +170,38 @@ import java.util.*
         }
 <span class="fc" id="L171">    }</span>
 
-    fun deleteExerciseByExerciseId (ctx: Context) {
+    fun incrementView (ctx: Context) {
 <span class="fc" id="L174">        val foundId = ctx.pathParam(&quot;exercise-id&quot;).toInt()</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (exerciseDao.findByExerciseId(foundId) != null) {</span>
-<span class="fc" id="L176">            exerciseDao.deleteByExerciseId(foundId)</span>
-<span class="fc" id="L177">            ctx.status(204).html(&quot;Exercise with id: ${foundId}, deleted successfully&quot;)</span>
+<span class="fc" id="L175">        val foundExercise = exerciseDao.findByExerciseId(foundId)</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (foundExercise != null) {</span>
+<span class="fc" id="L177">            val increment = foundExercise.views + 1</span>
+<span class="fc" id="L178">            val exercise: ExerciseDTO = jsonToObject(&quot;{\&quot;views\&quot;:\&quot;$increment\&quot;}&quot;)</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">            if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {</span>
+<span class="fc" id="L180">                ctx.status(204).json(&quot;Successfully incremented view, new value = $increment&quot;)</span>
+            }
         } else {
-<span class="fc" id="L179">            ctx.status(404).json(&quot;Exercise with id ${foundId}, does not exist&quot;)</span>
+<span class="fc" id="L183">            ctx.status(404).json(&quot;Could not find the exercise with id: $foundId&quot;)</span>
         }
-<span class="fc" id="L181">    }</span>
+<span class="fc" id="L185">    }</span>
+
+    fun deleteExerciseByExerciseId (ctx: Context) {
+<span class="fc" id="L188">        val foundId = ctx.pathParam(&quot;exercise-id&quot;).toInt()</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (exerciseDao.findByExerciseId(foundId) != null) {</span>
+<span class="fc" id="L190">            exerciseDao.deleteByExerciseId(foundId)</span>
+<span class="fc" id="L191">            ctx.status(204).html(&quot;Exercise with id: ${foundId}, deleted successfully&quot;)</span>
+        } else {
+<span class="fc" id="L193">            ctx.status(404).json(&quot;Exercise with id ${foundId}, does not exist&quot;)</span>
+        }
+<span class="fc" id="L195">    }</span>
 
     fun deleteExerciseByUserId (ctx: Context) {
-<span class="fc" id="L184">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (exerciseDao.deleteByExerciseId(foundId) != 0) {</span>
-<span class="nc" id="L186">            ctx.status(204).html(&quot;Exercises belonging to user, deleted successfully&quot;)</span>
+<span class="fc" id="L198">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (exerciseDao.deleteByExerciseId(foundId) != 0) {</span>
+<span class="nc" id="L200">            ctx.status(204).html(&quot;Exercises belonging to user, deleted successfully&quot;)</span>
         } else {
-<span class="fc" id="L188">            ctx.status(404).json(&quot;No Exercises found&quot;)</span>
+<span class="fc" id="L202">            ctx.status(404).json(&quot;No Exercises found&quot;)</span>
         }
-<span class="fc" id="L190">    }</span>
+<span class="fc" id="L204">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
