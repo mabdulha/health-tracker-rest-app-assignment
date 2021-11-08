@@ -66,6 +66,8 @@ class ExerciseDAO {
                     it[duration] = exerciseDTO.duration
                 if (exerciseDTO.muscle != null)
                     it[muscle] = exerciseDTO.muscle
+                if (exerciseDTO.views != null)
+                    it[views] = exerciseDTO.views
                 if (exerciseDTO.userId != null)
                     it[userId] = exerciseDTO.userId
             }

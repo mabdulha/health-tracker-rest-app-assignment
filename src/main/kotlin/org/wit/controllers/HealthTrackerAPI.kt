@@ -170,6 +170,20 @@ object HealthTrackerAPI {
         }
     }
 
+    fun incrementView (ctx: Context) {
+        val foundId = ctx.pathParam("exercise-id").toInt()
+        val foundExercise = exerciseDao.findByExerciseId(foundId)
+        if (foundExercise != null) {
+            val increment = foundExercise.views + 1
+            val exercise: ExerciseDTO = jsonToObject("{\"views\":\"$increment\"}")
+            if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {
+                ctx.status(200).json("Successfully incremented view, new value = $increment")
+            }
+        } else {
+            ctx.status(404).json("Could not find the exercise with id: $foundId")
+        }
+    }
+
     fun deleteExerciseByExerciseId (ctx: Context) {
         val foundId = ctx.pathParam("exercise-id").toInt()
         if (exerciseDao.findByExerciseId(foundId) != null) {

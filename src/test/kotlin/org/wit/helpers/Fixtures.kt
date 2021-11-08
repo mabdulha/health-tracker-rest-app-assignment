@@ -33,10 +33,10 @@ val users = arrayListOf(
 )
 
 val exercises = arrayListOf(
-    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", id = 1, userId = 1),
-    ExerciseDTO(name = "Machine Fly", description = "The fly machine is ideal for increasing chest strength and muscle mass by targeting the pectoralis muscles", calories = 40, duration = 13.00, muscle = "Chest", id = 2, userId = 1),
-    ExerciseDTO(name = "Bench Press", description = "Bench presses are an exercise that can be used to tone the muscles of the upper body", calories = 100, duration = 30.00, muscle = "Shoulder", id = 3, userId = 2),
-    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", id = 4, userId = 3)
+    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 25, id = 1, userId = 1),
+    ExerciseDTO(name = "Machine Fly", description = "The fly machine is ideal for increasing chest strength and muscle mass by targeting the pectoralis muscles", calories = 40, duration = 13.00, muscle = "Chest", views = 16, id = 2, userId = 1),
+    ExerciseDTO(name = "Bench Press", description = "Bench presses are an exercise that can be used to tone the muscles of the upper body", calories = 100, duration = 30.00, muscle = "Shoulder", views = 14, id = 3, userId = 2),
+    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 7, id = 4, userId = 3)
 )
 
 fun populateUserTable(): UserDAO {

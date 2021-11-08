@@ -7,6 +7,6 @@ data class ExerciseDTO (
     var calories: Int?,
     var duration: Double?,
     var muscle: String?,
-    var views: Int = 0,
+    var views: Int,
     var userId: Int?
     )
