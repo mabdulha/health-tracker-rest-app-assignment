@@ -37,12 +37,12 @@ import org.wit.controllers.HealthTrackerAPI
 
             //Exercise routes
 <span class="fc" id="L39">            get(&quot;/api/exercises&quot;, HealthTrackerAPI::getAllExercises)</span>
-<span class="fc" id="L40">            get(&quot;/api/exercises/user/:user-id&quot;, HealthTrackerAPI::getExercisesByUserId)</span>
+<span class="fc" id="L40">            get(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::getExercisesByUserId)</span>
 <span class="fc" id="L41">            get(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::getExercisesByExerciseId)</span>
 <span class="fc" id="L42">            post(&quot;/api/exercises&quot;, HealthTrackerAPI::addExercise)</span>
 <span class="fc" id="L43">            patch(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::updateExercise)</span>
 <span class="fc" id="L44">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
-<span class="fc" id="L45">            delete(&quot;/api/exercises/user/:user-id&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
+<span class="fc" id="L45">            delete(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
 <span class="fc" id="L46">        }</span>
 <span class="fc" id="L47">    }</span>
 
