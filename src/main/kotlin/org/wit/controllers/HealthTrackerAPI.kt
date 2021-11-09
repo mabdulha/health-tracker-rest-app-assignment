@@ -10,6 +10,7 @@ import org.wit.domain.ExerciseDTO
 import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ExerciseDAO
+import org.wit.repository.IngredientDAO
 import org.wit.repository.MealDAO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
@@ -21,6 +22,7 @@ object HealthTrackerAPI {
     private val userDao = UserDAO()
     private val exerciseDao = ExerciseDAO()
     private val mealDao = MealDAO()
+    private val ingredientDao = IngredientDAO()
 
     //--------------------------------------------------------------
     // UserDAO specifics
@@ -255,6 +257,20 @@ object HealthTrackerAPI {
             ctx.status(204).html("Meal with id: $foundId, deleted successfully")
         } else {
             ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    //--------------------------------------------------------------
+    // IngredientDAO specifics
+    //-------------------------------------------------------------
+
+    fun getAllIngredients(ctx: Context) {
+        val ingredients = ingredientDao.getAll()
+        if (ingredients.size != 0) {
+            ctx.status(200).json(ingredients)
+        } else {
+            ctx.status(404)
+            ctx.html("Error 404 - No Ingredients Found!!")
         }
     }
 

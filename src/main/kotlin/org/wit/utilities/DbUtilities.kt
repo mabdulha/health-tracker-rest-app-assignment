@@ -2,9 +2,11 @@ package org.wit.utilities
 
 import org.jetbrains.exposed.sql.ResultRow
 import org.wit.db.Exercises
+import org.wit.db.Ingredients
 import org.wit.db.Meals
 import org.wit.db.Users
 import org.wit.domain.ExerciseDTO
+import org.wit.domain.IngredientDTO
 import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 
@@ -38,4 +40,14 @@ fun mapToMealDTO(it: ResultRow) = MealDTO (
     protein = it[Meals.protein],
     fat = it[Meals.fat],
     carbs = it[Meals.carbs]
+)
+
+fun mapToIngredientDTO(it: ResultRow) = IngredientDTO (
+    id = it[Ingredients.id],
+    name = it[Ingredients.name],
+    energy = it[Ingredients.energy],
+    protein = it[Ingredients.protein],
+    carbs = it[Ingredients.carbs],
+    fat = it[Ingredients.fat],
+    sodium = it[Ingredients.sodium]
 )
