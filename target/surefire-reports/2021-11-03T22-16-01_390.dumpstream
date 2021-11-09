@@ -1,0 +1,288 @@
+# Created at 2021-11-03T22:16:05.992
+java.lang.instrument.IllegalClassFormatException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created at 2021-11-03T22:16:05.993
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:94)
+
+# Created at 2021-11-03T22:16:05.994
+	at java.instrument/java.lang.instrument.ClassFileTransformer.transform(ClassFileTransformer.java:244)
+
+# Created at 2021-11-03T22:16:05.994
+	at java.instrument/sun.instrument.TransformerManager.transform(TransformerManager.java:188)
+
+# Created at 2021-11-03T22:16:05.995
+	at java.instrument/sun.instrument.InstrumentationImpl.transform(InstrumentationImpl.java:565)
+
+# Created at 2021-11-03T22:16:05.997
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created at 2021-11-03T22:16:05.998
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1101)
+
+# Created at 2021-11-03T22:16:05.999
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:182)
+
+# Created at 2021-11-03T22:16:05.999
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:814)
+
+# Created at 2021-11-03T22:16:06.000
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:735)
+
+# Created at 2021-11-03T22:16:06.000
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:616)
+
+# Created at 2021-11-03T22:16:06.001
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:631)
+
+# Created at 2021-11-03T22:16:06.001
+	at java.base/java.lang.Class.forName(Class.java:543)
+
+# Created at 2021-11-03T22:16:06.001
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:852)
+
+# Created at 2021-11-03T22:16:06.002
+	at java.base/java.util.ServiceLoader$ModuleServicesLookupIterator.hasNext(ServiceLoader.java:1076)
+
+# Created at 2021-11-03T22:16:06.002
+	at java.base/java.util.ServiceLoader$2.hasNext(ServiceLoader.java:1299)
+
+# Created at 2021-11-03T22:16:06.003
+	at java.base/java.util.ServiceLoader$3.hasNext(ServiceLoader.java:1383)
+
+# Created at 2021-11-03T22:16:06.003
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:89)
+
+# Created at 2021-11-03T22:16:06.004
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:86)
+
+# Created at 2021-11-03T22:16:06.004
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+
+# Created at 2021-11-03T22:16:06.005
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter.<init>(CLDRLocaleProviderAdapter.java:86)
+
+# Created at 2021-11-03T22:16:06.005
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+
+# Created at 2021-11-03T22:16:06.006
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:78)
+
+# Created at 2021-11-03T22:16:06.006
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+
+# Created at 2021-11-03T22:16:06.007
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+
+# Created at 2021-11-03T22:16:06.007
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+
+# Created at 2021-11-03T22:16:06.008
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.forType(LocaleProviderAdapter.java:188)
+
+# Created at 2021-11-03T22:16:06.008
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.findAdapter(LocaleProviderAdapter.java:287)
+
+# Created at 2021-11-03T22:16:06.009
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.getAdapter(LocaleProviderAdapter.java:258)
+
+# Created at 2021-11-03T22:16:06.009
+	at java.base/java.util.Calendar.createCalendar(Calendar.java:1693)
+
+# Created at 2021-11-03T22:16:06.009
+	at java.base/java.util.Calendar.getInstance(Calendar.java:1661)
+
+# Created at 2021-11-03T22:16:06.010
+	at java.base/java.text.SimpleDateFormat.initializeCalendar(SimpleDateFormat.java:677)
+
+# Created at 2021-11-03T22:16:06.010
+	at java.base/java.text.SimpleDateFormat.<init>(SimpleDateFormat.java:621)
+
+# Created at 2021-11-03T22:16:06.011
+	at java.base/java.text.SimpleDateFormat.<init>(SimpleDateFormat.java:600)
+
+# Created at 2021-11-03T22:16:06.011
+	at org.apache.maven.surefire.booter.PpidChecker.createWindowsCreationDateFormat(PpidChecker.java:316)
+
+# Created at 2021-11-03T22:16:06.012
+	at org.apache.maven.surefire.booter.PpidChecker.<clinit>(PpidChecker.java:62)
+
+# Created at 2021-11-03T22:16:06.012
+	at org.apache.maven.surefire.booter.ForkedBooter.listenToShutdownCommands(ForkedBooter.java:191)
+
+# Created at 2021-11-03T22:16:06.013
+	at org.apache.maven.surefire.booter.ForkedBooter.setupBooter(ForkedBooter.java:94)
+
+# Created at 2021-11-03T22:16:06.013
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+
+# Created at 2021-11-03T22:16:06.013
+Caused by: java.io.IOException: Error while instrumenting sun/util/resources/cldr/provider/CLDRLocaleDataMetaInfo.
+
+# Created at 2021-11-03T22:16:06.014
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrumentError(Instrumenter.java:159)
+
+# Created at 2021-11-03T22:16:06.014
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:109)
+
+# Created at 2021-11-03T22:16:06.015
+	at org.jacoco.agent.rt.internal_43f5073.CoverageTransformer.transform(CoverageTransformer.java:92)
+
+# Created at 2021-11-03T22:16:06.015
+	... 37 more
+
+# Created at 2021-11-03T22:16:06.016
+Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 60
+
+# Created at 2021-11-03T22:16:06.017
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:195)
+
+# Created at 2021-11-03T22:16:06.017
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:176)
+
+# Created at 2021-11-03T22:16:06.018
+	at org.jacoco.agent.rt.internal_43f5073.asm.ClassReader.<init>(ClassReader.java:162)
+
+# Created at 2021-11-03T22:16:06.018
+	at org.jacoco.agent.rt.internal_43f5073.core.internal.instr.InstrSupport.classReaderFor(InstrSupport.java:280)
+
+# Created at 2021-11-03T22:16:06.019
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:75)
+
+# Created at 2021-11-03T22:16:06.019
+	at org.jacoco.agent.rt.internal_43f5073.core.instr.Instrumenter.instrument(Instrumenter.java:107)
+
+# Created at 2021-11-03T22:16:06.020
+	... 38 more
+
+# Created at 2021-11-03T22:16:06.021
+java.util.ServiceConfigurationError: Locale provider adapter "CLDR"cannot be instantiated.
+
+# Created at 2021-11-03T22:16:06.021
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.forType(LocaleProviderAdapter.java:199)
+
+# Created at 2021-11-03T22:16:06.022
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.findAdapter(LocaleProviderAdapter.java:287)
+
+# Created at 2021-11-03T22:16:06.022
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.getAdapter(LocaleProviderAdapter.java:258)
+
+# Created at 2021-11-03T22:16:06.023
+	at java.base/java.util.Calendar.createCalendar(Calendar.java:1693)
+
+# Created at 2021-11-03T22:16:06.023
+	at java.base/java.util.Calendar.getInstance(Calendar.java:1661)
+
+# Created at 2021-11-03T22:16:06.024
+	at java.base/java.text.SimpleDateFormat.initializeCalendar(SimpleDateFormat.java:677)
+
+# Created at 2021-11-03T22:16:06.025
+	at java.base/java.text.SimpleDateFormat.<init>(SimpleDateFormat.java:621)
+
+# Created at 2021-11-03T22:16:06.025
+	at java.base/java.text.SimpleDateFormat.<init>(SimpleDateFormat.java:600)
+
+# Created at 2021-11-03T22:16:06.026
+	at org.apache.maven.surefire.booter.PpidChecker.createWindowsCreationDateFormat(PpidChecker.java:316)
+
+# Created at 2021-11-03T22:16:06.026
+	at org.apache.maven.surefire.booter.PpidChecker.<clinit>(PpidChecker.java:62)
+
+# Created at 2021-11-03T22:16:06.027
+	at org.apache.maven.surefire.booter.ForkedBooter.listenToShutdownCommands(ForkedBooter.java:191)
+
+# Created at 2021-11-03T22:16:06.027
+	at org.apache.maven.surefire.booter.ForkedBooter.setupBooter(ForkedBooter.java:94)
+
+# Created at 2021-11-03T22:16:06.028
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
+
+# Created at 2021-11-03T22:16:06.028
+Caused by: java.lang.reflect.InvocationTargetException
+
+# Created at 2021-11-03T22:16:06.029
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+
+# Created at 2021-11-03T22:16:06.029
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:78)
+
+# Created at 2021-11-03T22:16:06.030
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+
+# Created at 2021-11-03T22:16:06.030
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+
+# Created at 2021-11-03T22:16:06.031
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+
+# Created at 2021-11-03T22:16:06.031
+	at java.base/sun.util.locale.provider.LocaleProviderAdapter.forType(LocaleProviderAdapter.java:188)
+
+# Created at 2021-11-03T22:16:06.031
+	... 12 more
+
+# Created at 2021-11-03T22:16:06.032
+Caused by: java.util.ServiceConfigurationError: sun.util.locale.provider.LocaleDataMetaInfo: Unable to load sun.util.resources.cldr.provider.CLDRLocaleDataMetaInfo
+
+# Created at 2021-11-03T22:16:06.032
+	at java.base/java.util.ServiceLoader.fail(ServiceLoader.java:582)
+
+# Created at 2021-11-03T22:16:06.033
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:854)
+
+# Created at 2021-11-03T22:16:06.033
+	at java.base/java.util.ServiceLoader$ModuleServicesLookupIterator.hasNext(ServiceLoader.java:1076)
+
+# Created at 2021-11-03T22:16:06.034
+	at java.base/java.util.ServiceLoader$2.hasNext(ServiceLoader.java:1299)
+
+# Created at 2021-11-03T22:16:06.034
+	at java.base/java.util.ServiceLoader$3.hasNext(ServiceLoader.java:1383)
+
+# Created at 2021-11-03T22:16:06.035
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:89)
+
+# Created at 2021-11-03T22:16:06.035
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter$1.run(CLDRLocaleProviderAdapter.java:86)
+
+# Created at 2021-11-03T22:16:06.036
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+
+# Created at 2021-11-03T22:16:06.036
+	at java.base/sun.util.cldr.CLDRLocaleProviderAdapter.<init>(CLDRLocaleProviderAdapter.java:86)
+
+# Created at 2021-11-03T22:16:06.037
+	... 18 more
+
+# Created at 2021-11-03T22:16:06.037
+Caused by: java.lang.LinkageError: loader 'platform' attempted duplicate class definition for sun.util.resources.cldr.provider.CLDRLocaleDataMetaInfo. (sun.util.resources.cldr.provider.CLDRLocaleDataMetaInfo is in module jdk.localedata of loader 'platform')
+
+# Created at 2021-11-03T22:16:06.038
+	at java.base/java.lang.ClassLoader.defineClass2(Native Method)
+
+# Created at 2021-11-03T22:16:06.038
+	at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1101)
+
+# Created at 2021-11-03T22:16:06.039
+	at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:182)
+
+# Created at 2021-11-03T22:16:06.039
+	at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:814)
+
+# Created at 2021-11-03T22:16:06.040
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClassInModuleOrNull(BuiltinClassLoader.java:735)
+
+# Created at 2021-11-03T22:16:06.040
+	at java.base/jdk.internal.loader.BuiltinClassLoader.findClass(BuiltinClassLoader.java:616)
+
+# Created at 2021-11-03T22:16:06.041
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:631)
+
+# Created at 2021-11-03T22:16:06.041
+	at java.base/java.lang.Class.forName(Class.java:543)
+
+# Created at 2021-11-03T22:16:06.042
+	at java.base/java.util.ServiceLoader.loadProvider(ServiceLoader.java:852)
+
+# Created at 2021-11-03T22:16:06.042
+	... 25 more
+

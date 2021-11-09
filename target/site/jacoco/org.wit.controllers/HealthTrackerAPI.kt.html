@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HealthTrackerAPI.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">org.wit healthtrackerrest</a> &gt; <a href="index.source.html" class="el_package">org.wit.controllers</a> &gt; <span class="el_source">HealthTrackerAPI.kt</span></div><h1>HealthTrackerAPI.kt</h1><pre class="source lang-java linenums">package org.wit.controllers
+
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.harium.dotenv.Env
+import io.javalin.http.Context
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.security.Keys
+import org.wit.domain.ExerciseDTO
+import org.wit.domain.UserDTO
+import org.wit.repository.ExerciseDAO
+import org.wit.repository.UserDAO
+import org.wit.utilities.decryptPassword
+import org.wit.utilities.jsonToObject
+import java.util.*
+
+<span class="fc" id="L17">object HealthTrackerAPI {</span>
+
+<span class="fc" id="L19">    private val userDao = UserDAO()</span>
+<span class="fc" id="L20">    private val exerciseDao = ExerciseDAO()</span>
+
+    //--------------------------------------------------------------
+    // UserDAO specifics
+    //-------------------------------------------------------------
+
+    fun getAllUsers(ctx: Context) {
+<span class="fc" id="L27">        val users = userDao.getAll()</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (users.size != 0) {</span>
+<span class="fc" id="L29">            ctx.json(users)</span>
+<span class="fc" id="L30">            ctx.status(200)</span>
+        } else {
+<span class="nc" id="L32">            ctx.status(404)</span>
+<span class="nc" id="L33">            ctx.html(&quot;Error 404 - No Users Found!!&quot;)</span>
+        }
+
+<span class="fc" id="L36">    }</span>
+
+    fun getUserByUserId(ctx: Context) {
+<span class="fc" id="L39">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="fc" id="L40">        val user = userDao.findById(foundId)</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (user != null) {</span>
+<span class="fc" id="L42">            ctx.json(user)</span>
+<span class="fc" id="L43">            ctx.status(200)</span>
+        } else {
+<span class="fc" id="L45">            ctx.status(404)</span>
+<span class="fc" id="L46">            ctx.html(&quot;No user found with id: $foundId&quot;)</span>
+        }
+<span class="fc" id="L48">    }</span>
+
+    fun addUser(ctx: Context) {
+<span class="fc" id="L51">        val user : UserDTO = jsonToObject(ctx.body())</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (userDao.findByEmail(user.email) == null) {</span>
+<span class="fc" id="L53">            val userId = userDao.save(user)</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if (userId != null) {</span>
+<span class="fc" id="L55">                user.id = userId</span>
+<span class="fc" id="L56">                ctx.json(user)</span>
+<span class="fc" id="L57">                ctx.status(201)</span>
+            }
+        } else {
+<span class="fc" id="L60">            ctx.status(409).json(&quot;The email: ${user.email}, already exists&quot;)</span>
+        }
+
+<span class="fc" id="L63">    }</span>
+
+    fun getUserByEmail(ctx: Context) {
+<span class="fc" id="L66">        val foundEmail = ctx.pathParam(&quot;email&quot;)</span>
+<span class="fc" id="L67">        val user = userDao.findByEmail(foundEmail)</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (user != null) {</span>
+<span class="fc" id="L69">            ctx.status(200)</span>
+<span class="fc" id="L70">            ctx.json(user)</span>
+        } else {
+<span class="fc" id="L72">            ctx.status(404)</span>
+<span class="fc" id="L73">            ctx.html(&quot;No user found with email: $foundEmail&quot;)</span>
+        }
+<span class="fc" id="L75">    }</span>
+
+    fun deleteUser(ctx: Context){
+<span class="fc" id="L78">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (userDao.findById(foundId) != null) {</span>
+<span class="fc" id="L80">            userDao.delete(foundId)</span>
+<span class="fc" id="L81">            ctx.html(&quot;User with id: ${foundId}, deleted successfully&quot;)</span>
+<span class="fc" id="L82">            ctx.status(204)</span>
+        } else {
+<span class="fc" id="L84">            ctx.status(404).json(&quot;User with id ${foundId}, does not exist&quot;)</span>
+        }
+<span class="fc" id="L86">    }</span>
+
+    fun updateUser(ctx: Context){
+<span class="fc" id="L89">        val user : UserDTO = jsonToObject(ctx.body())</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if ((userDao.update(id = ctx.pathParam(&quot;user-id&quot;).toInt(), userDTO=user)) != 0)</span>
+<span class="fc" id="L91">            ctx.status(204)</span>
+        else
+<span class="fc" id="L93">            ctx.status(404)</span>
+<span class="fc" id="L94">    }</span>
+
+    fun login (ctx: Context) {
+<span class="fc" id="L97">        val mapper = jacksonObjectMapper()</span>
+<span class="fc" id="L98">        val user = mapper.readValue&lt;UserDTO&gt;(ctx.body())</span>
+<span class="fc" id="L99">        val existingUser = userDao.findByEmail(user.email)</span>
+<span class="fc" id="L100">        val secret = Base64.getDecoder().decode(Env.get(&quot;JWT_SECRET&quot;))</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (existingUser != null) {</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            if(decryptPassword(user.password, existingUser.password)) {</span>
+<span class="fc" id="L103">                val jwt = Jwts.builder()</span>
+<span class="fc" id="L104">                    .claim(&quot;User&quot;, existingUser)</span>
+<span class="fc" id="L105">                    .signWith(Keys.hmacShaKeyFor(secret))</span>
+<span class="fc" id="L106">                    .compact()</span>
+<span class="fc" id="L107">                ctx.json(jwt)</span>
+<span class="fc" id="L108">                ctx.status(200)</span>
+            } else {
+<span class="fc" id="L110">                ctx.status(401)</span>
+<span class="fc" id="L111">                ctx.json(&quot;Invalid email or password&quot;)</span>
+<span class="fc" id="L112">            }</span>
+        } else {
+<span class="fc" id="L114">            ctx.status(401)</span>
+            // print(ctx.res.sendError(401, &quot;Invalid email or password&quot;))
+<span class="fc" id="L116">            ctx.json(&quot;Invalid email or password&quot;)</span>
+        }
+<span class="fc" id="L118">    }</span>
+
+    //--------------------------------------------------------------
+    // ExerciseDAO specifics
+    //-------------------------------------------------------------
+
+    fun getAllExercises (ctx: Context) {
+<span class="fc" id="L125">        ctx.json(exerciseDao.getAll())</span>
+<span class="fc" id="L126">    }</span>
+
+    fun getExercisesByUserId (ctx: Context) {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (userDao.findById(ctx.pathParam(&quot;user-id&quot;).toInt()) != null) {</span>
+<span class="fc" id="L130">            val exercises = exerciseDao.findExerciseByUserId(ctx.pathParam(&quot;user-id&quot;).toInt())</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">            if (exercises.isNotEmpty()) {</span>
+<span class="fc" id="L132">                ctx.status(200).json(exercises)</span>
+            } else {
+<span class="fc" id="L134">                ctx.status(404).json(&quot;No exercises found&quot;)</span>
+<span class="fc" id="L135">            }</span>
+        } else {
+<span class="fc" id="L137">            ctx.status(404).json(&quot;No exercises associated with user&quot;)</span>
+        }
+<span class="fc" id="L139">    }</span>
+
+    fun getExercisesByExerciseId (ctx: Context) {
+<span class="fc" id="L142">        val exercise = exerciseDao.findByExerciseId(ctx.pathParam(&quot;exercise-id&quot;).toInt())</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (exercise != null) {</span>
+<span class="fc" id="L144">            ctx.status(200).json(exercise)</span>
+        } else {
+<span class="fc" id="L146">            ctx.status(404).html(&quot;No exercises found&quot;)</span>
+        }
+<span class="fc" id="L148">    }</span>
+
+    fun addExercise (ctx: Context) {
+<span class="fc" id="L151">        val exerciseDTO : ExerciseDTO = jsonToObject(ctx.body())</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        val userId = exerciseDTO.userId?.let { userDao.findById(it) }</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (userId != null) {</span>
+<span class="fc" id="L154">            val exerciseId = exerciseDao.save(exerciseDTO)</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (exerciseId != null) {</span>
+<span class="fc" id="L156">                exerciseDTO.id = exerciseId</span>
+<span class="fc" id="L157">                ctx.status(201).json(exerciseDTO)</span>
+            }
+        } else {
+<span class="fc" id="L160">            ctx.status(404).json(&quot;Cannot add exercise to userid: $userId&quot;)</span>
+        }
+<span class="fc" id="L162">    }</span>
+
+    fun updateExercise (ctx: Context) {
+<span class="fc" id="L165">        val exercise : ExerciseDTO = jsonToObject(ctx.body())</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (exerciseDao.updateByExerciseId(exerciseId = ctx.pathParam(&quot;exercise-id&quot;).toInt(), exerciseDTO = exercise) != 0) {</span>
+<span class="fc" id="L167">            ctx.status(204)</span>
+        } else {
+<span class="fc" id="L169">            ctx.status(404)</span>
+        }
+<span class="fc" id="L171">    }</span>
+
+    fun incrementView (ctx: Context) {
+<span class="fc" id="L174">        val foundId = ctx.pathParam(&quot;exercise-id&quot;).toInt()</span>
+<span class="fc" id="L175">        val foundExercise = exerciseDao.findByExerciseId(foundId)</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (foundExercise != null) {</span>
+<span class="fc" id="L177">            val increment = foundExercise.views + 1</span>
+<span class="fc" id="L178">            val exercise: ExerciseDTO = jsonToObject(&quot;{\&quot;views\&quot;:\&quot;$increment\&quot;}&quot;)</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">            if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {</span>
+<span class="fc" id="L180">                ctx.status(204).json(&quot;Successfully incremented view, new value = $increment&quot;)</span>
+            }
+        } else {
+<span class="fc" id="L183">            ctx.status(404).json(&quot;Could not find the exercise with id: $foundId&quot;)</span>
+        }
+<span class="fc" id="L185">    }</span>
+
+    fun deleteExerciseByExerciseId (ctx: Context) {
+<span class="fc" id="L188">        val foundId = ctx.pathParam(&quot;exercise-id&quot;).toInt()</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (exerciseDao.findByExerciseId(foundId) != null) {</span>
+<span class="fc" id="L190">            exerciseDao.deleteByExerciseId(foundId)</span>
+<span class="fc" id="L191">            ctx.status(204).html(&quot;Exercise with id: ${foundId}, deleted successfully&quot;)</span>
+        } else {
+<span class="fc" id="L193">            ctx.status(404).json(&quot;Exercise with id ${foundId}, does not exist&quot;)</span>
+        }
+<span class="fc" id="L195">    }</span>
+
+    fun deleteExerciseByUserId (ctx: Context) {
+<span class="fc" id="L198">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (exerciseDao.deleteByExerciseId(foundId) != 0) {</span>
+<span class="nc" id="L200">            ctx.status(204).html(&quot;Exercises belonging to user, deleted successfully&quot;)</span>
+        } else {
+<span class="fc" id="L202">            ctx.status(404).json(&quot;No Exercises found&quot;)</span>
+        }
+<span class="fc" id="L204">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
