@@ -7,6 +7,7 @@ import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.wit.domain.ExerciseDTO
+import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ExerciseDAO
 import org.wit.repository.MealDAO
@@ -224,6 +225,17 @@ object HealthTrackerAPI {
             ctx.status(200).json(meal)
         } else {
             ctx.status(404).html("No meals found")
+        }
+    }
+
+    fun addMeal (ctx: Context) {
+        val meal : MealDTO = jsonToObject(ctx.body())
+        val mealId = mealDao.save(meal)
+        if (mealId != null) {
+            ctx.json(meal)
+            ctx.status(201)
+        } else {
+            ctx.status(409).json("Could not add meal")
         }
     }
 

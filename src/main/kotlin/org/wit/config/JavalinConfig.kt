@@ -48,6 +48,7 @@ class JavalinConfig {
             //Meal routes
             get("/api/meals", HealthTrackerAPI::getAllMeals)
             get("/api/meals/:meal-id", HealthTrackerAPI::getMealsByMealId)
+            post("/api/meals", HealthTrackerAPI::addMeal)
         }
     }
 
