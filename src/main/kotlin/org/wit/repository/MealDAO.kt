@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import org.wit.db.Meals
 import org.wit.domain.MealDTO
 import org.wit.utilities.mapToMealDTO
@@ -40,6 +41,26 @@ class MealDAO {
                 it[fat] = mealDTO.fat
                 it[carbs] = mealDTO.carbs
             } get Meals.id
+        }
+    }
+
+    //Update a meal by passing in the meal id
+    fun updateByMealId(mealId: Int, mealDTO: MealDTO): Int {
+        return transaction {
+            Meals.update ({
+                Meals.id eq mealId}) {
+                if (mealDTO.name != null)
+                    it[name] = mealDTO.name
+                if (mealDTO.calories != null)
+                    it[calories] = mealDTO.calories
+                if (mealDTO.protein != null)
+                    it[protein] = mealDTO.protein
+                if (mealDTO.fat != null)
+                    it[fat] = mealDTO.fat
+                if (mealDTO.carbs != null)
+                    it[carbs] = mealDTO.carbs
+
+            }
         }
     }
 

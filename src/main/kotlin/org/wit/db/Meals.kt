@@ -7,7 +7,7 @@ import org.jetbrains.exposed.sql.Table
 
 object Meals: Table("meals") {
     val id = integer("id").autoIncrement().primaryKey()
-    val name = varchar("name", 100)
+    val name = varchar("name", 100).nullable()
     val calories = integer("calories").nullable()
     val protein = double("protein").nullable()
     val fat = double("fat").nullable()
