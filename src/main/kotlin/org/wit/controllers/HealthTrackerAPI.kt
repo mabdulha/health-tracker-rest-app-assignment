@@ -274,4 +274,13 @@ object HealthTrackerAPI {
         }
     }
 
+    fun getIngredientsByIngredientId (ctx: Context) {
+        val ingredient = ingredientDao.findByIngredientId(ctx.pathParam("ingredient-id").toInt())
+        if (ingredient != null) {
+            ctx.status(200).json(ingredient)
+        } else {
+            ctx.status(404).html("No ingredients found")
+        }
+    }
+
 }

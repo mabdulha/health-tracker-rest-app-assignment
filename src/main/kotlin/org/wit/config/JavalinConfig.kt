@@ -54,6 +54,7 @@ class JavalinConfig {
 
             //Ingredient routes
             get("/api/ingredients", HealthTrackerAPI::getAllIngredients)
+            get("/api/ingredients/:ingredient-id", HealthTrackerAPI::getIngredientsByIngredientId)
         }
     }
 
