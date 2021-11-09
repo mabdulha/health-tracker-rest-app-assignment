@@ -3,8 +3,8 @@ package org.wit.db
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
-// SRP - Responsibility is to manage one activity.
-//       Database wise, this is the table object.
+// SRP - Responsibility is to manage one exercise.
+//       Dat abase wise, this is the table object.
 
 object Exercises: Table("exercises") {
     val id = integer("id").autoIncrement().primaryKey()
