@@ -7,9 +7,7 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 
-../target/
-\target\
+/target/
 *.class
 *.jar
-../target
-../.env
+.env
