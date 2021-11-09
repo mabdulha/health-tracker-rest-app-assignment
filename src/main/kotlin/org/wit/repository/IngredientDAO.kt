@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -26,6 +27,20 @@ class IngredientDAO {
                 .select { Ingredients.id eq id}
                 .map{ mapToIngredientDTO(it) }
                 .firstOrNull()
+        }
+    }
+
+    //Save a meal in the database
+    fun save(ingredientDTO: IngredientDTO): Int? {
+        return transaction {
+            Ingredients.insert {
+                it[name] = ingredientDTO.name
+                it[energy] = ingredientDTO.energy
+                it[protein] = ingredientDTO.protein
+                it[carbs] = ingredientDTO.fat
+                it[fat] = ingredientDTO.carbs
+                it[sodium] = ingredientDTO.sodium
+            } get Ingredients.id
         }
     }
 
