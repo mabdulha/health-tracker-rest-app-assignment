@@ -57,6 +57,7 @@ class JavalinConfig {
             get("/api/ingredients/:ingredient-id", HealthTrackerAPI::getIngredientsByIngredientId)
             post("/api/ingredients", HealthTrackerAPI::addIngredient)
             patch("/api/ingredients/:ingredient-id", HealthTrackerAPI::updateIngredient)
+            delete("/api/ingredients/:ingredient-id", HealthTrackerAPI::deleteIngredientByIngredientId)
         }
     }
 

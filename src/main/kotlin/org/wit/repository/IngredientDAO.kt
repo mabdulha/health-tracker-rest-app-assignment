@@ -1,11 +1,10 @@
 package org.wit.repository
 
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 import org.wit.db.Ingredients
+import org.wit.db.Meals
 import org.wit.domain.IngredientDTO
 import org.wit.utilities.mapToIngredientDTO
 
@@ -63,6 +62,13 @@ class IngredientDAO {
                 if (ingredientDTO.sodium != null)
                     it[sodium] = ingredientDTO.sodium
             }
+        }
+    }
+
+    //Delete ingredient by passing the ingredient id
+    fun deleteByIngredientId (ingredientId: Int): Int {
+        return transaction{
+            Ingredients.deleteWhere { Ingredients.id eq ingredientId }
         }
     }
 

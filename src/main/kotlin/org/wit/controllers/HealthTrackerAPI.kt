@@ -304,4 +304,14 @@ object HealthTrackerAPI {
         }
     }
 
+    fun deleteIngredientByIngredientId (ctx: Context) {
+        val foundId = ctx.pathParam("ingredient-id").toInt()
+        if (ingredientDao.findByIngredientId(foundId) != null) {
+            ingredientDao.deleteByIngredientId(foundId)
+            ctx.status(204).html("Ingredient with id: $foundId, deleted successfully")
+        } else {
+            ctx.status(404).json("Ingredient with id $foundId, does not exist")
+        }
+    }
+
 }
