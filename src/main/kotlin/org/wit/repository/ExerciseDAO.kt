@@ -22,7 +22,7 @@ class ExerciseDAO {
     fun findByExerciseId(id: Int): ExerciseDTO? {
         return transaction {
             Exercises
-                .select() { Exercises.id eq id}
+                .select { Exercises.id eq id}
                 .map{ mapToExerciseDTO(it)}
                 .firstOrNull()
         }

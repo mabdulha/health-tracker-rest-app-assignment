@@ -218,4 +218,13 @@ object HealthTrackerAPI {
         }
     }
 
+    fun getMealsByMealId (ctx: Context) {
+        val meal = mealDao.findByMealId(ctx.pathParam("meal-id").toInt())
+        if (meal != null) {
+            ctx.status(200).json(meal)
+        } else {
+            ctx.status(404).html("No meals found")
+        }
+    }
+
 }

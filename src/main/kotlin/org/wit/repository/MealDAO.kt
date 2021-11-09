@@ -1,5 +1,6 @@
 package org.wit.repository
 
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Meals
@@ -16,6 +17,16 @@ class MealDAO {
                 exercisesList.add(mapToMealDTO(it)) }
         }
         return exercisesList
+    }
+
+    //Find a specific meal by meal id
+    fun findByMealId(id: Int): MealDTO? {
+        return transaction {
+            Meals
+                .select { Meals.id eq id}
+                .map{ mapToMealDTO(it) }
+                .firstOrNull()
+        }
     }
 
 }
