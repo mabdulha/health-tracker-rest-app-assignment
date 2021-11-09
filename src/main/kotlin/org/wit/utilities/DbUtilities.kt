@@ -2,8 +2,10 @@ package org.wit.utilities
 
 import org.jetbrains.exposed.sql.ResultRow
 import org.wit.db.Exercises
+import org.wit.db.Meals
 import org.wit.db.Users
 import org.wit.domain.ExerciseDTO
+import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 
 fun mapToUserDTO(it: ResultRow) = UserDTO (
@@ -27,4 +29,13 @@ fun mapToExerciseDTO(it: ResultRow) = ExerciseDTO (
     muscle = it[Exercises.muscle],
     views = it[Exercises.views],
     userId = it[Exercises.userId]
+)
+
+fun mapToMealDTO(it: ResultRow) = MealDTO (
+    id = it[Meals.id],
+    name = it[Meals.name],
+    calories = it[Meals.calories],
+    protein = it[Meals.protein],
+    fat = it[Meals.fat],
+    carbs = it[Meals.carbs]
 )
