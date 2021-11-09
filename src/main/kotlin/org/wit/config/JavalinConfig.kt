@@ -44,6 +44,9 @@ class JavalinConfig {
             put("/api/exercises/:exercise-id/increment-view", HealthTrackerAPI::incrementView)
             delete("/api/exercises/:exercise-id", HealthTrackerAPI::deleteExerciseByExerciseId)
             delete("/api/users/:user-id/exercises", HealthTrackerAPI::deleteExerciseByUserId)
+
+            //Meal routes
+            get("/api/meals", HealthTrackerAPI::getAllMeals)
         }
     }
 

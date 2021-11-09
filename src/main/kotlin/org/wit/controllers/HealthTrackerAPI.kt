@@ -9,6 +9,7 @@ import io.jsonwebtoken.security.Keys
 import org.wit.domain.ExerciseDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.ExerciseDAO
+import org.wit.repository.MealDAO
 import org.wit.repository.UserDAO
 import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
@@ -18,6 +19,7 @@ object HealthTrackerAPI {
 
     private val userDao = UserDAO()
     private val exerciseDao = ExerciseDAO()
+    private val mealDao = MealDAO()
 
     //--------------------------------------------------------------
     // UserDAO specifics
@@ -32,7 +34,6 @@ object HealthTrackerAPI {
             ctx.status(404)
             ctx.html("Error 404 - No Users Found!!")
         }
-
     }
 
     fun getUserByUserId(ctx: Context) {
@@ -200,6 +201,20 @@ object HealthTrackerAPI {
             ctx.status(204).html("Exercises belonging to user with id: $foundId, deleted successfully")
         } else {
             ctx.status(404).json("No Exercises found for user with id: $foundId")
+        }
+    }
+
+    //--------------------------------------------------------------
+    // MealDAO specifics
+    //-------------------------------------------------------------
+
+    fun getAllMeals(ctx: Context) {
+        val meals = mealDao.getAll()
+        if (meals.size != 0) {
+            ctx.status(200).json(meals)
+        } else {
+            ctx.status(404)
+            ctx.html("Error 404 - No Meals Found!!")
         }
     }
 
