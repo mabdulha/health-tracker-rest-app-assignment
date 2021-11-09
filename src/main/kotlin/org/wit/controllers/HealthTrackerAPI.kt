@@ -248,4 +248,14 @@ object HealthTrackerAPI {
         }
     }
 
+    fun deleteMealByMealId (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            mealDao.deleteByMealId(foundId)
+            ctx.status(204).html("Meal with id: $foundId, deleted successfully")
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
 }

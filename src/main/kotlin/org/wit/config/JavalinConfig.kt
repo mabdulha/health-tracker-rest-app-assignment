@@ -50,6 +50,7 @@ class JavalinConfig {
             get("/api/meals/:meal-id", HealthTrackerAPI::getMealsByMealId)
             post("/api/meals", HealthTrackerAPI::addMeal)
             patch("/api/meals/:meal-id", HealthTrackerAPI::updateMeal)
+            delete("/api/meals/:meal-id", HealthTrackerAPI::deleteMealByMealId)
         }
     }
 
