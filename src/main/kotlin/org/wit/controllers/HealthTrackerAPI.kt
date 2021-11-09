@@ -295,4 +295,13 @@ object HealthTrackerAPI {
         }
     }
 
+    fun updateIngredient (ctx: Context) {
+        val ingredient : IngredientDTO = jsonToObject(ctx.body())
+        if (ingredientDao.updateByIngredientId(ingredientId = ctx.pathParam("ingredient-id").toInt(), ingredientDTO = ingredient) != 0) {
+            ctx.status(204)
+        } else {
+            ctx.status(404)
+        }
+    }
+
 }

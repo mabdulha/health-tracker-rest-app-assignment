@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 import org.wit.db.Ingredients
 import org.wit.domain.IngredientDTO
 import org.wit.utilities.mapToIngredientDTO
@@ -41,6 +42,27 @@ class IngredientDAO {
                 it[fat] = ingredientDTO.carbs
                 it[sodium] = ingredientDTO.sodium
             } get Ingredients.id
+        }
+    }
+
+    //Update an ingredient by passing in the ingredient id
+    fun updateByIngredientId(ingredientId: Int, ingredientDTO: IngredientDTO): Int {
+        return transaction {
+            Ingredients.update ({
+                Ingredients.id eq ingredientId}) {
+                if (ingredientDTO.name != null)
+                    it[name] = ingredientDTO.name
+                if (ingredientDTO.energy != null)
+                    it[energy] = ingredientDTO.energy
+                if (ingredientDTO.protein != null)
+                    it[protein] = ingredientDTO.protein
+                if (ingredientDTO.carbs != null)
+                    it[carbs] = ingredientDTO.carbs
+                if (ingredientDTO.fat != null)
+                    it[fat] = ingredientDTO.fat
+                if (ingredientDTO.sodium != null)
+                    it[sodium] = ingredientDTO.sodium
+            }
         }
     }
 
