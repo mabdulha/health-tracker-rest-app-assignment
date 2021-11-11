@@ -231,6 +231,20 @@ object HealthTrackerAPI {
         }
     }
 
+    fun getMealIngredients (ctx: Context) {
+        val meal = mealDao.findByMealId(ctx.pathParam("meal-id").toInt())
+        if (meal != null) {
+            val ingredients = ingredientDao.findIngredientsForMeal(meal.id)
+            if (ingredients.size != 0) {
+                ctx.status(200).json(ingredients)
+            } else {
+                ctx.status(404).json("No ingredients found")
+            }
+        } else {
+            ctx.status(404).html("No Meal found")
+        }
+    }
+
     fun addMeal (ctx: Context) {
         val meal : MealDTO = jsonToObject(ctx.body())
         val mealId = mealDao.save(meal)

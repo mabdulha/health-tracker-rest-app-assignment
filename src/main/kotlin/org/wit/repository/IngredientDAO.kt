@@ -1,9 +1,9 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Ingredients
+import org.wit.db.MealIngredients
 import org.wit.db.Meals
 import org.wit.domain.IngredientDTO
 import org.wit.utilities.mapToIngredientDTO
@@ -12,12 +12,12 @@ class IngredientDAO {
 
     //Get all the ingredients in the database
     fun getAll(): ArrayList<IngredientDTO> {
-        val exercisesList: ArrayList<IngredientDTO> = arrayListOf()
+        val ingredientList: ArrayList<IngredientDTO> = arrayListOf()
         transaction {
             Ingredients.selectAll().map {
-                exercisesList.add(mapToIngredientDTO(it)) }
+                ingredientList.add(mapToIngredientDTO(it)) }
         }
-        return exercisesList
+        return ingredientList
     }
 
     //Find a specific ingredient by ingredient id
@@ -30,7 +30,21 @@ class IngredientDAO {
         }
     }
 
-    //Save a meal in the database
+    fun findIngredientsForMeal (id: Int): ArrayList<IngredientDTO> {
+        val ingredientList: ArrayList<IngredientDTO> = arrayListOf()
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.name, Ingredients.fat, Ingredients.carbs, Ingredients.protein,
+                    Ingredients.sodium, Ingredients.id, Ingredients.energy)
+                .select { MealIngredients.mealId eq id }
+                .map { ingredientList.add(mapToIngredientDTO(it)) }
+        }
+        return ingredientList
+    }
+
+    //Save an ingredient in the database
     fun save(ingredientDTO: IngredientDTO): Int? {
         return transaction {
             Ingredients.insert {

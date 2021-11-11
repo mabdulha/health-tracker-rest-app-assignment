@@ -1,22 +1,27 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Exercises
+import org.wit.db.Ingredients
+import org.wit.db.MealIngredients
 import org.wit.db.Meals
+import org.wit.domain.IngredientDTO
 import org.wit.domain.MealDTO
+import org.wit.utilities.mapToIngredientDTO
 import org.wit.utilities.mapToMealDTO
 
 class MealDAO {
 
     //Get all the meals in the database
     fun getAll(): ArrayList<MealDTO> {
-        val exercisesList: ArrayList<MealDTO> = arrayListOf()
+        val mealsList: ArrayList<MealDTO> = arrayListOf()
         transaction {
             Meals.selectAll().map {
-                exercisesList.add(mapToMealDTO(it)) }
+                mealsList.add(mapToMealDTO(it)) }
         }
-        return exercisesList
+        return mealsList
     }
 
     //Find a specific meal by meal id
