@@ -10,6 +10,7 @@ class JavalinConfig {
 
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
+            error(404) { ctx -> ctx.json("404 - Not Found") }
         }.start(getHerokuAssignedPort())
 
         registerRoutes(app)

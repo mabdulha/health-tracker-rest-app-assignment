@@ -362,4 +362,11 @@ object HealthTrackerAPI {
         }
     }
 
+    /**
+     *
+     * New feature
+     * Make a route and method to save the bmi score to database which can be used to graph
+     *
+     */
+
 }
