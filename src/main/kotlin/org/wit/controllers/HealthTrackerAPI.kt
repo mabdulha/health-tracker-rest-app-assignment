@@ -339,4 +339,14 @@ object HealthTrackerAPI {
         }
     }
 
+    fun countAllMealIngredients (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = ingredientDao.countAmountOfIngredientsInMeal(foundId)
+            ctx.status(200).json(count)
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
 }

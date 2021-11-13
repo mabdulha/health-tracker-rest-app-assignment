@@ -44,6 +44,16 @@ class IngredientDAO {
         return ingredientList
     }
 
+    fun countAmountOfIngredientsInMeal (id: Int): Int {
+        return transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.id)
+                .select { MealIngredients.mealId eq id }.count()
+        }
+    }
+
     //Save an ingredient in the database
     fun save(ingredientDTO: IngredientDTO): Int? {
         return transaction {
