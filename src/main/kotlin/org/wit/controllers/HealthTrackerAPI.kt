@@ -277,6 +277,9 @@ object HealthTrackerAPI {
             if (ingredientDao.findByIngredientId(foundIngredientId) != null) {
                 val mealIngredient: MealIngredientDTO = jsonToObject("{\"mealId\":\"$foundMealId\", \"ingredientId\":\"$foundIngredientId\"}")
                 mealDao.saveMealAndIngredientId(mealIngredient)
+                val sumProtein = ingredientDao.countProteinForMeal(foundMealId)
+                val meal: MealDTO = jsonToObject("{\"protein\":\"$sumProtein\"}")
+                mealDao.updateByMealId(foundMealId, meal)
                 ctx.status(200)
             } else {
                 ctx.status(404).json("Ingredient with id $foundIngredientId, does not exist")
@@ -344,6 +347,16 @@ object HealthTrackerAPI {
         if (mealDao.findByMealId(foundId) != null) {
             val count = ingredientDao.countAmountOfIngredientsInMeal(foundId)
             ctx.status(200).json(count)
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun countEnergyForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = ingredientDao.countProteinForMeal(foundId)
+            ctx.status(200).json(count!!)
         } else {
             ctx.status(404).json("Meal with id $foundId, does not exist")
         }

@@ -35,10 +35,6 @@ class MealDAO {
         return transaction {
             Meals.insert {
                 it[name] = mealDTO.name
-                it[calories] = mealDTO.calories
-                it[protein] = mealDTO.protein
-                it[fat] = mealDTO.fat
-                it[carbs] = mealDTO.carbs
             } get Meals.id
         }
     }

@@ -54,6 +54,19 @@ class IngredientDAO {
         }
     }
 
+    fun countProteinForMeal (id: Int): Double? {
+        var sum: Double? = 0.00
+        transaction {
+        Ingredients
+            .innerJoin(MealIngredients)
+            .innerJoin(Meals)
+            .slice(Ingredients.protein.sum())
+            .select { MealIngredients.mealId eq id }
+            .map { resultRow -> sum = resultRow[Ingredients.protein.sum()] }
+        }
+        return sum
+    }
+
     //Save an ingredient in the database
     fun save(ingredientDTO: IngredientDTO): Int? {
         return transaction {
