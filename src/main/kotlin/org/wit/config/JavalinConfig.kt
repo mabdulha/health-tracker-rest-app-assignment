@@ -29,7 +29,7 @@ class JavalinConfig {
             //User routes
             get("/api/users", HealthTrackerAPI::getAllUsers)
             get("/api/users/:user-id", HealthTrackerAPI::getUserByUserId)
-            post("/api/users", HealthTrackerAPI::addUser)
+            post("/api/users/register", HealthTrackerAPI::addUser)
             get("/api/users/email/:email", HealthTrackerAPI::getUserByEmail)
             delete("/api/users/:user-id", HealthTrackerAPI::deleteUser)
             patch("/api/users/:user-id", HealthTrackerAPI::updateUser)

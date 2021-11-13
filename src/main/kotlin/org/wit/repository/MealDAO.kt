@@ -1,15 +1,11 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.wit.db.Exercises
-import org.wit.db.Ingredients
 import org.wit.db.MealIngredients
 import org.wit.db.Meals
-import org.wit.domain.IngredientDTO
 import org.wit.domain.MealDTO
-import org.wit.utilities.mapToIngredientDTO
+import org.wit.domain.MealIngredientDTO
 import org.wit.utilities.mapToMealDTO
 
 class MealDAO {
@@ -44,6 +40,15 @@ class MealDAO {
                 it[fat] = mealDTO.fat
                 it[carbs] = mealDTO.carbs
             } get Meals.id
+        }
+    }
+
+    fun saveMealAndIngredientId (mealIngredientDTO: MealIngredientDTO) {
+        return transaction {
+            MealIngredients.insert {
+                it[mealId] = mealIngredientDTO.mealId
+                it[ingredientId] = mealIngredientDTO.ingredientId
+            }
         }
     }
 

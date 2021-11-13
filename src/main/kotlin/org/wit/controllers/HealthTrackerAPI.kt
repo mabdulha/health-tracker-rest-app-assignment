@@ -6,14 +6,8 @@ import com.harium.dotenv.Env
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import org.wit.domain.ExerciseDTO
-import org.wit.domain.IngredientDTO
-import org.wit.domain.MealDTO
-import org.wit.domain.UserDTO
-import org.wit.repository.ExerciseDAO
-import org.wit.repository.IngredientDAO
-import org.wit.repository.MealDAO
-import org.wit.repository.UserDAO
+import org.wit.domain.*
+import org.wit.repository.*
 import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
 import java.util.*
@@ -25,7 +19,7 @@ object HealthTrackerAPI {
     private val mealDao = MealDAO()
     private val ingredientDao = IngredientDAO()
 
-    //--------------------------------------------------------------
+    //-------------------------------------------------------------
     // UserDAO specifics
     //-------------------------------------------------------------
 
@@ -117,8 +111,8 @@ object HealthTrackerAPI {
             }
         } else {
             ctx.status(401)
-            // print(ctx.res.sendError(401, "Invalid email or password"))
-            ctx.json("Invalid email or password")
+            ctx.res.sendError(401, "Invalid email or password")
+            // ctx.json("Invalid email or password")
         }
     }
 
