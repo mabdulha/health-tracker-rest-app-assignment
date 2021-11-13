@@ -10,7 +10,6 @@ class JavalinConfig {
 
         val app = Javalin.create().apply {
             exception(Exception::class.java) { e, _ -> e.printStackTrace() }
-            error(404) { ctx -> ctx.json("404 - Not Found") }
         }.start(getHerokuAssignedPort())
 
         registerRoutes(app)
@@ -51,6 +50,7 @@ class JavalinConfig {
             get("/api/meals/:meal-id/ingredients", HealthTrackerAPI::getMealIngredients)
             post("/api/meals", HealthTrackerAPI::addMeal)
             patch("/api/meals/:meal-id", HealthTrackerAPI::updateMeal)
+            post("/api/meals/:meal-id/ingredients/:ingredient-id/assign", HealthTrackerAPI::assignIngredientIdAndMealId)
             delete("/api/meals/:meal-id", HealthTrackerAPI::deleteMealByMealId)
 
             //Ingredient routes

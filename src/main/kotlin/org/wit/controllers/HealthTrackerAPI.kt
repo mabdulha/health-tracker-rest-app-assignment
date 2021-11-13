@@ -269,6 +269,23 @@ object HealthTrackerAPI {
         }
     }
 
+    fun assignIngredientIdAndMealId (ctx: Context) {
+        val foundMealId = ctx.pathParam("meal-id").toInt()
+        val foundIngredientId = ctx.pathParam("ingredient-id").toInt()
+        print("meal: $foundMealId, ingredient: $foundIngredientId")
+        if (mealDao.findByMealId(foundMealId) != null) {
+            if (ingredientDao.findByIngredientId(foundIngredientId) != null) {
+                val mealIngredient: MealIngredientDTO = jsonToObject("{\"mealId\":\"$foundMealId\", \"ingredientId\":\"$foundIngredientId\"}")
+                mealDao.saveMealAndIngredientId(mealIngredient)
+                ctx.status(200)
+            } else {
+                ctx.status(404).json("Ingredient with id $foundIngredientId, does not exist")
+            }
+        } else {
+            ctx.status(404).json("Meal with id $foundMealId, does not exist")
+        }
+    }
+
     //--------------------------------------------------------------
     // IngredientDAO specifics
     //-------------------------------------------------------------
