@@ -270,7 +270,7 @@ object HealthTrackerAPI {
         }
     }
 
-    fun assignIngredientIdAndMealId (ctx: Context) {
+    fun assignIngredientIdToMealId (ctx: Context) {
         val foundMealId = ctx.pathParam("meal-id").toInt()
         val foundIngredientId = ctx.pathParam("ingredient-id").toInt()
         print("meal: $foundMealId, ingredient: $foundIngredientId")
@@ -278,9 +278,7 @@ object HealthTrackerAPI {
             if (ingredientDao.findByIngredientId(foundIngredientId) != null) {
                 val mealIngredient: MealIngredientDTO = jsonToObject("{\"mealId\":\"$foundMealId\", \"ingredientId\":\"$foundIngredientId\"}")
                 mealDao.saveMealAndIngredientId(mealIngredient)
-                val sumProtein = ingredientDao.countProteinForMeal(foundMealId)
-                val meal: MealDTO = jsonToObject("{\"protein\":\"$sumProtein\"}")
-                mealDao.updateByMealId(foundMealId, meal)
+                saveNutrientsForMeals(foundMealId)
                 ctx.status(200)
             } else {
                 ctx.status(404).json("Ingredient with id $foundIngredientId, does not exist")
@@ -353,68 +351,16 @@ object HealthTrackerAPI {
         }
     }
 
-    fun totalEnergyForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = ingredientDao.countEnergyForMeal(foundId)
-            if (count != null) {
-                ctx.status(200).json(count)
-            }
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
-    }
-
-    fun totalCaloriesForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = ingredientDao.countCaloriesForMeal(foundId)
-            if (count != null) {
-                ctx.status(200).json(count)
-            }
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
-    }
-
-    fun totalProteinForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = "%.2f".format(ingredientDao.countProteinForMeal(foundId))
-            ctx.status(200).json(count)
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
-    }
-
-    fun totalFatForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = "%.2f".format(ingredientDao.countFatForMeal(foundId))
-            ctx.status(200).json(count)
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
-    }
-
-    fun totalCarbsForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = "%.2f".format(ingredientDao.countCarbsForMeal(foundId))
-            ctx.status(200).json(count)
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
-    }
-
-    fun totalSodiumForMeals (ctx: Context) {
-        val foundId = ctx.pathParam("meal-id").toInt()
-        if (mealDao.findByMealId(foundId) != null) {
-            val count = "%.2f".format(ingredientDao.countSodiumForMeal(foundId))
-            ctx.status(200).json(count)
-        } else {
-            ctx.status(404).json("Meal with id $foundId, does not exist")
-        }
+    private fun saveNutrientsForMeals (mealId: Int) {
+        val sumEnergy = ingredientDao.countEnergyForMeal(mealId)
+        val sumCalories = ingredientDao.countCaloriesForMeal(mealId)
+        val sumProtein = ingredientDao.countProteinForMeal(mealId)
+        val sumFat = ingredientDao.countFatForMeal(mealId)
+        val sumCarbs = ingredientDao.countCarbsForMeal(mealId)
+        val sumSodium = ingredientDao.countSodiumForMeal(mealId)
+        val meal: MealDTO = jsonToObject("{\"energy\":\"$sumEnergy\", \"calories\":\"$sumCalories\", \"protein\":\"$sumProtein\"," +
+                " \"fat\":\"$sumFat\", \"carbs\":\"$sumCarbs\", \"sodium\":\"$sumSodium\"}")
+        mealDao.updateByMealId(mealId, meal)
     }
 
     /**

@@ -36,7 +36,7 @@ class IngredientDAO {
             Ingredients
                 .innerJoin(MealIngredients)
                 .innerJoin(Meals)
-                .slice(Ingredients.id, Ingredients.name, Ingredients.energy, Ingredients.calories, Ingredients.protein, Ingredients.fat, Ingredients.carbs,
+                .slice(Ingredients.id, Ingredients.image, Ingredients.name, Ingredients.energy, Ingredients.calories, Ingredients.protein, Ingredients.fat, Ingredients.carbs,
                     Ingredients.sodium)
                 .select { MealIngredients.mealId eq id }
                 .map { ingredientList.add(mapToIngredientDTO(it)) }
@@ -137,6 +137,7 @@ class IngredientDAO {
         return transaction {
             Ingredients.insert {
                 it[name] = ingredientDTO.name
+                it[image] = ingredientDTO.image
                 it[energy] = ingredientDTO.energy
                 it[calories] = ingredientDTO.calories
                 it[protein] = ingredientDTO.protein
@@ -154,6 +155,8 @@ class IngredientDAO {
                 Ingredients.id eq ingredientId}) {
                 if (ingredientDTO.name != null)
                     it[name] = ingredientDTO.name
+                if (ingredientDTO.image != null)
+                    it[image] = ingredientDTO.image
                 if (ingredientDTO.energy != null)
                     it[energy] = ingredientDTO.energy
                 if (ingredientDTO.calories != null)

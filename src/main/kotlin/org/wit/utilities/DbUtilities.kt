@@ -50,6 +50,7 @@ fun mapToMealDTO(it: ResultRow) = MealDTO (
 
 fun mapToIngredientDTO(it: ResultRow) = IngredientDTO (
     id = it[Ingredients.id],
+    image = it[Ingredients.image],
     name = it[Ingredients.name],
     energy = it[Ingredients.energy],
     calories = it[Ingredients.calories],

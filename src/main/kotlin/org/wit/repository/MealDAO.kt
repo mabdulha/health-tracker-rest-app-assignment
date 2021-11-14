@@ -59,6 +59,20 @@ class MealDAO {
                     it[image] = mealDTO.image
                 if (mealDTO.name != null)
                     it[name] = mealDTO.name
+                if (mealDTO.energy != null)
+                    it[energy] = mealDTO.energy
+                if (mealDTO.calories != null)
+                    it[calories] = mealDTO.calories
+                if (mealDTO.protein != null)
+                    it[protein] = mealDTO.protein
+                if (mealDTO.fat != null)
+                    it[fat] = mealDTO.fat
+                if (mealDTO.carbs != null)
+                    it[carbs] = mealDTO.carbs
+                if (mealDTO.sodium != null)
+                    it[sodium] = mealDTO.sodium
+                if (mealDTO.loves != null)
+                    it[loves] = mealDTO.loves
             }
         }
     }
