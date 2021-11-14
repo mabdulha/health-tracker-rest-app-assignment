@@ -24,6 +24,7 @@ fun mapToUserDTO(it: ResultRow) = UserDTO (
 
 fun mapToExerciseDTO(it: ResultRow) = ExerciseDTO (
     id = it[Exercises.id],
+    image = it[Exercises.image],
     name = it[Exercises.name],
     description = it[Exercises.description],
     calories = it[Exercises.calories],

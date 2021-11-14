@@ -2,6 +2,7 @@ package org.wit.domain
 
 data class ExerciseDTO (
     var id: Int,
+    var image: String?,
     var name: String?,
     var description: String?,
     var calories: Int?,

@@ -42,6 +42,7 @@ class ExerciseDAO {
         return transaction {
             Exercises.insert {
                 it[name] = exerciseDTO.name
+                it[image] = exerciseDTO.image
                 it[description] = exerciseDTO.description
                 it[calories] = exerciseDTO.calories
                 it[duration] = exerciseDTO.duration
@@ -59,6 +60,8 @@ class ExerciseDAO {
                 Exercises.id eq exerciseId}) {
                 if (exerciseDTO.name != null)
                     it[name] = exerciseDTO.name
+                if (exerciseDTO.image != null)
+                    it[image] = exerciseDTO.image
                 if (exerciseDTO.description != null)
                     it[description] = exerciseDTO.description
                 if (exerciseDTO.calories != null)
