@@ -12,6 +12,7 @@ import org.wit.domain.UserDTO
 
 fun mapToUserDTO(it: ResultRow) = UserDTO (
     id = it[Users.id],
+    avatar = it[Users.avatar],
     fname = it[Users.fname],
     lname = it[Users.lname],
     email = it[Users.email],

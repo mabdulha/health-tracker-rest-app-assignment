@@ -30,6 +30,7 @@ class UserDAO {
     fun save(userDTO: UserDTO) : Int? {
         return transaction {
             Users.insert {
+                it[avatar] = userDTO.avatar
                 it[fname] = userDTO.fname
                 it[lname] = userDTO.lname
                 it[email] = userDTO.email
@@ -63,6 +64,8 @@ class UserDAO {
         return transaction {
             Users.update ({
                 Users.id eq id}) {
+                if (userDTO.avatar != null)
+                    it[avatar] = userDTO.avatar
                 if (userDTO.fname != null)
                     it[fname] = userDTO.fname
                 if (userDTO.lname != null)

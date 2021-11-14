@@ -2,6 +2,7 @@ package org.wit.domain
 
 data class UserDTO (
     var id: Int,
+    var avatar: String?,
     var fname: String?,
     var lname: String?,
     var email: String?,
