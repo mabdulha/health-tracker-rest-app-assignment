@@ -34,6 +34,7 @@ class MealDAO {
     fun save(mealDTO: MealDTO): Int? {
         return transaction {
             Meals.insert {
+                it[image] = mealDTO.image
                 it[name] = mealDTO.name
             } get Meals.id
         }
@@ -53,17 +54,10 @@ class MealDAO {
         return transaction {
             Meals.update ({
                 Meals.id eq mealId}) {
+                if (mealDTO.image != null)
+                    it[image] = mealDTO.image
                 if (mealDTO.name != null)
                     it[name] = mealDTO.name
-                if (mealDTO.calories != null)
-                    it[calories] = mealDTO.calories
-                if (mealDTO.protein != null)
-                    it[protein] = mealDTO.protein
-                if (mealDTO.fat != null)
-                    it[fat] = mealDTO.fat
-                if (mealDTO.carbs != null)
-                    it[carbs] = mealDTO.carbs
-
             }
         }
     }

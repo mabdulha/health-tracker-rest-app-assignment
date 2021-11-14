@@ -173,7 +173,7 @@ object HealthTrackerAPI {
         val foundId = ctx.pathParam("exercise-id").toInt()
         val foundExercise = exerciseDao.findByExerciseId(foundId)
         if (foundExercise != null) {
-            val increment = foundExercise.views + 1
+            val increment = foundExercise.views?.plus(1)
             val exercise: ExerciseDTO = jsonToObject("{\"views\":\"$increment\"}")
             if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {
                 ctx.status(204).json("Successfully incremented view, new value = $increment")

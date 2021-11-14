@@ -14,6 +14,6 @@ object Exercises: Table("exercises") {
     val calories = integer("calories").nullable()
     val duration = double("duration").nullable()
     val muscle = varchar("muscle", 50).nullable()
-    val views = integer("views").default(0)
+    val views = integer("views").default(0).nullable()
     val userId = integer("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE).nullable()
 }

@@ -36,11 +36,14 @@ fun mapToExerciseDTO(it: ResultRow) = ExerciseDTO (
 
 fun mapToMealDTO(it: ResultRow) = MealDTO (
     id = it[Meals.id],
+    image = it[Meals.image],
     name = it[Meals.name],
+    energy = it[Meals.energy],
     calories = it[Meals.calories],
     protein = it[Meals.protein],
     fat = it[Meals.fat],
-    carbs = it[Meals.carbs]
+    carbs = it[Meals.carbs],
+    sodium = it[Meals.sodium]
 )
 
 fun mapToIngredientDTO(it: ResultRow) = IngredientDTO (

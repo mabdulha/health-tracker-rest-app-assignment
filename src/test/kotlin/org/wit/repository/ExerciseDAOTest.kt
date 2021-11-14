@@ -139,7 +139,7 @@ class ExerciseDAOTest {
                 //Act & Assert
                 val exercise3updated = ExerciseDTO(
                     id = 3, name = "Running", description = "Cardio", duration = 42.0,
-                    calories = 220, muscle = "Body", userId = 2, views = 25
+                    calories = 220, muscle = "Body", userId = 2, views = 25, image = ""
                 )
                 exerciseDAO.updateByExerciseId(exercise3updated.id, exercise3updated)
                 assertEquals(exercise3updated, exerciseDAO.findByExerciseId(3))
@@ -156,7 +156,7 @@ class ExerciseDAOTest {
 
                 //Act & Assert
                 val exercise4updated = ExerciseDTO(id = 4, name = "Running", description = "Cardio", duration = 42.0,
-                    calories = 220, muscle = "Body", userId = 2, views = 35)
+                    calories = 220, muscle = "Body", userId = 2, views = 35, image = "")
                 exerciseDAO.updateByExerciseId(4, exercise4updated)
                 assertEquals(null, exerciseDAO.findByExerciseId(4))
                 assertEquals(3, exerciseDAO.getAll().size)
