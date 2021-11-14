@@ -47,8 +47,9 @@ fun mapToIngredientDTO(it: ResultRow) = IngredientDTO (
     id = it[Ingredients.id],
     name = it[Ingredients.name],
     energy = it[Ingredients.energy],
+    calories = it[Ingredients.calories],
     protein = it[Ingredients.protein],
-    carbs = it[Ingredients.carbs],
     fat = it[Ingredients.fat],
+    carbs = it[Ingredients.carbs],
     sodium = it[Ingredients.sodium]
 )

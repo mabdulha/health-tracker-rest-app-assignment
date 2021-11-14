@@ -36,8 +36,8 @@ class IngredientDAO {
             Ingredients
                 .innerJoin(MealIngredients)
                 .innerJoin(Meals)
-                .slice(Ingredients.name, Ingredients.fat, Ingredients.carbs, Ingredients.protein,
-                    Ingredients.sodium, Ingredients.id, Ingredients.energy)
+                .slice(Ingredients.id, Ingredients.name, Ingredients.energy, Ingredients.calories, Ingredients.protein, Ingredients.fat, Ingredients.carbs,
+                    Ingredients.sodium)
                 .select { MealIngredients.mealId eq id }
                 .map { ingredientList.add(mapToIngredientDTO(it)) }
         }
@@ -73,9 +73,10 @@ class IngredientDAO {
             Ingredients.insert {
                 it[name] = ingredientDTO.name
                 it[energy] = ingredientDTO.energy
+                it[calories] = ingredientDTO.calories
                 it[protein] = ingredientDTO.protein
-                it[carbs] = ingredientDTO.fat
-                it[fat] = ingredientDTO.carbs
+                it[fat] = ingredientDTO.fat
+                it[carbs] = ingredientDTO.carbs
                 it[sodium] = ingredientDTO.sodium
             } get Ingredients.id
         }
@@ -90,12 +91,14 @@ class IngredientDAO {
                     it[name] = ingredientDTO.name
                 if (ingredientDTO.energy != null)
                     it[energy] = ingredientDTO.energy
+                if (ingredientDTO.calories != null)
+                    it[calories] = ingredientDTO.calories
                 if (ingredientDTO.protein != null)
                     it[protein] = ingredientDTO.protein
-                if (ingredientDTO.carbs != null)
-                    it[carbs] = ingredientDTO.carbs
                 if (ingredientDTO.fat != null)
                     it[fat] = ingredientDTO.fat
+                if (ingredientDTO.carbs != null)
+                    it[carbs] = ingredientDTO.carbs
                 if (ingredientDTO.sodium != null)
                     it[sodium] = ingredientDTO.sodium
             }
