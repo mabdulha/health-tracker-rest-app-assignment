@@ -6,6 +6,7 @@ import com.harium.dotenv.Env
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
+import kotlin.math.round
 import org.wit.domain.*
 import org.wit.repository.*
 import org.wit.utilities.decryptPassword
@@ -352,11 +353,65 @@ object HealthTrackerAPI {
         }
     }
 
-    fun countEnergyForMeals (ctx: Context) {
+    fun totalEnergyForMeals (ctx: Context) {
         val foundId = ctx.pathParam("meal-id").toInt()
         if (mealDao.findByMealId(foundId) != null) {
-            val count = ingredientDao.countProteinForMeal(foundId)
-            ctx.status(200).json(count!!)
+            val count = ingredientDao.countEnergyForMeal(foundId)
+            if (count != null) {
+                ctx.status(200).json(count)
+            }
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun totalCaloriesForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = ingredientDao.countCaloriesForMeal(foundId)
+            if (count != null) {
+                ctx.status(200).json(count)
+            }
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun totalProteinForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = "%.2f".format(ingredientDao.countProteinForMeal(foundId))
+            ctx.status(200).json(count)
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun totalFatForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = "%.2f".format(ingredientDao.countFatForMeal(foundId))
+            ctx.status(200).json(count)
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun totalCarbsForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = "%.2f".format(ingredientDao.countCarbsForMeal(foundId))
+            ctx.status(200).json(count)
+        } else {
+            ctx.status(404).json("Meal with id $foundId, does not exist")
+        }
+    }
+
+    fun totalSodiumForMeals (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        if (mealDao.findByMealId(foundId) != null) {
+            val count = "%.2f".format(ingredientDao.countSodiumForMeal(foundId))
+            ctx.status(200).json(count)
         } else {
             ctx.status(404).json("Meal with id $foundId, does not exist")
         }

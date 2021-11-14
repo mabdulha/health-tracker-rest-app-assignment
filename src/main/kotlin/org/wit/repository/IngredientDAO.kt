@@ -54,15 +54,80 @@ class IngredientDAO {
         }
     }
 
-    fun countProteinForMeal (id: Int): Double? {
-        var sum: Double? = 0.00
+    fun countEnergyForMeal (id: Int): Int? {
+        var sum: Int? = 0
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.energy.sum())
+                .select { MealIngredients.mealId eq id }
+                .map { resultRow -> sum = resultRow[Ingredients.energy.sum()] }
+        }
+        return sum
+    }
+
+    fun countCaloriesForMeal (id: Int): Int? {
+        var sum: Int? = 0
         transaction {
         Ingredients
             .innerJoin(MealIngredients)
             .innerJoin(Meals)
-            .slice(Ingredients.protein.sum())
+            .slice(Ingredients.calories.sum())
             .select { MealIngredients.mealId eq id }
-            .map { resultRow -> sum = resultRow[Ingredients.protein.sum()] }
+            .map { resultRow -> sum = resultRow[Ingredients.calories.sum()] }
+        }
+        return sum
+    }
+
+    fun countProteinForMeal (id: Int): Double? {
+        var sum: Double? = 0.00
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.protein.sum())
+                .select { MealIngredients.mealId eq id }
+                .map { resultRow -> sum = resultRow[Ingredients.protein.sum()] }
+        }
+        return sum
+    }
+
+    fun countFatForMeal (id: Int): Double? {
+        var sum: Double? = 0.00
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.fat.sum())
+                .select { MealIngredients.mealId eq id }
+                .map { resultRow -> sum = resultRow[Ingredients.fat.sum()] }
+        }
+        return sum
+    }
+
+    fun countCarbsForMeal (id: Int): Double? {
+        var sum: Double? = 0.00
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.carbs.sum())
+                .select { MealIngredients.mealId eq id }
+                .map { resultRow -> sum = resultRow[Ingredients.carbs.sum()] }
+        }
+        return sum
+    }
+
+    fun countSodiumForMeal (id: Int): Double? {
+        var sum: Double? = 0.00
+        transaction {
+            Ingredients
+                .innerJoin(MealIngredients)
+                .innerJoin(Meals)
+                .slice(Ingredients.sodium.sum())
+                .select { MealIngredients.mealId eq id }
+                .map { resultRow -> sum = resultRow[Ingredients.sodium.sum()] }
         }
         return sum
     }
