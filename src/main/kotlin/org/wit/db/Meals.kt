@@ -1,5 +1,6 @@
 package org.wit.db
 
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.Table
 
 // SRP - Responsibility is to manage one meal.
@@ -15,5 +16,6 @@ object Meals: Table("meals") {
     val fat = double("fat").default(0.00).nullable()
     val carbs = double("carbs").default(0.00).nullable()
     var sodium = double("sodium").default(0.00).nullable()
-    var loves = integer("loves").default(0).nullable()
+    val loves = integer("loves").default(0).nullable()
+    val userId = integer("user_id").references(Users.id, onDelete = ReferenceOption.CASCADE).nullable()
 }

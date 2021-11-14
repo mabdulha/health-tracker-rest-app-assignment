@@ -36,7 +36,14 @@ class MealDAO {
             Meals.insert {
                 it[image] = mealDTO.image
                 it[name] = mealDTO.name
-                it[loves] = mealDTO.loves
+                it[energy] = 0
+                it[calories] = 0
+                it[protein] = 0.00
+                it[fat] = 0.00
+                it[carbs] = 0.00
+                it[sodium] = 0.00
+                it[loves] = 0
+                it[userId] = mealDTO.userId
             } get Meals.id
         }
     }
@@ -73,6 +80,9 @@ class MealDAO {
                     it[sodium] = mealDTO.sodium
                 if (mealDTO.loves != null)
                     it[loves] = mealDTO.loves
+                if (mealDTO.userId != null) {
+                    it[userId] = mealDTO.userId
+                }
             }
         }
     }
