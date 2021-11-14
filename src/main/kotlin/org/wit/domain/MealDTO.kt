@@ -9,5 +9,6 @@ data class MealDTO (
     var protein: Double?,
     var fat: Double?,
     val carbs: Double?,
-    var sodium: Double?
+    var sodium: Double?,
+    var loves: Int?
 )

@@ -43,7 +43,8 @@ fun mapToMealDTO(it: ResultRow) = MealDTO (
     protein = it[Meals.protein],
     fat = it[Meals.fat],
     carbs = it[Meals.carbs],
-    sodium = it[Meals.sodium]
+    sodium = it[Meals.sodium],
+    loves = it[Meals.loves]
 )
 
 fun mapToIngredientDTO(it: ResultRow) = IngredientDTO (

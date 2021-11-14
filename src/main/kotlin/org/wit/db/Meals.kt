@@ -15,4 +15,5 @@ object Meals: Table("meals") {
     val fat = double("fat").default(0.00).nullable()
     val carbs = double("carbs").default(0.00).nullable()
     var sodium = double("sodium").default(0.00).nullable()
+    var loves = integer("loves").default(0).nullable()
 }

@@ -36,6 +36,7 @@ class MealDAO {
             Meals.insert {
                 it[image] = mealDTO.image
                 it[name] = mealDTO.name
+                it[loves] = mealDTO.loves
             } get Meals.id
         }
     }
