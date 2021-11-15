@@ -178,7 +178,7 @@ object HealthTrackerAPI {
             val increment = foundExercise.views?.plus(1)
             val exercise: ExerciseDTO = jsonToObject("{\"views\":\"$increment\"}")
             if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {
-                ctx.status(204).json("Successfully incremented view, new value = $increment")
+                ctx.status(201).json("Successfully incremented view, new value = $increment")
             }
         } else {
             ctx.status(404).json("Could not find the exercise with id: $foundId")
@@ -288,6 +288,21 @@ object HealthTrackerAPI {
             ctx.status(404).json("Meal with id $foundMealId, does not exist")
         }
     }
+
+    fun incrementMealLoves (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
+        val foundMeal = mealDao.findByMealId(foundId)
+        if (foundMeal != null) {
+            val increment = foundMeal.loves?.plus(1)
+            val meal: MealDTO = jsonToObject("{\"loves\":\"$increment\"}")
+            if (mealDao.updateByMealId(mealId = foundId, mealDTO = meal) != 0) {
+                ctx.status(201).json("Successfully incremented love, new value = $increment")
+            }
+        } else {
+            ctx.status(404).json("Could not find the meal with id: $foundId")
+        }
+    }
+
 
     //--------------------------------------------------------------
     // IngredientDAO specifics

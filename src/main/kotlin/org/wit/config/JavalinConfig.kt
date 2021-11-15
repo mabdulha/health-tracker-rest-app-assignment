@@ -50,9 +50,10 @@ class JavalinConfig {
             get("/api/meals/:meal-id", HealthTrackerAPI::getMealsByMealId)
             get("/api/meals/:meal-id/ingredients", HealthTrackerAPI::getMealIngredients)
             get("/api/meals/:meal-id/ingredients/count/", HealthTrackerAPI::countAllMealIngredients)
-            post("/api/meals", HealthTrackerAPI::addMeal)
             patch("/api/meals/:meal-id", HealthTrackerAPI::updateMeal)
+            post("/api/meals", HealthTrackerAPI::addMeal)
             post("/api/meals/:meal-id/ingredients/:ingredient-id/assign", HealthTrackerAPI::assignIngredientIdToMealId)
+            put("/api/meals/:meal-id/increment-loves", HealthTrackerAPI::incrementMealLoves)
             delete("/api/meals/:meal-id", HealthTrackerAPI::deleteMealByMealId)
 
             //Ingredient routes
