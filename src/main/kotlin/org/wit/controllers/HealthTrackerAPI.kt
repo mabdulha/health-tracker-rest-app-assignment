@@ -381,4 +381,15 @@ object HealthTrackerAPI {
         }
     }
 
+    fun addBmiScore (ctx: Context) {
+        val bmi : UserBmiDTO = jsonToObject(ctx.body())
+        val bmiId = userBmiDAO.save(bmi)
+        if (bmiId != null) {
+            ctx.json(bmi)
+            ctx.status(201)
+        } else {
+            ctx.status(409).json("Could not add bmi score")
+        }
+    }
+
 }
