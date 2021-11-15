@@ -19,6 +19,7 @@ object HealthTrackerAPI {
     private val exerciseDao = ExerciseDAO()
     private val mealDao = MealDAO()
     private val ingredientDao = IngredientDAO()
+    private val userBmiDAO = UserBmiDAO()
 
     //-------------------------------------------------------------
     // UserDAO specifics
@@ -369,5 +370,15 @@ object HealthTrackerAPI {
      * Make a route and method to save the bmi score to database which can be used to graph
      *
      */
+
+    fun getBmiScoresByUserId (ctx: Context) {
+        val foundId = ctx.pathParam("user-id").toInt()
+        val bmiScores = userBmiDAO.findBmiScoresByUserId(foundId)
+        if (bmiScores.size != 0) {
+            ctx.status(200).json(bmiScores)
+        } else {
+            ctx.status(404).json("Bmi score with id $foundId, does not exist")
+        }
+    }
 
 }

@@ -61,6 +61,9 @@ class JavalinConfig {
             post("/api/ingredients", HealthTrackerAPI::addIngredient)
             patch("/api/ingredients/:ingredient-id", HealthTrackerAPI::updateIngredient)
             delete("/api/ingredients/:ingredient-id", HealthTrackerAPI::deleteIngredientByIngredientId)
+
+            //BMI routes
+            get("/api/bmi/users/:user-id/scores", HealthTrackerAPI::getBmiScoresByUserId)
         }
     }
 

@@ -1,4 +1,4 @@
-[*] Make a new table in database to store the user id and bmi score.
+[X] Make a new table in database to store the user id and bmi score.
 [*] Make a method to save the bmi score to database.
 [*] Make a route to get all the BMI scores which can be used to graph the previous scores.
 [*] Add method to increment loves on meals
