@@ -51,6 +51,7 @@ class JavalinConfig {
             get("/api/meals", HealthTrackerAPI::getAllMeals)
             get("/api/meals/count", HealthTrackerAPI::countAllMeals)
             get("/api/meals/:meal-id", HealthTrackerAPI::getMealsByMealId)
+            get("/api/meals/users/:user-id", HealthTrackerAPI::getMealsByUserId)
             get("/api/meals/:meal-id/ingredients", HealthTrackerAPI::getMealIngredients)
             get("/api/meals/:meal-id/ingredients/count/", HealthTrackerAPI::countAllMealIngredients)
             patch("/api/meals/:meal-id", HealthTrackerAPI::updateMeal)

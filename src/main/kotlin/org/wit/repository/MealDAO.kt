@@ -5,8 +5,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.wit.db.Exercises
 import org.wit.db.MealIngredients
 import org.wit.db.Meals
+import org.wit.domain.ExerciseDTO
 import org.wit.domain.MealDTO
 import org.wit.domain.MealIngredientDTO
+import org.wit.utilities.mapToExerciseDTO
 import org.wit.utilities.mapToMealDTO
 
 class MealDAO {
@@ -28,6 +30,16 @@ class MealDAO {
                 .select { Meals.id eq id}
                 .map{ mapToMealDTO(it) }
                 .firstOrNull()
+        }
+    }
+
+    //Find all meals for a specific user id
+    fun findMealByUserId(userId: Int): List<MealDTO> {
+        return transaction {
+            Meals
+                .select {Meals.userId eq userId}
+                .orderBy(Meals.loves to SortOrder.DESC)
+                .map { mapToMealDTO(it) }
         }
     }
 
