@@ -12,7 +12,7 @@ class ExerciseDAO {
     fun getAll(): ArrayList<ExerciseDTO> {
         val exercisesList: ArrayList<ExerciseDTO> = arrayListOf()
         transaction {
-            Exercises.selectAll().map {
+            Exercises.selectAll().orderBy(Exercises.views to SortOrder.DESC).map {
                 exercisesList.add(mapToExerciseDTO(it)) }
         }
         return exercisesList
@@ -33,6 +33,7 @@ class ExerciseDAO {
         return transaction {
             Exercises
                 .select {Exercises.userId eq userId}
+                .orderBy(Exercises.views to SortOrder.DESC)
                 .map { mapToExerciseDTO(it) }
         }
     }

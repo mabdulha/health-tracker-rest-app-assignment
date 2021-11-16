@@ -2,6 +2,7 @@ package org.wit.repository
 
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.wit.db.Exercises
 import org.wit.db.MealIngredients
 import org.wit.db.Meals
 import org.wit.domain.MealDTO
@@ -14,7 +15,7 @@ class MealDAO {
     fun getAll(): ArrayList<MealDTO> {
         val mealsList: ArrayList<MealDTO> = arrayListOf()
         transaction {
-            Meals.selectAll().map {
+            Meals.selectAll().orderBy(Meals.loves to SortOrder.DESC).map {
                 mealsList.add(mapToMealDTO(it)) }
         }
         return mealsList
