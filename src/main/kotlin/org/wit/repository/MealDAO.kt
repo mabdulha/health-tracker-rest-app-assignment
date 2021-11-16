@@ -49,12 +49,12 @@ class MealDAO {
             Meals.insert {
                 it[image] = mealDTO.image
                 it[name] = mealDTO.name
-                it[energy] = 0
-                it[calories] = 0
-                it[protein] = 0.00
-                it[fat] = 0.00
-                it[carbs] = 0.00
-                it[sodium] = 0.00
+                it[energy] = mealDTO.energy
+                it[calories] = mealDTO.calories
+                it[protein] = mealDTO.protein
+                it[fat] = mealDTO.fat
+                it[carbs] = mealDTO.carbs
+                it[sodium] = mealDTO.sodium
                 it[loves] = 0
                 it[userId] = mealDTO.userId
             } get Meals.id
