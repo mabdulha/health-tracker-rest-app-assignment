@@ -159,7 +159,7 @@ object HealthTrackerAPI {
         if (exercise != null) {
             ctx.status(200).json(exercise)
         } else {
-            ctx.status(404).html("No exercises found")
+            ctx.status(404).json("No exercises found")
         }
     }
 
@@ -178,11 +178,12 @@ object HealthTrackerAPI {
     }
 
     fun updateExercise (ctx: Context) {
+        val foundId = ctx.pathParam("exercise-id").toInt()
         val exercise : ExerciseDTO = jsonToObject(ctx.body())
-        if (exerciseDao.updateByExerciseId(exerciseId = ctx.pathParam("exercise-id").toInt(), exerciseDTO = exercise) != 0) {
-            ctx.status(204)
+        if (exerciseDao.updateByExerciseId(exerciseId = foundId, exerciseDTO = exercise) != 0) {
+            ctx.status(204).json("Exercise with id: $foundId, updated successfully")
         } else {
-            ctx.status(404)
+            ctx.status(404).json("Could not find exercise with id: $foundId")
         }
     }
 
@@ -204,7 +205,7 @@ object HealthTrackerAPI {
         val foundId = ctx.pathParam("exercise-id").toInt()
         if (exerciseDao.findByExerciseId(foundId) != null) {
             exerciseDao.deleteByExerciseId(foundId)
-            ctx.status(204).html("Exercise with id: $foundId, deleted successfully")
+            ctx.status(204).json("Exercise with id: $foundId, deleted successfully")
         } else {
             ctx.status(404).json("Exercise with id $foundId, does not exist")
         }
@@ -213,7 +214,7 @@ object HealthTrackerAPI {
     fun deleteExerciseByUserId (ctx: Context) {
         val foundId = ctx.pathParam("user-id").toInt()
         if (exerciseDao.deleteByExerciseId(foundId) != 0) {
-            ctx.status(204).html("Exercises belonging to user with id: $foundId, deleted successfully")
+            ctx.status(204).json("Exercises belonging to user with id: $foundId, deleted successfully")
         } else {
             ctx.status(404).json("No Exercises found for user with id: $foundId")
         }
@@ -230,6 +231,15 @@ object HealthTrackerAPI {
         } else {
             ctx.status(404)
             ctx.html("Error 404 - No Meals Found!!")
+        }
+    }
+
+    fun countAllMeals (ctx: Context) {
+        val mealsCount = mealDao.getAll().size
+        if (mealsCount != 0) {
+            ctx.status(200).json(mealsCount)
+        } else {
+            ctx.status(404).json("Error 404 - No Meals Found!!")
         }
     }
 
