@@ -55,7 +55,7 @@ class MealDAO {
                 it[fat] = mealDTO.fat
                 it[carbs] = mealDTO.carbs
                 it[sodium] = mealDTO.sodium
-                it[loves] = 0
+                it[loves] = mealDTO.loves
                 it[userId] = mealDTO.userId
             } get Meals.id
         }
