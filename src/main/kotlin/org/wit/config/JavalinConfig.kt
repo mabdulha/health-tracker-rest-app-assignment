@@ -28,6 +28,7 @@ class JavalinConfig {
         app.routes {
             //User routes
             get("/api/users", HealthTrackerAPI::getAllUsers)
+            get("/api/users/count", HealthTrackerAPI::countAllUsers)
             get("/api/users/:user-id", HealthTrackerAPI::getUserByUserId)
             post("/api/users/register", HealthTrackerAPI::addUser)
             get("/api/users/email/:email", HealthTrackerAPI::getUserByEmail)
@@ -37,6 +38,7 @@ class JavalinConfig {
 
             //Exercise routes
             get("/api/exercises", HealthTrackerAPI::getAllExercises)
+            get("/api/exercises/count", HealthTrackerAPI::countAllExercises)
             get("/api/users/:user-id/exercises", HealthTrackerAPI::getExercisesByUserId)
             get("/api/exercises/:exercise-id", HealthTrackerAPI::getExercisesByExerciseId)
             post("/api/exercises", HealthTrackerAPI::addExercise)

@@ -3,8 +3,11 @@
 [X] Make a route to get all the BMI scores which can be used to graph the previous scores.
 [*] Add method to increment loves on meals.
 [*] Sort get all by views/loves/alphabetically.
+[*] Counts of how many users, meals, exercises are on the app to make a dashboard in vue.
 [*] Add tests for Meals.
 [*] Add tests for Ingredients.
 [*] Add additional tests for the new methods in Exercises and Users.
 [*] Add comments.
 [*] Swagger document all routes.
+[*] Add a Readme.
+[*] Fill Assignment Documentation.

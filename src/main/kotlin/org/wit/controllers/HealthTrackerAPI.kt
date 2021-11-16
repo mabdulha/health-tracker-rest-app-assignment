@@ -36,15 +36,22 @@ object HealthTrackerAPI {
         }
     }
 
+    fun countAllUsers (ctx: Context) {
+        val users = userDao.getAll().size
+        if (users != 0) {
+            ctx.status(200).json(users)
+        } else {
+            ctx.status(404).json("Error 404 - No Users Found!!")
+        }
+    }
+
     fun getUserByUserId(ctx: Context) {
         val foundId = ctx.pathParam("user-id").toInt()
         val user = userDao.findById(foundId)
         if (user != null) {
-            ctx.json(user)
-            ctx.status(200)
+            ctx.status(200).json(user)
         } else {
-            ctx.status(404)
-            ctx.html("No user found with id: $foundId")
+            ctx.status(404).json("No user found with id: $foundId")
         }
     }
 
@@ -54,8 +61,7 @@ object HealthTrackerAPI {
             val userId = userDao.save(user)
             if (userId != null) {
                 user.id = userId
-                ctx.json(user)
-                ctx.status(201)
+                ctx.status(201).json(user)
             }
         } else {
             ctx.status(409).json("The email: ${user.email}, already exists")
@@ -67,11 +73,9 @@ object HealthTrackerAPI {
         val foundEmail = ctx.pathParam("email")
         val user = userDao.findByEmail(foundEmail)
         if (user != null) {
-            ctx.status(200)
-            ctx.json(user)
+            ctx.status(200).json(user)
         } else {
-            ctx.status(404)
-            ctx.html("No user found with email: $foundEmail")
+            ctx.status(404).json("No user found with email: $foundEmail")
         }
     }
 
@@ -79,19 +83,19 @@ object HealthTrackerAPI {
         val foundId = ctx.pathParam("user-id").toInt()
         if (userDao.findById(foundId) != null) {
             userDao.delete(foundId)
-            ctx.html("User with id: ${foundId}, deleted successfully")
-            ctx.status(204)
+            ctx.status(204).json("User with id: ${foundId}, deleted successfully")
         } else {
             ctx.status(404).json("User with id ${foundId}, does not exist")
         }
     }
 
     fun updateUser(ctx: Context){
+        val foundId = ctx.pathParam("user-id").toInt()
         val user : UserDTO = jsonToObject(ctx.body())
-        if ((userDao.update(id = ctx.pathParam("user-id").toInt(), userDTO=user)) != 0)
-            ctx.status(204)
+        if ((userDao.update(id = foundId, userDTO=user)) != 0)
+            ctx.status(204).json("User with id: $foundId, updated successfully")
         else
-            ctx.status(404)
+            ctx.status(404).json("User with id: $foundId, not found ")
     }
 
     fun login (ctx: Context) {
@@ -105,14 +109,11 @@ object HealthTrackerAPI {
                     .claim("User", existingUser)
                     .signWith(Keys.hmacShaKeyFor(secret))
                     .compact()
-                ctx.json(jwt)
-                ctx.status(200)
+                ctx.status(200).json(jwt)
             } else {
-                ctx.status(401)
-                ctx.json("Invalid email or password")
+                ctx.status(401).json("Invalid email or password")
             }
         } else {
-            ctx.status(401)
             ctx.res.sendError(401, "Invalid email or password")
             // ctx.json("Invalid email or password")
         }
@@ -123,7 +124,21 @@ object HealthTrackerAPI {
     //-------------------------------------------------------------
 
     fun getAllExercises (ctx: Context) {
-        ctx.json(exerciseDao.getAll())
+        val exercises = exerciseDao.getAll()
+        if (exercises.size != 0) {
+            ctx.status(200).json(exercises)
+        } else {
+            ctx.status(404).json("Error 404 - No Exercises Found!!")
+        }
+    }
+
+    fun countAllExercises (ctx: Context) {
+        val exercises = exerciseDao.getAll().size
+        if (exercises != 0) {
+            ctx.status(200).json(exercises)
+        } else {
+            ctx.status(404).json("Error 404 - No Exercises Found!!")
+        }
     }
 
     fun getExercisesByUserId (ctx: Context) {
