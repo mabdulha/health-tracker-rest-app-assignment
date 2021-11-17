@@ -1,14 +1,13 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.wit.db.Ingredients
 import org.wit.helpers.ingredients
+import org.wit.helpers.populateIngredientTable
 
 //retrieving some test data from Fixtures
 val ingredient1 = ingredients[0]
@@ -34,11 +33,7 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
-                SchemaUtils.create(Ingredients)
-                val ingredientDao = IngredientDAO()
-                ingredientDao.save(ingredient1)
-                ingredientDao.save(ingredient2)
-                ingredientDao.save(ingredient3)
+                val ingredientDao = populateIngredientTable()
 
                 //Act & Assert
                 assertEquals(3, ingredientDao.getAll().size)
@@ -58,11 +53,7 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
-                SchemaUtils.create(Ingredients)
-                val ingredientDao = IngredientDAO()
-                ingredientDao.save(ingredient1)
-                ingredientDao.save(ingredient2)
-                ingredientDao.save(ingredient3)
+                val ingredientDao = populateIngredientTable()
 
                 //Act & Assert
                 assertEquals(3, ingredientDao.getAll().size)
@@ -74,11 +65,7 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
-                SchemaUtils.create(Ingredients)
-                val ingredientDao = IngredientDAO()
-                ingredientDao.save(ingredient1)
-                ingredientDao.save(ingredient2)
-                ingredientDao.save(ingredient3)
+                val ingredientDao = populateIngredientTable()
 
                 //Act & Assert
                 assertEquals(null, ingredientDao.findByIngredientId(4))
@@ -90,11 +77,7 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
-                SchemaUtils.create(Ingredients)
-                val ingredientDao = IngredientDAO()
-                ingredientDao.save(ingredient1)
-                ingredientDao.save(ingredient2)
-                ingredientDao.save(ingredient3)
+                val ingredientDao = populateIngredientTable()
 
                 //Act & Assert
                 assertEquals(ingredient3, ingredientDao.findByIngredientId(3))
