@@ -51,7 +51,25 @@ class IngredientDAOTest {
     }
 
     @Nested
-    inner class ReadIngredients {}
+    inner class ReadIngredients {
+
+        @Test
+        fun `getting all ingredients from a populated table returns all rows`() {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients
+                SchemaUtils.create(Ingredients)
+                val ingredientDao = IngredientDAO()
+                ingredientDao.save(ingredient1)
+                ingredientDao.save(ingredient2)
+                ingredientDao.save(ingredient3)
+
+                //Act & Assert
+                assertEquals(3, ingredientDao.getAll().size)
+            }
+        }
+
+    }
 
     @Nested
     inner class UpdateIngredients {}
