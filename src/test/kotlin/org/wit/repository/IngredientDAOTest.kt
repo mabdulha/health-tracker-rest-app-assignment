@@ -10,12 +10,18 @@ import org.junit.jupiter.api.Test
 import org.wit.db.Ingredients
 import org.wit.domain.IngredientDTO
 import org.wit.helpers.ingredients
+import org.wit.helpers.meals
 import org.wit.helpers.populateIngredientTable
 
 //retrieving some test data from Fixtures
 val ingredient1 = ingredients[0]
 val ingredient2 = ingredients[1]
 val ingredient3 = ingredients[2]
+
+val meal1 = meals[0]
+val meal2 = meals[1]
+val meal3 = meals[2]
+
 
 class IngredientDAOTest {
 

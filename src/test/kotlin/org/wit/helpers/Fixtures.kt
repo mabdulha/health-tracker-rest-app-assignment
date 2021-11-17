@@ -3,9 +3,11 @@ package org.wit.helpers
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.wit.db.Exercises
 import org.wit.db.Ingredients
+import org.wit.db.Meals
 import org.wit.db.Users
 import org.wit.domain.ExerciseDTO
 import org.wit.domain.IngredientDTO
+import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.*
 
@@ -48,6 +50,13 @@ val ingredients = arrayListOf(
     IngredientDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main4.png", name = "Carrots", energy = 46, calories = 124, protein = 7.77, fat = 7.77, carbs = 7.77, sodium = 7.77)
 )
 
+val meals = arrayListOf(
+    MealDTO(id = 1, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main1.png", name = "Cheese Cake", energy = 15, calories = 11, protein = 1.11, fat = 1.11, carbs = 1.11, sodium = 1.11, loves = 26, userId = 1),
+    MealDTO(id = 2, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main2.png", name = "Beef Stew", energy = 35, calories = 44, protein = 2.22, fat = 2.22, carbs = 2.22, sodium = 2.22, loves = 98, userId = 1),
+    MealDTO(id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png", name = "Chicken Salad", energy = 25, calories = 55, protein = 3.33, fat = 3.33, carbs = 3.33, sodium = 3.33, loves = 46, userId = 2),
+    MealDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main4.png", name = "Veggies", energy = 42, calories = 65, protein = 4.44, fat = 4.44, carbs = 4.44, sodium = 4.44, loves = 13, userId = 3)
+)
+
 fun populateUserTable(): UserDAO {
     SchemaUtils.create(Users)
     val userDAO = UserDAO()
@@ -73,4 +82,13 @@ fun populateIngredientTable(): IngredientDAO {
     ingredientDao.save(ingredient2)
     ingredientDao.save(ingredient3)
     return ingredientDao
+}
+
+fun populateMealTable(): MealDAO {
+    SchemaUtils.create(Meals)
+    val mealDAO = MealDAO()
+    mealDAO.save(meal1)
+    mealDAO.save(meal2)
+    mealDAO.save(meal3)
+    return mealDAO
 }
