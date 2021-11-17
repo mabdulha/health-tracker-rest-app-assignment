@@ -42,10 +42,10 @@ val exercises = arrayListOf(
 )
 
 val ingredients = arrayListOf(
-    IngredientDTO(id = 1, image = "", name = "", energy = 5, calories = 55, protein = 4.44, fat = 4.44, carbs = 4.44, sodium = 4.44),
-    IngredientDTO(id = 2, image = "", name = "", energy = 1, calories = 48, protein = 5.55, fat = 5.55, carbs = 5.55, sodium = 5.55),
-    IngredientDTO(id = 3, image = "", name = "", energy = 35, calories = 67, protein = 6.66, fat = 6.66, carbs = 6.66, sodium = 6.66),
-    IngredientDTO(id = 4, image = "", name = "", energy = 46, calories = 124, protein = 7.77, fat = 7.77, carbs = 7.77, sodium = 7.77)
+    IngredientDTO(id = 1, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main1.png", name = "Lamb", energy = 5, calories = 55, protein = 4.44, fat = 4.44, carbs = 4.44, sodium = 4.44),
+    IngredientDTO(id = 2, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main2.png", name = "Chicken Drumstick", energy = 1, calories = 48, protein = 5.55, fat = 5.55, carbs = 5.55, sodium = 5.55),
+    IngredientDTO(id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png", name = "Salt", energy = 35, calories = 67, protein = 6.66, fat = 6.66, carbs = 6.66, sodium = 6.66),
+    IngredientDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main4.png", name = "Carrots", energy = 46, calories = 124, protein = 7.77, fat = 7.77, carbs = 7.77, sodium = 7.77)
 )
 
 fun populateUserTable(): UserDAO {

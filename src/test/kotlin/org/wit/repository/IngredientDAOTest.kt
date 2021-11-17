@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.wit.domain.IngredientDTO
 import org.wit.helpers.ingredients
 import org.wit.helpers.populateIngredientTable
 
@@ -88,7 +89,23 @@ class IngredientDAOTest {
     }
 
     @Nested
-    inner class UpdateIngredients {}
+    inner class UpdateIngredients {
+
+        @Test
+        fun `updating existing ingredient in table results in successful update`() {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients
+                val ingredientDao = populateIngredientTable()
+
+                //Act & Assert
+                val ingredient3Updated = IngredientDTO(id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main5.png", name = "Lamb", energy = 9, calories = 99, protein = 9.99, fat = 9.99, carbs = 9.99, sodium = 9.99)
+                ingredientDao.updateByIngredientId(ingredient3.id, ingredient3Updated)
+                assertEquals(ingredient3Updated, ingredientDao.findByIngredientId(3))
+            }
+        }
+
+    }
 
     @Nested
     inner class DeleteIngredients {
@@ -97,7 +114,7 @@ class IngredientDAOTest {
         fun `deleting a non-existant ingredient in table results in no deletion`() {
             transaction {
 
-                //Arrange - create and populate table with three users
+                //Arrange - create and populate table with three ingredients
                 val ingredientDAO = populateIngredientTable()
 
                 //Act & Assert
@@ -111,7 +128,7 @@ class IngredientDAOTest {
         fun `deleting an existing ingredient in table results in record being deleted`() {
             transaction {
 
-                //Arrange - create and populate table with three users
+                //Arrange - create and populate table with three ingredients
                 val ingredientDAO = populateIngredientTable()
 
                 //Act & Assert
