@@ -1,11 +1,13 @@
 package org.wit.repository
 
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.wit.db.Ingredients
 import org.wit.domain.IngredientDTO
 import org.wit.helpers.ingredients
 import org.wit.helpers.populateIngredientTable
@@ -48,6 +50,19 @@ class IngredientDAOTest {
 
     @Nested
     inner class ReadIngredients {
+
+        @Test
+        fun `get all ingredients over empty table returns none`() {
+            transaction {
+
+                //Arrange - create and setup ingredientDAO object
+                SchemaUtils.create(Ingredients)
+                val ingredientDAO = IngredientDAO()
+
+                //Act & Assert
+                assertEquals(0, ingredientDAO.getAll().size)
+            }
+        }
 
         @Test
         fun `getting all ingredients from a populated table returns all rows`() {
