@@ -2,8 +2,10 @@ package org.wit.helpers
 
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.wit.db.Exercises
+import org.wit.db.Ingredients
 import org.wit.db.Users
 import org.wit.domain.ExerciseDTO
+import org.wit.domain.IngredientDTO
 import org.wit.domain.UserDTO
 import org.wit.repository.*
 
@@ -39,6 +41,13 @@ val exercises = arrayListOf(
     ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 7, id = 4, userId = 3, image = "")
 )
 
+val ingredients = arrayListOf(
+    IngredientDTO(id = 1, image = "", name = "", energy = 5, calories = 55, protein = 4.44, fat = 4.44, carbs = 4.44, sodium = 4.44),
+    IngredientDTO(id = 2, image = "", name = "", energy = 1, calories = 48, protein = 5.55, fat = 5.55, carbs = 5.55, sodium = 5.55),
+    IngredientDTO(id = 3, image = "", name = "", energy = 35, calories = 67, protein = 6.66, fat = 6.66, carbs = 6.66, sodium = 6.66),
+    IngredientDTO(id = 4, image = "", name = "", energy = 46, calories = 124, protein = 7.77, fat = 7.77, carbs = 7.77, sodium = 7.77)
+)
+
 fun populateUserTable(): UserDAO {
     SchemaUtils.create(Users)
     val userDAO = UserDAO()
@@ -55,4 +64,13 @@ fun populateExerciseTable(): ExerciseDAO {
     exerciseDAO.save(exercise2)
     exerciseDAO.save(exercise3)
     return exerciseDAO
+}
+
+fun populateIngredientTable(): IngredientDAO {
+    SchemaUtils.create(Ingredients)
+    val ingredientDao = IngredientDAO()
+    ingredientDao.save(ingredient1)
+    ingredientDao.save(ingredient2)
+    ingredientDao.save(ingredient3)
+    return ingredientDao
 }
