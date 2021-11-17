@@ -91,6 +91,22 @@ class IngredientDAOTest {
     inner class UpdateIngredients {}
 
     @Nested
-    inner class DeleteIngredients {}
+    inner class DeleteIngredients {
+
+        @Test
+        fun `deleting a non-existant ingredient in table results in no deletion`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val ingredientDAO = populateIngredientTable()
+
+                //Act & Assert
+                assertEquals(3, ingredientDAO.getAll().size)
+                ingredientDAO.deleteByIngredientId(4)
+                assertEquals(3, ingredientDAO.getAll().size)
+            }
+        }
+
+    }
 
 }
