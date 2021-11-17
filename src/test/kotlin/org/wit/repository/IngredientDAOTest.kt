@@ -105,6 +105,21 @@ class IngredientDAOTest {
             }
         }
 
+        @Test
+        fun `updating non-existant ingredient in table results in no updates`() {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients
+                val ingredientDao = populateIngredientTable()
+
+                //Act & Assert
+                val ingredient4Updated = IngredientDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main5.png", name = "Lamb", energy = 9, calories = 99, protein = 9.99, fat = 9.99, carbs = 9.99, sodium = 9.99)
+                ingredientDao.updateByIngredientId(4, ingredient4Updated)
+                assertEquals(null, ingredientDao.findByIngredientId(4))
+                assertEquals(3, ingredientDao.getAll().size)
+            }
+        }
+
     }
 
     @Nested
