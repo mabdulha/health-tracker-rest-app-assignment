@@ -69,6 +69,22 @@ class IngredientDAOTest {
             }
         }
 
+        @Test
+        fun `get ingredient by id that doesn't exist, results in no user returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients
+                SchemaUtils.create(Ingredients)
+                val ingredientDao = IngredientDAO()
+                ingredientDao.save(ingredient1)
+                ingredientDao.save(ingredient2)
+                ingredientDao.save(ingredient3)
+
+                //Act & Assert
+                assertEquals(null, ingredientDao.findByIngredientId(4))
+            }
+        }
+
     }
 
     @Nested
