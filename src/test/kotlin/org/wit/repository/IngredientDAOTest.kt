@@ -107,6 +107,20 @@ class IngredientDAOTest {
             }
         }
 
+        @Test
+        fun `deleting an existing ingredient in table results in record being deleted`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                val ingredientDAO = populateIngredientTable()
+
+                //Act & Assert
+                assertEquals(3, ingredientDAO.getAll().size)
+                ingredientDAO.deleteByIngredientId(user3.id)
+                assertEquals(2, ingredientDAO.getAll().size)
+            }
+        }
+
     }
 
 }
