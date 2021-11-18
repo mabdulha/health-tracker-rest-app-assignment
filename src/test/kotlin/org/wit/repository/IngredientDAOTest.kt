@@ -187,10 +187,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val ingredients = arrayListOf(ingredient1, ingredient2)
 
                 assertEquals(ingredients, ingredientDAO.findIngredientsForMeal(meal1.id))
@@ -204,10 +204,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
 
                 assertEquals(2, ingredientDAO.countAmountOfIngredientsInMeal(meal1.id))
 
@@ -219,10 +219,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val count = ingredient1.energy?.plus(ingredient2.energy!!)
 
                 assertEquals(count, ingredientDAO.countEnergyForMeal(meal1.id))
@@ -236,10 +236,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val count = ingredient1.calories?.plus(ingredient2.calories!!)
 
 
@@ -254,10 +254,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val count = ingredient1.protein?.plus(ingredient2.protein!!)
 
 
@@ -272,10 +272,10 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val count = ingredient1.fat?.plus(ingredient2.fat!!)
 
 
@@ -290,15 +290,33 @@ class IngredientDAOTest {
             transaction {
 
                 //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val ingredientDAO = populateIngredientTable()
-                val mealDAO = populateMealTable()
-                val mealIngredient = populateMealIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
                 val count = ingredient1.carbs?.plus(ingredient2.carbs!!)
 
 
                 assertEquals(count, ingredientDAO.countCarbsForMeal(meal1.id))
                 assertEquals(ingredient3.carbs, ingredientDAO.countCarbsForMeal(meal2.id))
+
+            }
+        }
+
+        @Test
+        fun `count the amount of sodium in a meal by passing meal id` () {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
+                populateUserTable()
+                val ingredientDAO = populateIngredientTable()
+                populateMealTable()
+                populateMealIngredientTable()
+                val count = ingredient1.sodium?.plus(ingredient2.sodium!!)
+
+
+                assertEquals(count, ingredientDAO.countSodiumForMeal(meal1.id))
+                assertEquals(ingredient3.sodium, ingredientDAO.countSodiumForMeal(meal2.id))
 
             }
         }
