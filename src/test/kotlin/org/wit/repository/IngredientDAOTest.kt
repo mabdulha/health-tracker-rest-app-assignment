@@ -183,6 +183,23 @@ class IngredientDAOTest {
     inner class IngredientCounts {
 
         @Test
+        fun `return all the ingredients associated with a meal` () {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
+                val userDAO = populateUserTable()
+                val ingredientDAO = populateIngredientTable()
+                val mealDAO = populateMealTable()
+                val mealIngredient = populateMealIngredientTable()
+                val ingredients = arrayListOf(ingredient1, ingredient2)
+
+                assertEquals(ingredients, ingredientDAO.findIngredientsForMeal(meal1.id))
+                assertEquals(arrayListOf(ingredient3), ingredientDAO.findIngredientsForMeal(meal2.id))
+
+            }
+        }
+
+        @Test
         fun `count the amount of ingredients in meals with correct id` () {
             transaction {
 
@@ -192,7 +209,7 @@ class IngredientDAOTest {
                 val mealDAO = populateMealTable()
                 val mealIngredient = populateMealIngredientTable()
 
-                assertEquals(2, ingredientDAO.findIngredientsForMeal(meal1.id).count())
+                assertEquals(2, ingredientDAO.countAmountOfIngredientsInMeal(meal1.id))
 
             }
         }
