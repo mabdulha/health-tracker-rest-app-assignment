@@ -8,10 +8,9 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Ingredients
+import org.wit.db.MealIngredients
 import org.wit.domain.IngredientDTO
-import org.wit.helpers.ingredients
-import org.wit.helpers.meals
-import org.wit.helpers.populateIngredientTable
+import org.wit.helpers.*
 
 //retrieving some test data from Fixtures
 val ingredient1 = ingredients[0]
@@ -21,6 +20,10 @@ val ingredient3 = ingredients[2]
 val meal1 = meals[0]
 val meal2 = meals[1]
 val meal3 = meals[2]
+
+val mealIngredient1 = mealIngredients[0]
+val mealIngredient2 = mealIngredients[1]
+val mealIngredient3 = mealIngredients[2]
 
 
 class IngredientDAOTest {
@@ -171,6 +174,26 @@ class IngredientDAOTest {
                 assertEquals(3, ingredientDAO.getAll().size)
                 ingredientDAO.deleteByIngredientId(user3.id)
                 assertEquals(2, ingredientDAO.getAll().size)
+            }
+        }
+
+    }
+
+    @Nested
+    inner class IngredientCounts {
+
+        @Test
+        fun `count the amount of ingredients in meals with correct id` () {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
+                val userDAO = populateUserTable()
+                val ingredientDAO = populateIngredientTable()
+                val mealDAO = populateMealTable()
+                val mealIngredient = populateMealIngredientTable()
+
+                assertEquals(2, ingredientDAO.findIngredientsForMeal(meal1.id).count())
+
             }
         }
 

@@ -1,4 +1,72 @@
 -------------------------------------------------------------------------------
 Test set: org.wit.controllers.HealthTrackerAPITest
 -------------------------------------------------------------------------------
-Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 133.015 s - in org.wit.controllers.HealthTrackerAPITest
+Tests run: 30, Failures: 2, Errors: 15, Skipped: 0, Time elapsed: 25.749 s <<< FAILURE! - in org.wit.controllers.HealthTrackerAPITest
+getting a user by email when email exists, returns a 200 response  Time elapsed: 1.039 s  <<< FAILURE!
+java.lang.AssertionError: expected:<200> but was:<404>
+	at org.wit.controllers.HealthTrackerAPITest$ReadUsers.getting a user by email when email exists, returns a 200 response(HealthTrackerAPITest.kt:90)
+
+getting a user by id when id exists, returns a 200 response  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$ReadUsers.getting a user by id when id exists, returns a 200 response(HealthTrackerAPITest.kt:71)
+
+add a user with correct details returns a 201 response  Time elapsed: 0.01 s  <<< FAILURE!
+java.lang.AssertionError: expected:<201> but was:<404>
+	at org.wit.controllers.HealthTrackerAPITest$CreateUsers.add a user with correct details returns a 201 response(HealthTrackerAPITest.kt:109)
+
+add a user where email already exists, returns a 409  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$CreateUsers.add a user where email already exists, returns a 409(HealthTrackerAPITest.kt:133)
+
+updating a user when it exists, returns a 204 response  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$UpdateUsers.updating a user when it exists, returns a 204 response(HealthTrackerAPITest.kt:158)
+
+deleting a user when it exists, returns a 204 response  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$DeleteUsers.deleting a user when it exists, returns a 204 response(HealthTrackerAPITest.kt:197)
+
+logging in a user with correct credentials, returns a 200 response  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$LoginUsers.logging in a user with correct credentials, returns a 200 response(HealthTrackerAPITest.kt:220)
+
+logging in a user with correct email and incorrect password, returns a 401 response  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$LoginUsers.logging in a user with correct email and incorrect password, returns a 401 response(HealthTrackerAPITest.kt:250)
+
+logging in a user with incorrect email and password, returns a 401 response  Time elapsed: 0.011 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$LoginUsers.logging in a user with incorrect email and password, returns a 401 response(HealthTrackerAPITest.kt:235)
+
+add an exercise when a user exists for it, returns a 201 response  Time elapsed: 0.016 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$CreateExercises.add an exercise when a user exists for it, returns a 201 response(HealthTrackerAPITest.kt:272)
+
+get all exercises by user id when no exercises exist returns 404 response  Time elapsed: 0.01 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$ReadExercises.get all exercises by user id when no exercises exist returns 404 response(HealthTrackerAPITest.kt:337)
+
+get all exercises by user id when user and exercise exists returns 200 response  Time elapsed: 0.008 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$ReadExercises.get all exercises by user id when user and exercise exists returns 200 response(HealthTrackerAPITest.kt:316)
+
+get exercise by exercise id when exercise exists returns 200 response  Time elapsed: 0.005 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$ReadExercises.get exercise by exercise id when exercise exists returns 200 response(HealthTrackerAPITest.kt:369)
+
+incrementing an exercises view by exercise id when it exists, returns 204 response  Time elapsed: 0.008 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$UpdateExercises.incrementing an exercises view by exercise id when it exists, returns 204 response(HealthTrackerAPITest.kt:445)
+
+updating an exercise by exercise id when it exists, returns 204 response  Time elapsed: 0.003 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$UpdateExercises.updating an exercise by exercise id when it exists, returns 204 response(HealthTrackerAPITest.kt:405)
+
+deleting an exercise by id when it exists, returns a 204 response  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$DeleteExercises.deleting an exercise by id when it exists, returns a 204 response(HealthTrackerAPITest.kt:487)
+
+deleting all exercises by userid when it exists, returns a 204 response  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "kong.unirest.JsonNode.toString()" because the return value of "kong.unirest.HttpResponse.getBody()" is null
+	at org.wit.controllers.HealthTrackerAPITest$DeleteExercises.deleting all exercises by userid when it exists, returns a 204 response(HealthTrackerAPITest.kt:504)
+
