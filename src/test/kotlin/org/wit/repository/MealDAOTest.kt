@@ -2,7 +2,6 @@ package org.wit.repository
 
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -137,6 +136,38 @@ class MealDAOTest {
     inner class UpdateMeals {}
 
     @Nested
-    inner class DeleteMeals {}
+    inner class DeleteMeals {
+
+        @Test
+        fun `deleting a non-existent meal in table results in no deletion`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(3, mealDAO.getAll().size)
+                mealDAO.deleteByMealId(4)
+                Assertions.assertEquals(3, mealDAO.getAll().size)
+            }
+        }
+
+        @Test
+        fun `deleting an existing meal in table results in record being deleted`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(3, mealDAO.getAll().size)
+                mealDAO.deleteByMealId(user3.id)
+                Assertions.assertEquals(2, mealDAO.getAll().size)
+            }
+        }
+
+    }
 
 }
