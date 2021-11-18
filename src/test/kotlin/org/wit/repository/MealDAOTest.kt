@@ -4,12 +4,18 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Meals
+import org.wit.domain.ExerciseDTO
+import org.wit.domain.MealDTO
+import org.wit.domain.UserDTO
+import org.wit.helpers.populateExerciseTable
 import org.wit.helpers.populateMealTable
 import org.wit.helpers.populateUserTable
+import kotlin.test.assertNotEquals
 
 class MealDAOTest {
 
@@ -34,10 +40,10 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(3, mealDAO.getAll().size)
-                Assertions.assertEquals(meal1, mealDAO.findByMealId(meal1.id))
-                Assertions.assertEquals(meal2, mealDAO.findByMealId(meal2.id))
-                Assertions.assertEquals(meal3, mealDAO.findByMealId(meal3.id))
+                assertEquals(3, mealDAO.getAll().size)
+                assertEquals(meal1, mealDAO.findByMealId(meal1.id))
+                assertEquals(meal2, mealDAO.findByMealId(meal2.id))
+                assertEquals(meal3, mealDAO.findByMealId(meal3.id))
 
             }
         }
@@ -56,7 +62,7 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(3, mealDAO.getAll().size)
+                assertEquals(3, mealDAO.getAll().size)
             }
         }
 
@@ -70,7 +76,7 @@ class MealDAOTest {
                 val mealDAO = MealDAO()
 
                 //Act & Assert
-                Assertions.assertEquals(0, mealDAO.getAll().size)
+                assertEquals(0, mealDAO.getAll().size)
             }
         }
 
@@ -83,7 +89,7 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(null, mealDAO.findByMealId(4))
+                assertEquals(null, mealDAO.findByMealId(4))
             }
         }
 
@@ -96,9 +102,9 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(meal1, mealDAO.findByMealId(1))
-                Assertions.assertEquals(meal2, mealDAO.findByMealId(2))
-                Assertions.assertEquals(meal3, mealDAO.findByMealId(3))
+                assertEquals(meal1, mealDAO.findByMealId(1))
+                assertEquals(meal2, mealDAO.findByMealId(2))
+                assertEquals(meal3, mealDAO.findByMealId(3))
             }
         }
 
@@ -111,7 +117,7 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(0, mealDAO.findMealByUserId(4).size)
+                assertEquals(0, mealDAO.findMealByUserId(4).size)
             }
         }
 
@@ -125,15 +131,56 @@ class MealDAOTest {
                 val meals = arrayListOf(meal2, meal1)
 
                 //Act & Assert
-                Assertions.assertEquals(meals, mealDAO.findMealByUserId(1))
-                Assertions.assertEquals(arrayListOf(meal3), mealDAO.findMealByUserId(2))
+                assertEquals(meals, mealDAO.findMealByUserId(1))
+                assertEquals(arrayListOf(meal3), mealDAO.findMealByUserId(2))
             }
         }
 
     }
 
     @Nested
-    inner class UpdateMeals {}
+    inner class UpdateMeals {
+
+        @Test
+        fun `updating existing meal in table results in successful update`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                val meal3updated = MealDTO(
+                    id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png",
+                    name = "Chicken Soup", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00,
+                    loves = 46, userId = 2
+                )
+                mealDAO.updateByMealId(meal3updated.id, meal3updated)
+                assertEquals(meal3updated, mealDAO.findByMealId(3))
+            }
+        }
+
+        @Test
+        fun `updating non-existent meal in table results in no updates`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                val meal4updated = MealDTO(
+                    id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png",
+                    name = "Chicken Soup", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00,
+                    loves = 46, userId = 2
+                )
+                mealDAO.updateByMealId(4, meal4updated)
+                assertEquals(null, mealDAO.findByMealId(4))
+                assertEquals(3, mealDAO.getAll().size)
+            }
+        }
+
+    }
 
     @Nested
     inner class DeleteMeals {
@@ -147,9 +194,9 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(3, mealDAO.getAll().size)
+                assertEquals(3, mealDAO.getAll().size)
                 mealDAO.deleteByMealId(4)
-                Assertions.assertEquals(3, mealDAO.getAll().size)
+                assertEquals(3, mealDAO.getAll().size)
             }
         }
 
@@ -162,9 +209,9 @@ class MealDAOTest {
                 val mealDAO = populateMealTable()
 
                 //Act & Assert
-                Assertions.assertEquals(3, mealDAO.getAll().size)
+                assertEquals(3, mealDAO.getAll().size)
                 mealDAO.deleteByMealId(user3.id)
-                Assertions.assertEquals(2, mealDAO.getAll().size)
+                assertEquals(2, mealDAO.getAll().size)
             }
         }
 
