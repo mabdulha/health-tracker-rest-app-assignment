@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Ingredients
-import org.wit.db.MealIngredients
 import org.wit.domain.IngredientDTO
 import org.wit.helpers.*
 
@@ -130,7 +129,7 @@ class IngredientDAOTest {
         }
 
         @Test
-        fun `updating non-existant ingredient in table results in no updates`() {
+        fun `updating non-existent ingredient in table results in no updates`() {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
@@ -150,7 +149,7 @@ class IngredientDAOTest {
     inner class DeleteIngredients {
 
         @Test
-        fun `deleting a non-existant ingredient in table results in no deletion`() {
+        fun `deleting a non-existent ingredient in table results in no deletion`() {
             transaction {
 
                 //Arrange - create and populate table with three ingredients
