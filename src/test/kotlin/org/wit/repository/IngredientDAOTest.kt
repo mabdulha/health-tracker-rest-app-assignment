@@ -285,6 +285,24 @@ class IngredientDAOTest {
             }
         }
 
+        @Test
+        fun `count the amount of carbs in a meal by passing meal id` () {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
+                val userDAO = populateUserTable()
+                val ingredientDAO = populateIngredientTable()
+                val mealDAO = populateMealTable()
+                val mealIngredient = populateMealIngredientTable()
+                val count = ingredient1.carbs?.plus(ingredient2.carbs!!)
+
+
+                assertEquals(count, ingredientDAO.countCarbsForMeal(meal1.id))
+                assertEquals(ingredient3.carbs, ingredientDAO.countCarbsForMeal(meal2.id))
+
+            }
+        }
+
     }
 
 }
