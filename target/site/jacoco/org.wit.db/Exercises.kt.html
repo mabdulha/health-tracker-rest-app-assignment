@@ -9,8 +9,8 @@ import org.jetbrains.exposed.sql.Table
 <span class="fc" id="L9">object Exercises: Table(&quot;exercises&quot;) {</span>
 <span class="fc" id="L10">    val id = integer(&quot;id&quot;).autoIncrement().primaryKey()</span>
 <span class="fc" id="L11">    val image = varchar(&quot;image&quot;, 255).nullable()</span>
-<span class="fc" id="L12">    val name = varchar(&quot;name&quot;, 50).nullable()</span>
-<span class="fc" id="L13">    val description = varchar(&quot;description&quot;, 255).nullable()</span>
+<span class="fc" id="L12">    val name = varchar(&quot;name&quot;, 255).nullable()</span>
+<span class="fc" id="L13">    val description = varchar(&quot;description&quot;, 500).nullable()</span>
 <span class="fc" id="L14">    val calories = integer(&quot;calories&quot;).nullable()</span>
 <span class="fc" id="L15">    val duration = double(&quot;duration&quot;).nullable()</span>
 <span class="fc" id="L16">    val muscle = varchar(&quot;muscle&quot;, 50).nullable()</span>

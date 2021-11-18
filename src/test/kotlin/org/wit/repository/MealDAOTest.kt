@@ -9,13 +9,9 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Meals
-import org.wit.domain.ExerciseDTO
 import org.wit.domain.MealDTO
-import org.wit.domain.UserDTO
-import org.wit.helpers.populateExerciseTable
 import org.wit.helpers.populateMealTable
 import org.wit.helpers.populateUserTable
-import kotlin.test.assertNotEquals
 
 class MealDAOTest {
 

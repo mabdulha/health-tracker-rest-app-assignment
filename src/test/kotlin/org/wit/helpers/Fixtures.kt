@@ -32,9 +32,9 @@ val users = arrayListOf(
 )
 
 val exercises = arrayListOf(
-    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 25, id = 1, userId = 1, image = ""),
-    ExerciseDTO(name = "Machine Fly", description = "The fly machine is ideal for increasing chest strength and muscle mass by targeting the pectoralis muscles", calories = 40, duration = 13.00, muscle = "Chest", views = 16, id = 2, userId = 1, image = ""),
-    ExerciseDTO(name = "Bench Press", description = "Bench presses are an exercise that can be used to tone the muscles of the upper body", calories = 100, duration = 30.00, muscle = "Shoulder", views = 14, id = 3, userId = 2, image = ""),
+    ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 25, id = 1, userId = 1, image = "https://cdn1.dotesports.com/wp-content/uploads/2018/08/11151637/128fb6e6-7b6a-4b25-8b16-6e562f9c288d.jpg"),
+    ExerciseDTO(name = "Machine Fly", description = "The fly machine is ideal for increasing chest strength", calories = 40, duration = 13.00, muscle = "Chest", views = 16, id = 2, userId = 1, image = ""),
+    ExerciseDTO(name = "Bench Press", description = "Bench presses are an exercise to tone the muscles of the upper body", calories = 100, duration = 30.00, muscle = "Shoulder", views = 14, id = 3, userId = 2, image = ""),
     ExerciseDTO(name = "Shoulder Press", description = "Exercise which targets the shoulder muscle", calories = 70, duration = 15.00, muscle = "Shoulder", views = 7, id = 4, userId = 3, image = "")
 )
 

@@ -9,8 +9,8 @@ import org.jetbrains.exposed.sql.Table
 object Exercises: Table("exercises") {
     val id = integer("id").autoIncrement().primaryKey()
     val image = varchar("image", 255).nullable()
-    val name = varchar("name", 50).nullable()
-    val description = varchar("description", 255).nullable()
+    val name = varchar("name", 255).nullable()
+    val description = varchar("description", 500).nullable()
     val calories = integer("calories").nullable()
     val duration = double("duration").nullable()
     val muscle = varchar("muscle", 50).nullable()
