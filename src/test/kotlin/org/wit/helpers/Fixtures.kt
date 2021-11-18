@@ -58,6 +58,13 @@ val mealIngredients = arrayListOf(
     MealIngredientDTO(id = 4, mealId = 3, ingredientId = 1)
 )
 
+val userBmi = arrayListOf(
+    UserBmiDTO(id = 1, bmi = 18.5, userId = 1),
+    UserBmiDTO(id = 2, bmi = 22.6, userId = 1),
+    UserBmiDTO(id = 3, bmi = 22.9, userId = 2),
+    UserBmiDTO(id = 4, bmi = 35.4, userId = 3)
+)
+
 fun populateUserTable(): UserDAO {
     SchemaUtils.create(Users)
     val userDAO = UserDAO()
@@ -101,4 +108,13 @@ fun populateMealIngredientTable(): MealDAO {
     mealIngredientDAO.saveMealAndIngredientId(mealIngredient2)
     mealIngredientDAO.saveMealAndIngredientId(mealIngredient3)
     return mealIngredientDAO
+}
+
+fun populateUserBmiTable(): UserBmiDAO {
+    SchemaUtils.create(UserBmi)
+    val userBmiDAO = UserBmiDAO()
+    userBmiDAO.save(userBmi1)
+    userBmiDAO.save(userBmi2)
+    userBmiDAO.save(userBmi3)
+    return userBmiDAO
 }
