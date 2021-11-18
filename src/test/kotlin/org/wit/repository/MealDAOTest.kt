@@ -75,6 +75,19 @@ class MealDAOTest {
             }
         }
 
+        @Test
+        fun `get meal by id that doesn't exist, results in no meal returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(null, mealDAO.findByMealId(4))
+            }
+        }
+
     }
 
     @Nested
