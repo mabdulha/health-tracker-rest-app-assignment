@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.wit.config.DbConfig
 import org.wit.domain.ExerciseDTO
+import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
@@ -530,34 +531,117 @@ class HealthTrackerAPITest {
     // Meals Tests
     //-------------------------------------------------------------
 
-    @Nested
-    inner class CreateMeals {
-
-        @Test
-        fun `add a meal when a user exists for it, returns a 201 response`() {
-
-            //Arrange - add a user and an associated meal that we plan to do an add for
-            val addedUser: UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
-
-            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
-            assertEquals(201, addMealResponse.status)
-
-            //After - delete the user (Activity will cascade delete in the database)
-            deleteUser(addedUser.id)
-        }
-
-        @Test
-        fun `add a meal when no user exists for it, returns a 404 response`() {
-
-            //Arrange - check there is no user for -1 id
-            val userId = -1
-            assertEquals(404, retrieveUserById(userId).status)
-
-            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, userId)
-            assertEquals(409, addMealResponse.status)
-        }
-
-    }
+//    @Nested
+//    inner class CreateMeals {
+//
+//        @Test
+//        fun `add a meal when a user exists for it, returns a 201 response`() {
+//
+//            //Arrange - add a user and an associated meal that we plan to do an add for
+//            val addedUser: UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+//
+//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+//            assertEquals(201, addMealResponse.status)
+//
+//            //After - delete the user (Activity will cascade delete in the database)
+//            deleteUser(addedUser.id)
+//        }
+//
+//        @Test
+//        fun `add a meal when no user exists for it, returns a 404 response`() {
+//
+//            //Arrange - check there is no user for -1 id
+//            val userId = -1
+//            assertEquals(404, retrieveUserById(userId).status)
+//
+//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, userId)
+//            assertEquals(409, addMealResponse.status)
+//        }
+//
+//    }
+//
+//    @Nested
+//    inner class ReadMeals {
+//
+//        @Test
+//        fun `get all meals from the database returns 200 or 404 response`() {
+//            val response = retrieveAllMeals()
+//            if (response.status == 200){
+//                val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
+//                assertNotEquals(0, retrievedMeals.size)
+//            }
+//            else{
+//                assertEquals(404, response.status)
+//            }
+//        }
+//
+//        @Test
+//        fun `get all meals by user id when user and meal exists returns 200 response`() {
+//            //Arrange - add a user and 3 associated meals that we plan to retrieve
+//            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+//            addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+//            addMeal(meals[1].image, meals[1].name, meals[1].loves, addedUser.id)
+//            addMeal(meals[2].image, meals[2].name, meals[2].loves, addedUser.id)
+//
+//            //Assert and Act - retrieve the three added meals by user id
+//            val response = retrieveMealsByUserId(addedUser.id)
+//            assertEquals(200, response.status)
+//            val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
+//            assertEquals(3, retrievedMeals.size)
+//
+//            //After - delete the added user and assert a 204 is returned (meals are cascade deleted)
+//            assertEquals(204, deleteUser(addedUser.id).status)
+//        }
+//
+//        @Test
+//        fun `get all meals by user id when no meals exist returns 404 response`() {
+//            //Arrange - add a user
+//            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+//
+//            //Assert and Act - retrieve the meals by user id
+//            val response = retrieveMealsByUserId(addedUser.id)
+//            assertEquals(404, response.status)
+//
+//            //After - delete the added user and assert a 204 is returned
+//            assertEquals(204, deleteUser(addedUser.id).status)
+//        }
+//
+//        @Test
+//        fun `get all meals by user id when no user exists returns 404 response`() {
+//            //Arrange
+//            val userId = -1
+//
+//            //Assert and Act - retrieve exercises by user id
+//            val response = retrieveMealsByUserId(userId)
+//            assertEquals(404, response.status)
+//        }
+//
+//        @Test
+//        fun `get meal by meal id when no exercise exists returns 404 response`() {
+//            //Arrange
+//            val mealId = -1
+//            //Assert and Act - attempt to retrieve the meal by meal id
+//            val response = retrieveMealByMealId(mealId)
+//            assertEquals(404, response.status)
+//        }
+//
+//        @Test
+//        fun `get meal by meal id when exercise exists returns 200 response`() {
+//            //Arrange - add a user and associated meal
+//            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+//            assertEquals(201, addMealResponse.status)
+//            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
+//
+//            //Act & Assert - retrieve the meal by meal id
+//            val response = retrieveMealByMealId(addedMeal.id)
+//            assertEquals(200, response.status)
+//
+//            //After - delete the added user and assert a 204 is returned
+//            assertEquals(204, deleteUser(addedUser.id).status)
+//        }
+//
+//    }
 
     //--------------------------------------------------------------
     // User Helper Classes
@@ -656,47 +740,42 @@ class HealthTrackerAPITest {
     //-------------------------------------------------------------
 
     //helper function to retrieve all meals
-    private fun retrieveAllMeals(): HttpResponse<JsonNode> {
-        return Unirest.get("$origin/api/meals").asJson()
-    }
-
-    //helper function to retrieve meals by user id
-    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
-        return Unirest.get("$origin/api/users/${id}/meals").asJson()
-    }
-
-    //helper function to retrieve meal by meal id
-    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
-        return Unirest.get(origin + "/api/meals/${id}").asJson()
-    }
-
-    //helper function to delete a meal by meal id
-    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
-        return Unirest.delete("$origin/api/meals/$id").asString()
-    }
-
-    //helper function to delete an meal by user id
-    private fun deleteMealsByUserId(id: Int): HttpResponse<String> {
-        return Unirest.delete("$origin/api/users/$id/meals").asString()
-    }
-
-    //helper function to update a test meal to the database
-    private fun updateMeal(id: Int?, image: String?, name: String?, loves: Int?, userId: Int?): HttpResponse<JsonNode> {
-        return Unirest.patch("$origin/api/meals/$id")
-            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
-            .asJson()
-    }
-
-    //helper function to add a meal
-    private fun addMeal(image: String?, name: String?, loves: Int?,
-                        userId: Int?): HttpResponse<JsonNode> {
-        return Unirest.post("$origin/api/meals")
-            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
-            .asJson()
-    }
-
-    private fun incrementLoves (id: Int): HttpResponse<String> {
-        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
-    }
+//    private fun retrieveAllMeals(): HttpResponse<JsonNode> {
+//        return Unirest.get("$origin/api/meals").asJson()
+//    }
+//
+//    //helper function to retrieve meals by user id
+//    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
+//        return Unirest.get("$origin/api/meals/users/${id}").asJson()
+//    }
+//
+//    //helper function to retrieve meal by meal id
+//    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
+//        return Unirest.get(origin + "/api/meals/${id}").asJson()
+//    }
+//
+//    //helper function to delete a meal by meal id
+//    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
+//        return Unirest.delete("$origin/api/meals/$id").asString()
+//    }
+//
+//    //helper function to update a test meal to the database
+//    private fun updateMeal(id: Int?, image: String?, name: String?, loves: Int?, userId: Int?): HttpResponse<JsonNode> {
+//        return Unirest.patch("$origin/api/meals/$id")
+//            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
+//            .asJson()
+//    }
+//
+//    //helper function to add a meal
+//    private fun addMeal(image: String?, name: String?, loves: Int?,
+//                        userId: Int?): HttpResponse<JsonNode> {
+//        return Unirest.post("$origin/api/meals")
+//            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
+//            .asJson()
+//    }
+//
+//    private fun incrementLoves (id: Int): HttpResponse<String> {
+//        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
+//    }
 
 }
