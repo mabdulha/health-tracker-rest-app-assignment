@@ -2,6 +2,7 @@ package org.wit.repository
 
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -99,6 +100,34 @@ class MealDAOTest {
                 Assertions.assertEquals(meal1, mealDAO.findByMealId(1))
                 Assertions.assertEquals(meal2, mealDAO.findByMealId(2))
                 Assertions.assertEquals(meal3, mealDAO.findByMealId(3))
+            }
+        }
+
+        @Test
+        fun `get meal by user id that doesn't exist, results in no meal returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(0, mealDAO.findMealByUserId(4).size)
+            }
+        }
+
+        @Test
+        fun `get meal by user id that exists, results in a correct meal returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+                val meals = arrayListOf(meal2, meal1)
+
+                //Act & Assert
+                Assertions.assertEquals(meals, mealDAO.findMealByUserId(1))
+                Assertions.assertEquals(arrayListOf(meal3), mealDAO.findMealByUserId(2))
             }
         }
 
