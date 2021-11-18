@@ -45,10 +45,10 @@ val ingredients = arrayListOf(
 )
 
 val meals = arrayListOf(
-    MealDTO(id = 1, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main1.png", name = "Cheese Cake", energy = 15, calories = 11, protein = 1.11, fat = 1.11, carbs = 1.11, sodium = 1.11, loves = 26, userId = 1),
-    MealDTO(id = 2, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main2.png", name = "Beef Stew", energy = 35, calories = 44, protein = 2.22, fat = 2.22, carbs = 2.22, sodium = 2.22, loves = 98, userId = 1),
-    MealDTO(id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png", name = "Chicken Salad", energy = 25, calories = 55, protein = 3.33, fat = 3.33, carbs = 3.33, sodium = 3.33, loves = 46, userId = 2),
-    MealDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main4.png", name = "Veggies", energy = 42, calories = 65, protein = 4.44, fat = 4.44, carbs = 4.44, sodium = 4.44, loves = 13, userId = 3)
+    MealDTO(id = 1, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main1.png", name = "Cheese Cake", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00, loves = 26, userId = 1),
+    MealDTO(id = 2, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main2.png", name = "Beef Stew", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00, loves = 98, userId = 1),
+    MealDTO(id = 3, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main3.png", name = "Chicken Salad", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00, loves = 46, userId = 2),
+    MealDTO(id = 4, image = "https://agile-dev-2021.netlify.app/topic06-testing-unit/book-01-unit-testing/img/main4.png", name = "Veggies", energy = 0, calories = 0, protein = 0.00, fat = 0.00, carbs = 0.00, sodium = 0.00, loves = 13, userId = 3)
 )
 
 val mealIngredients = arrayListOf(
