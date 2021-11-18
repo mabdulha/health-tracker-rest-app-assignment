@@ -7,6 +7,7 @@ import org.wit.repository.*
 
 //Users
 const val nonExistingEmail = "112233445566778testUser@xxxxx.xx"
+const val validAvatar = "https://cdn1.dotesports.com/wp-content/uploads/2018/08/11151637/128fb6e6-7b6a-4b25-8b16-6e562f9c288d.jpg"
 const val validFName = "Michael"
 const val validLName = "Hogan"
 const val validEmail = "testuser@test.com"

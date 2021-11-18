@@ -5,7 +5,7 @@
 [X] Sort get all by views/loves/alphabetically.
 [X] Find meals by user id
 [X] Counts of how many users, meals, exercises are on the app to make a dashboard in vue.
-[*] Add unit tests for Meals.
+[X] Add unit tests for Meals.
 [X] Add unit tests for Ingredients.
 [X] And unit tests for bmi
 [*] Add integration tests for Meals.

@@ -38,7 +38,7 @@ class ExerciseDAOTest {
         fun `multiple exercises added to table can be retrieved successfully`() {
             transaction {
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
                 //Act & Assert
                 assertEquals(3, exerciseDAO.getAll().size)
@@ -56,7 +56,7 @@ class ExerciseDAOTest {
         fun `getting all exercises from a populated table returns all rows`() {
             transaction {
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
                 //Act & Assert
                 assertEquals(3, exerciseDAO.getAll().size)
@@ -67,7 +67,7 @@ class ExerciseDAOTest {
         fun `get exercise by user id that has no exercises, results in no record returned`() {
             transaction {
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
                 //Act & Assert
                 assertEquals(0, exerciseDAO.findExerciseByUserId(3).size)
@@ -173,7 +173,7 @@ class ExerciseDAOTest {
             transaction {
 
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
                 //Act & Assert
@@ -188,7 +188,7 @@ class ExerciseDAOTest {
             transaction {
 
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
                 //Act & Assert
@@ -203,7 +203,7 @@ class ExerciseDAOTest {
             transaction {
 
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
                 //Act & Assert
@@ -218,7 +218,7 @@ class ExerciseDAOTest {
             transaction {
 
                 //Arrange - create and populate tables with three users and three exercises
-                val userDAO = populateUserTable()
+                populateUserTable()
                 val exerciseDAO = populateExerciseTable()
 
                 //Act & Assert

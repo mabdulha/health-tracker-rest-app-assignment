@@ -28,24 +28,50 @@ import org.wit.controllers.HealthTrackerAPI
 <span class="fc" id="L28">        app.routes {</span>
             //User routes
 <span class="fc" id="L30">            get(&quot;/api/users&quot;, HealthTrackerAPI::getAllUsers)</span>
-<span class="fc" id="L31">            get(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::getUserByUserId)</span>
-<span class="fc" id="L32">            post(&quot;/api/users&quot;, HealthTrackerAPI::addUser)</span>
-<span class="fc" id="L33">            get(&quot;/api/users/email/:email&quot;, HealthTrackerAPI::getUserByEmail)</span>
-<span class="fc" id="L34">            delete(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::deleteUser)</span>
-<span class="fc" id="L35">            patch(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::updateUser)</span>
-<span class="fc" id="L36">            post(&quot;/api/users/login/&quot;, HealthTrackerAPI::login)</span>
+<span class="fc" id="L31">            get(&quot;/api/users/count&quot;, HealthTrackerAPI::countAllUsers)</span>
+<span class="fc" id="L32">            get(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::getUserByUserId)</span>
+<span class="fc" id="L33">            post(&quot;/api/users/register&quot;, HealthTrackerAPI::addUser)</span>
+<span class="fc" id="L34">            get(&quot;/api/users/email/:email&quot;, HealthTrackerAPI::getUserByEmail)</span>
+<span class="fc" id="L35">            delete(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::deleteUser)</span>
+<span class="fc" id="L36">            patch(&quot;/api/users/:user-id&quot;, HealthTrackerAPI::updateUser)</span>
+<span class="fc" id="L37">            post(&quot;/api/users/login/&quot;, HealthTrackerAPI::login)</span>
 
             //Exercise routes
-<span class="fc" id="L39">            get(&quot;/api/exercises&quot;, HealthTrackerAPI::getAllExercises)</span>
-<span class="fc" id="L40">            get(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::getExercisesByUserId)</span>
-<span class="fc" id="L41">            get(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::getExercisesByExerciseId)</span>
-<span class="fc" id="L42">            post(&quot;/api/exercises&quot;, HealthTrackerAPI::addExercise)</span>
-<span class="fc" id="L43">            patch(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::updateExercise)</span>
-<span class="fc" id="L44">            put(&quot;/api/exercises/:exercise-id/increment-view&quot;, HealthTrackerAPI::incrementView)</span>
-<span class="fc" id="L45">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
-<span class="fc" id="L46">            delete(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
-<span class="fc" id="L47">        }</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L40">            get(&quot;/api/exercises&quot;, HealthTrackerAPI::getAllExercises)</span>
+<span class="fc" id="L41">            get(&quot;/api/exercises/count&quot;, HealthTrackerAPI::countAllExercises)</span>
+<span class="fc" id="L42">            get(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::getExercisesByUserId)</span>
+<span class="fc" id="L43">            get(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::getExercisesByExerciseId)</span>
+<span class="fc" id="L44">            post(&quot;/api/exercises&quot;, HealthTrackerAPI::addExercise)</span>
+<span class="fc" id="L45">            patch(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::updateExercise)</span>
+<span class="fc" id="L46">            put(&quot;/api/exercises/:exercise-id/increment-view&quot;, HealthTrackerAPI::incrementView)</span>
+<span class="fc" id="L47">            delete(&quot;/api/exercises/:exercise-id&quot;, HealthTrackerAPI::deleteExerciseByExerciseId)</span>
+<span class="fc" id="L48">            delete(&quot;/api/users/:user-id/exercises&quot;, HealthTrackerAPI::deleteExerciseByUserId)</span>
+
+            //Meal routes
+<span class="fc" id="L51">            get(&quot;/api/meals&quot;, HealthTrackerAPI::getAllMeals)</span>
+<span class="fc" id="L52">            get(&quot;/api/meals/count&quot;, HealthTrackerAPI::countAllMeals)</span>
+<span class="fc" id="L53">            get(&quot;/api/meals/:meal-id&quot;, HealthTrackerAPI::getMealsByMealId)</span>
+<span class="fc" id="L54">            get(&quot;/api/meals/users/:user-id&quot;, HealthTrackerAPI::getMealsByUserId)</span>
+<span class="fc" id="L55">            get(&quot;/api/meals/:meal-id/ingredients&quot;, HealthTrackerAPI::getMealIngredients)</span>
+<span class="fc" id="L56">            get(&quot;/api/meals/:meal-id/ingredients/count/&quot;, HealthTrackerAPI::countAllMealIngredients)</span>
+<span class="fc" id="L57">            patch(&quot;/api/meals/:meal-id&quot;, HealthTrackerAPI::updateMeal)</span>
+<span class="fc" id="L58">            post(&quot;/api/meals&quot;, HealthTrackerAPI::addMeal)</span>
+<span class="fc" id="L59">            post(&quot;/api/meals/:meal-id/ingredients/:ingredient-id/assign&quot;, HealthTrackerAPI::assignIngredientIdToMealId)</span>
+<span class="fc" id="L60">            put(&quot;/api/meals/:meal-id/increment-loves&quot;, HealthTrackerAPI::incrementMealLoves)</span>
+<span class="fc" id="L61">            delete(&quot;/api/meals/:meal-id&quot;, HealthTrackerAPI::deleteMealByMealId)</span>
+
+            //Ingredient routes
+<span class="fc" id="L64">            get(&quot;/api/ingredients&quot;, HealthTrackerAPI::getAllIngredients)</span>
+<span class="fc" id="L65">            get(&quot;/api/ingredients/:ingredient-id&quot;, HealthTrackerAPI::getIngredientsByIngredientId)</span>
+<span class="fc" id="L66">            post(&quot;/api/ingredients&quot;, HealthTrackerAPI::addIngredient)</span>
+<span class="fc" id="L67">            patch(&quot;/api/ingredients/:ingredient-id&quot;, HealthTrackerAPI::updateIngredient)</span>
+<span class="fc" id="L68">            delete(&quot;/api/ingredients/:ingredient-id&quot;, HealthTrackerAPI::deleteIngredientByIngredientId)</span>
+
+            //BMI routes
+<span class="fc" id="L71">            get(&quot;/api/bmis/users/:user-id/scores&quot;, HealthTrackerAPI::getBmiScoresByUserId)</span>
+<span class="fc" id="L72">            post(&quot;/api/bmis&quot;, HealthTrackerAPI::addBmiScore)</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
