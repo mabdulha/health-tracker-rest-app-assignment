@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.helpers.populateMealTable
-import org.wit.helpers.populateUserBmiTable
 import org.wit.helpers.populateUserTable
 
 class MealDAOTest {
@@ -28,7 +27,7 @@ class MealDAOTest {
         fun `multiple meals added to table can be retrieved successfully` () {
             transaction {
 
-                //Arrange - create and populate table with three users and user bmi's
+                //Arrange - create and populate table with three users and meals
                 populateUserTable()
                 val mealDAO = populateMealTable()
 
@@ -44,7 +43,22 @@ class MealDAOTest {
     }
 
     @Nested
-    inner class ReadMeals {}
+    inner class ReadMeals {
+
+        @Test
+        fun `getting all meals from a populated table returns all rows`() {
+            transaction {
+
+                //Arrange - create and populate table with three users
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(3, mealDAO.getAll().size)
+            }
+        }
+
+    }
 
     @Nested
     inner class UpdateMeals {}
