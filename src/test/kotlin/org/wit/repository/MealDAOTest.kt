@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.wit.db.Meals
-import org.wit.db.Users
 import org.wit.helpers.populateMealTable
 import org.wit.helpers.populateUserTable
 
@@ -85,6 +84,21 @@ class MealDAOTest {
 
                 //Act & Assert
                 Assertions.assertEquals(null, mealDAO.findByMealId(4))
+            }
+        }
+
+        @Test
+        fun `get meal by id that exists, results in a correct meal returned`() {
+            transaction {
+
+                //Arrange - create and populate table with three users and meals
+                populateUserTable()
+                val mealDAO = populateMealTable()
+
+                //Act & Assert
+                Assertions.assertEquals(meal1, mealDAO.findByMealId(1))
+                Assertions.assertEquals(meal2, mealDAO.findByMealId(2))
+                Assertions.assertEquals(meal3, mealDAO.findByMealId(3))
             }
         }
 
