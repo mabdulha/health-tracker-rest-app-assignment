@@ -197,6 +197,20 @@ class IngredientDAOTest {
             }
         }
 
+        @Test
+        fun `count the amount of energy in a meal by passing id` () {
+            transaction {
+
+                //Arrange - create and populate table with three ingredients, meals, users and ids for mealIngredients
+                val userDAO = populateUserTable()
+                val ingredientDAO = populateIngredientTable()
+                val mealDAO = populateMealTable()
+                val mealIngredient = populateMealIngredientTable()
+
+                assertEquals(6, ingredientDAO.countEnergyForMeal(meal1.id))
+
+            }
+        }
     }
 
 }
