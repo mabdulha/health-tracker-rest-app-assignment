@@ -618,4 +618,52 @@ class HealthTrackerAPITest {
         return Unirest.put("$origin/api/exercises/$id/increment-view").asString()
     }
 
+    //--------------------------------------------------------------
+    // Meal Helper Classes
+    //-------------------------------------------------------------
+
+    //helper function to retrieve all meals
+    private fun retrieveAllMeals(): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/meals").asJson()
+    }
+
+    //helper function to retrieve meals by user id
+    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/users/${id}/meals").asJson()
+    }
+
+    //helper function to retrieve meal by meal id
+    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get(origin + "/api/meals/${id}").asJson()
+    }
+
+    //helper function to delete a meal by meal id
+    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/meals/$id").asString()
+    }
+
+    //helper function to delete an meal by user id
+    private fun deleteMealsByUserId(id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/users/$id/meals").asString()
+    }
+
+    //helper function to update a test meal to the database
+    private fun updateMeal(id: Int?, image: String?, name: String?, loves: Int?, userId: Int?): HttpResponse<JsonNode> {
+        return Unirest.patch("$origin/api/meals/$id")
+            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
+            .asJson()
+    }
+
+    //helper function to add a meal
+    private fun addMeal(image: String?, name: String?, loves: Int?,
+                        userId: Int?): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/meals")
+            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\" \"userId\":\"$userId\"}")
+            .asJson()
+    }
+
+    private fun incrementLoves (id: Int): HttpResponse<String> {
+        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
+    }
+
 }
