@@ -625,21 +625,22 @@ class HealthTrackerAPITest {
             assertEquals(404, response.status)
         }
 
-//        @Test
-//        fun `get meal by meal id when exercise exists returns 200 response`() {
-//            //Arrange - add a user and associated meal
-//            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
-//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
-//            assertEquals(201, addMealResponse.status)
-//            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
-//
-//            //Act & Assert - retrieve the meal by meal id
-//            val response = retrieveMealByMealId(addedMeal.id)
-//            assertEquals(200, response.status)
-//
-//            //After - delete the added user and assert a 204 is returned
-//            assertEquals(204, deleteUser(addedUser.id).status)
-//        }
+        @Test
+        fun `get meal by meal id when meal exists returns 200 response`() {
+            //Arrange - add a user and associated meal
+            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            assertEquals(201, addMealResponse.status)
+            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
+
+            //Act & Assert - retrieve the meal by meal id
+            val response = retrieveMealByMealId(addedMeal.id)
+            print(addedMeal.id)
+            assertEquals(200, response.status)
+
+            //After - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
 
     }
 

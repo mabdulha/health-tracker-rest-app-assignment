@@ -276,13 +276,13 @@ object HealthTrackerAPI {
     }
 
     fun addMeal (ctx: Context) {
-        val meal : MealDTO = jsonToObject(ctx.body())
-        val userId = userDao.findById(meal.userId!!)
+        val mealDTO : MealDTO = jsonToObject(ctx.body())
+        val userId = mealDTO.userId?.let { userDao.findById(it) }
         if (userId != null) {
-            val mealId = mealDao.save(meal)
+            val mealId = mealDao.save(mealDTO)
             if (mealId != null) {
-                ctx.json(meal)
-                ctx.status(201)
+                mealDTO.id = mealId
+                ctx.status(201).json(mealDTO)
             }
         } else {
             ctx.status(409).json("Could not add meal")

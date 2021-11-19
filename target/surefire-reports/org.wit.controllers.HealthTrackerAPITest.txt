@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.wit.controllers.HealthTrackerAPITest
 -------------------------------------------------------------------------------
-Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 131.737 s - in org.wit.controllers.HealthTrackerAPITest
+Tests run: 38, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 163.651 s - in org.wit.controllers.HealthTrackerAPITest

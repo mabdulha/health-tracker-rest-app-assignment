@@ -225,14 +225,14 @@ import java.util.*
     //-------------------------------------------------------------
 
     fun getAllMeals(ctx: Context) {
-<span class="nc" id="L228">        val meals = mealDao.getAll()</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (meals.size != 0) {</span>
-<span class="nc" id="L230">            ctx.status(200).json(meals)</span>
+<span class="fc" id="L228">        val meals = mealDao.getAll()</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (meals.size != 0) {</span>
+<span class="fc" id="L230">            ctx.status(200).json(meals)</span>
         } else {
 <span class="nc" id="L232">            ctx.status(404)</span>
 <span class="nc" id="L233">            ctx.html(&quot;Error 404 - No Meals Found!!&quot;)</span>
         }
-<span class="nc" id="L235">    }</span>
+<span class="fc" id="L235">    }</span>
 
     fun countAllMeals (ctx: Context) {
 <span class="nc" id="L238">        val mealsCount = mealDao.getAll().size</span>
@@ -244,21 +244,21 @@ import java.util.*
 <span class="nc" id="L244">    }</span>
 
     fun getMealsByMealId (ctx: Context) {
-<span class="nc" id="L247">        val meal = mealDao.findByMealId(ctx.pathParam(&quot;meal-id&quot;).toInt())</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">        if (meal != null) {</span>
-<span class="nc" id="L249">            ctx.status(200).json(meal)</span>
+<span class="fc" id="L247">        val meal = mealDao.findByMealId(ctx.pathParam(&quot;meal-id&quot;).toInt())</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        if (meal != null) {</span>
+<span class="fc" id="L249">            ctx.status(200).json(meal)</span>
         } else {
-<span class="nc" id="L251">            ctx.status(404).html(&quot;No meals found&quot;)</span>
+<span class="fc" id="L251">            ctx.status(404).html(&quot;No meals found&quot;)</span>
         }
-<span class="nc" id="L253">    }</span>
+<span class="fc" id="L253">    }</span>
     fun getMealsByUserId (ctx: Context) {
-<span class="nc" id="L255">        val meal = mealDao.findMealByUserId(ctx.pathParam(&quot;user-id&quot;).toInt())</span>
-<span class="nc bnc" id="L256" title="All 4 branches missed.">        if (meal.isNotEmpty()) {</span>
-<span class="nc" id="L257">            ctx.status(200).json(meal)</span>
+<span class="fc" id="L255">        val meal = mealDao.findMealByUserId(ctx.pathParam(&quot;user-id&quot;).toInt())</span>
+<span class="fc bfc" id="L256" title="All 4 branches covered.">        if (meal.isNotEmpty()) {</span>
+<span class="fc" id="L257">            ctx.status(200).json(meal)</span>
         } else {
-<span class="nc" id="L259">            ctx.status(404).html(&quot;No meals found&quot;)</span>
+<span class="fc" id="L259">            ctx.status(404).html(&quot;No meals found&quot;)</span>
         }
-<span class="nc" id="L261">    }</span>
+<span class="fc" id="L261">    }</span>
 
 
     fun getMealIngredients (ctx: Context) {
@@ -276,18 +276,18 @@ import java.util.*
 <span class="nc" id="L276">    }</span>
 
     fun addMeal (ctx: Context) {
-<span class="nc" id="L279">        val meal : MealDTO = jsonToObject(ctx.body())</span>
-<span class="nc" id="L280">        val userId = userDao.findById(meal.userId!!)</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">        if (userId != null) {</span>
-<span class="nc" id="L282">            val mealId = mealDao.save(meal)</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">            if (mealId != null) {</span>
-<span class="nc" id="L284">                ctx.json(meal)</span>
-<span class="nc" id="L285">                ctx.status(201)</span>
+<span class="fc" id="L279">        val mealDTO : MealDTO = jsonToObject(ctx.body())</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        val userId = mealDTO.userId?.let { userDao.findById(it) }</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (userId != null) {</span>
+<span class="fc" id="L282">            val mealId = mealDao.save(mealDTO)</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">            if (mealId != null) {</span>
+<span class="fc" id="L284">                mealDTO.id = mealId</span>
+<span class="fc" id="L285">                ctx.status(201).json(mealDTO)</span>
             }
         } else {
-<span class="nc" id="L288">            ctx.status(409).json(&quot;Could not add meal&quot;)</span>
+<span class="fc" id="L288">            ctx.status(409).json(&quot;Could not add meal&quot;)</span>
         }
-<span class="nc" id="L290">    }</span>
+<span class="fc" id="L290">    }</span>
 
     fun updateMeal (ctx: Context) {
 <span class="nc" id="L293">        val meal : MealDTO = jsonToObject(ctx.body())</span>
