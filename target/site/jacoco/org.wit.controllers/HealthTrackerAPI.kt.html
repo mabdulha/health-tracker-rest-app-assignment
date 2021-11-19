@@ -37,13 +37,13 @@ import java.util.*
 <span class="fc" id="L37">    }</span>
 
     fun countAllUsers (ctx: Context) {
-<span class="nc" id="L40">        val users = userDao.getAll().size</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (users != 0) {</span>
-<span class="nc" id="L42">            ctx.status(200).json(users)</span>
+<span class="fc" id="L40">        val users = userDao.getAll().size</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (users != 0) {</span>
+<span class="fc" id="L42">            ctx.status(200).json(users)</span>
         } else {
 <span class="nc" id="L44">            ctx.status(404).json(&quot;Error 404 - No Users Found!!&quot;)</span>
         }
-<span class="nc" id="L46">    }</span>
+<span class="fc" id="L46">    }</span>
 
     fun getUserByUserId(ctx: Context) {
 <span class="fc" id="L49">        val foundId = ctx.pathParam(&quot;user-id&quot;).toInt()</span>
