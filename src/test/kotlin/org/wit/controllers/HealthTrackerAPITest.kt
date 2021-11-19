@@ -531,34 +531,34 @@ class HealthTrackerAPITest {
     // Meals Tests
     //-------------------------------------------------------------
 
-//    @Nested
-//    inner class CreateMeals {
-//
-//        @Test
-//        fun `add a meal when a user exists for it, returns a 201 response`() {
-//
-//            //Arrange - add a user and an associated meal that we plan to do an add for
-//            val addedUser: UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
-//
-//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
-//            assertEquals(201, addMealResponse.status)
-//
-//            //After - delete the user (Activity will cascade delete in the database)
-//            deleteUser(addedUser.id)
-//        }
-//
-//        @Test
-//        fun `add a meal when no user exists for it, returns a 404 response`() {
-//
-//            //Arrange - check there is no user for -1 id
-//            val userId = -1
-//            assertEquals(404, retrieveUserById(userId).status)
-//
-//            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, userId)
-//            assertEquals(409, addMealResponse.status)
-//        }
-//
-//    }
+    @Nested
+    inner class CreateMeals {
+
+        @Test
+        fun `add a meal when a user exists for it, returns a 201 response`() {
+
+            //Arrange - add a user and an associated meal that we plan to do an add for
+            val addedUser: UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            assertEquals(201, addMealResponse.status)
+
+            //After - delete the user (Activity will cascade delete in the database)
+            deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `add a meal when no user exists for it, returns a 404 response`() {
+
+            //Arrange - check there is no user for -1 id
+            val userId = -1
+            assertEquals(404, retrieveUserById(userId).status)
+
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, userId)
+            assertEquals(409, addMealResponse.status)
+        }
+
+    }
 //
 //    @Nested
 //    inner class ReadMeals {
@@ -766,13 +766,13 @@ class HealthTrackerAPITest {
 //            .asJson()
 //    }
 //
-//    //helper function to add a meal
-//    private fun addMeal(image: String?, name: String?, loves: Int?,
-//                        userId: Int?): HttpResponse<JsonNode> {
-//        return Unirest.post("$origin/api/meals")
-//            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
-//            .asJson()
-//    }
+    //helper function to add a meal
+    private fun addMeal(image: String?, name: String?, loves: Int?,
+                        userId: Int?): HttpResponse<JsonNode> {
+        return Unirest.post("$origin/api/meals")
+            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
+            .asJson()
+    }
 //
 //    private fun incrementLoves (id: Int): HttpResponse<String> {
 //        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
