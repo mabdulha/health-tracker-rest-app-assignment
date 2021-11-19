@@ -24,6 +24,10 @@ const val updatedCalories = 65
 const val updatedDuration = 25.00
 const val updatedMuscle = "Calf"
 
+//Meals
+const val updatedMealName = "Margherita Pizza"
+const val updatedImage = "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-2000w,f_auto,q_auto:best/newscms/2020_09/3246761/plain_pizza.jpg"
+
 val users = arrayListOf(
     UserDTO(fname = "Alice", lname = "Cullen", email = "alice@cullen.com", password = "secret", weight = 2.0, height = 170f, gender = 'F', age = 25, id = 1, avatar = ""),
     UserDTO(fname = "Bob", lname = "Cat", email = "bob@cat.ie", password = "secret123", weight = 2.0, height = 1.555f, gender = 'F', age = 18, id = 2, avatar = ""),

@@ -450,10 +450,10 @@ class HealthTrackerAPITest {
             assertEquals(201, addExerciseResponse.status)
             val addedExercise : ExerciseDTO = jsonToObject(addExerciseResponse.body.toString())
 
-            //Assert that the value of a newly added exercise's view = 0
+            //Assert that the value of a newly added exercise's view
             assertEquals(25, addedExercise.views)
 
-            //Act & Assert - update the exercise view by 1 and assert a 204 is returned
+            //Act & Assert - update the exercise view by 1 and assert a 201 is returned
             assertEquals(201, incrementView(addedExercise.id).status)
 
             //Assert that the individual fields were all updated as expected
@@ -645,6 +645,84 @@ class HealthTrackerAPITest {
     }
 
     @Nested
+    inner class UpdateMeals {
+
+        @Test
+        fun `updating a meal by meal id when it doesn't exist, returns a 404 response`() {
+            val userId = -1
+            val exerciseID = -1
+
+            //Arrange - check there is no user for -1 id
+            assertEquals(404, retrieveUserById(userId).status)
+
+            //Act & Assert - attempt to update the details of an exercise/user that doesn't exist
+            assertEquals(404, updateExercise(exerciseID, updatedName, updatedDescription,
+                updatedCalories, updatedDuration, updatedMuscle, userId).status)
+        }
+
+        @Test
+        fun `updating a meal by meal id when it exists, returns 204 response`() {
+
+            //Arrange - add a user and an associated meal that we plan to do an update on
+            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            assertEquals(201, addMealResponse.status)
+            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
+
+            //Act & Assert - update the added meal and assert a 204 is returned
+            val updatedMealResponse = updateMeal(addedMeal.id, updatedImage, updatedMealName)
+            assertEquals(204, updatedMealResponse.status)
+
+            //Assert that the individual fields were all updated as expected
+            val retrievedMealResponse = retrieveMealByMealId(addedMeal.id)
+            val updatedMeal : MealDTO = jsonToObject(retrievedMealResponse.body.toString())
+            assertEquals(updatedMealName, updatedMeal.name)
+            assertEquals(updatedImage, updatedMeal.image)
+
+            //After - delete the user
+            deleteUser(addedUser.id)
+        }
+
+        @Test
+        fun `incrementing meal loves by meal id when it doesn't exist, returns a 404 response`() {
+            val userId = -1
+            val mealID = -1
+
+            //Arrange - check there is no user for -1 id
+            assertEquals(404, retrieveUserById(userId).status)
+
+            //Act & Assert - attempt to update the details of a meal that doesn't exist
+            assertEquals(404, incrementLoves(mealID).status)
+        }
+
+        @Test
+        fun `incrementing meal loves by meal id when it exists, returns 204 response` () {
+
+            //Arrange - add a user and an associated meal that we plan to do an update on
+            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            assertEquals(201, addMealResponse.status)
+            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
+
+            //Assert that the value of a newly added meals loves
+            assertEquals(26, addedMeal.loves)
+
+            //Act & Assert - update the meal loves by 1 and assert a 201 is returned
+            assertEquals(201, incrementLoves(addedMeal.id).status)
+
+            //Assert that the individual fields were all updated as expected
+            val retrievedMealResponse = retrieveMealByMealId(addedMeal.id)
+            val updatedMeal : MealDTO = jsonToObject(retrievedMealResponse.body.toString())
+            assertEquals(27, updatedMeal.loves)
+
+            //After - delete the added user and assert a 204 is returned
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
+    }
+
+
+    @Nested
     inner class DeleteMeals {
 
         @Test
@@ -787,14 +865,14 @@ class HealthTrackerAPITest {
         return Unirest.delete("$origin/api/meals/$id").asString()
     }
 
-//
-//    //helper function to update a test meal to the database
-//    private fun updateMeal(id: Int?, image: String?, name: String?, loves: Int?, userId: Int?): HttpResponse<JsonNode> {
-//        return Unirest.patch("$origin/api/meals/$id")
-//            .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
-//            .asJson()
-//    }
-//
+
+    //helper function to update a test meal to the database
+    private fun updateMeal(id: Int?, image: String?, name: String?): HttpResponse<JsonNode> {
+        return Unirest.patch("$origin/api/meals/$id")
+            .body("{\"image\":\"$image\", \"name\":\"$name\"}")
+            .asJson()
+    }
+
     //helper function to add a meal
     private fun addMeal(image: String?, name: String?, loves: Int?,
                         userId: Int?): HttpResponse<JsonNode> {
@@ -802,9 +880,9 @@ class HealthTrackerAPITest {
             .body("{\"image\":\"$image\", \"name\":\"$name\", \"loves\":\"$loves\", \"userId\":\"$userId\"}")
             .asJson()
     }
-//
-//    private fun incrementLoves (id: Int): HttpResponse<String> {
-//        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
-//    }
+
+    private fun incrementLoves (id: Int): HttpResponse<String> {
+        return Unirest.put("$origin/api/meals/$id/increment-loves").asString()
+    }
 
 }

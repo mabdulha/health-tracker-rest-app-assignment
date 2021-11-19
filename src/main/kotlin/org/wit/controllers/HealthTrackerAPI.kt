@@ -290,11 +290,12 @@ object HealthTrackerAPI {
     }
 
     fun updateMeal (ctx: Context) {
+        val foundId = ctx.pathParam("meal-id").toInt()
         val meal : MealDTO = jsonToObject(ctx.body())
-        if (mealDao.updateByMealId(mealId = ctx.pathParam("meal-id").toInt(), mealDTO = meal) != 0) {
-            ctx.status(204)
+        if (mealDao.updateByMealId(mealId = foundId, mealDTO = meal) != 0) {
+            ctx.status(204).json("Meal with id: $foundId, updated successfully")
         } else {
-            ctx.status(404)
+            ctx.status(404).json("Could not find meal with id: $foundId")
         }
     }
 
