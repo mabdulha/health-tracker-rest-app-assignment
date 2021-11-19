@@ -574,25 +574,25 @@ class HealthTrackerAPITest {
                 assertEquals(404, response.status)
             }
         }
-//
-//        @Test
-//        fun `get all meals by user id when user and meal exists returns 200 response`() {
-//            //Arrange - add a user and 3 associated meals that we plan to retrieve
-//            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
-//            addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
-//            addMeal(meals[1].image, meals[1].name, meals[1].loves, addedUser.id)
-//            addMeal(meals[2].image, meals[2].name, meals[2].loves, addedUser.id)
-//
-//            //Assert and Act - retrieve the three added meals by user id
-//            val response = retrieveMealsByUserId(addedUser.id)
-//            assertEquals(200, response.status)
-//            val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
-//            assertEquals(3, retrievedMeals.size)
-//
-//            //After - delete the added user and assert a 204 is returned (meals are cascade deleted)
-//            assertEquals(204, deleteUser(addedUser.id).status)
-//        }
-//
+
+        @Test
+        fun `get all meals by user id when user and meal exists returns 200 response`() {
+            //Arrange - add a user and 3 associated meals that we plan to retrieve
+            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            addMeal(meals[1].image, meals[1].name, meals[1].loves, addedUser.id)
+            addMeal(meals[2].image, meals[2].name, meals[2].loves, addedUser.id)
+
+            //Assert and Act - retrieve the three added meals by user id
+            val response = retrieveMealsByUserId(addedUser.id)
+            assertEquals(200, response.status)
+            val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
+            assertEquals(3, retrievedMeals.size)
+
+            //After - delete the added user and assert a 204 is returned (meals are cascade deleted)
+            assertEquals(204, deleteUser(addedUser.id).status)
+        }
+
 //        @Test
 //        fun `get all meals by user id when no meals exist returns 404 response`() {
 //            //Arrange - add a user
@@ -743,12 +743,12 @@ class HealthTrackerAPITest {
     private fun retrieveAllMeals(): HttpResponse<JsonNode> {
         return Unirest.get("$origin/api/meals").asJson()
     }
-//
-//    //helper function to retrieve meals by user id
-//    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
-//        return Unirest.get("$origin/api/meals/users/${id}").asJson()
-//    }
-//
+
+    //helper function to retrieve meals by user id
+    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/meals/users/${id}").asJson()
+    }
+
 //    //helper function to retrieve meal by meal id
 //    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
 //        return Unirest.get(origin + "/api/meals/${id}").asJson()
