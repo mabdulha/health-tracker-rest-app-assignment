@@ -606,16 +606,16 @@ class HealthTrackerAPITest {
             assertEquals(204, deleteUser(addedUser.id).status)
         }
 
-//        @Test
-//        fun `get all meals by user id when no user exists returns 404 response`() {
-//            //Arrange
-//            val userId = -1
-//
-//            //Assert and Act - retrieve exercises by user id
-//            val response = retrieveMealsByUserId(userId)
-//            assertEquals(404, response.status)
-//        }
-//
+        @Test
+        fun `get all meals by user id when no user exists returns 404 response`() {
+            //Arrange
+            val userId = -1
+
+            //Assert and Act - retrieve exercises by user id
+            val response = retrieveMealsByUserId(userId)
+            assertEquals(404, response.status)
+        }
+
 //        @Test
 //        fun `get meal by meal id when no exercise exists returns 404 response`() {
 //            //Arrange
