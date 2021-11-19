@@ -616,15 +616,15 @@ class HealthTrackerAPITest {
             assertEquals(404, response.status)
         }
 
-//        @Test
-//        fun `get meal by meal id when no exercise exists returns 404 response`() {
-//            //Arrange
-//            val mealId = -1
-//            //Assert and Act - attempt to retrieve the meal by meal id
-//            val response = retrieveMealByMealId(mealId)
-//            assertEquals(404, response.status)
-//        }
-//
+        @Test
+        fun `get meal by meal id when no exercise exists returns 404 response`() {
+            //Arrange
+            val mealId = -1
+            //Assert and Act - attempt to retrieve the meal by meal id
+            val response = retrieveMealByMealId(mealId)
+            assertEquals(404, response.status)
+        }
+
 //        @Test
 //        fun `get meal by meal id when exercise exists returns 200 response`() {
 //            //Arrange - add a user and associated meal
@@ -749,11 +749,11 @@ class HealthTrackerAPITest {
         return Unirest.get("$origin/api/meals/users/${id}").asJson()
     }
 
-//    //helper function to retrieve meal by meal id
-//    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
-//        return Unirest.get(origin + "/api/meals/${id}").asJson()
-//    }
-//
+    //helper function to retrieve meal by meal id
+    private fun retrieveMealByMealId(id: Int): HttpResponse<JsonNode> {
+        return Unirest.get(origin + "/api/meals/${id}").asJson()
+    }
+
 //    //helper function to delete a meal by meal id
 //    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
 //        return Unirest.delete("$origin/api/meals/$id").asString()
