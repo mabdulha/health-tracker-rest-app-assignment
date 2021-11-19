@@ -96,6 +96,24 @@ class HealthTrackerAPITest {
             deleteUser(retrievedUser.id)
         }
 
+        @Test
+        fun `getting the count of amount of users on the app` () {
+
+            //Arrange - add the user
+            val addResponse = addUser(
+                validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight,
+                validAge, validGender)
+            val addedUser : UserDTO = jsonToObject(addResponse.body.toString())
+
+            //Assert - retrieve the added user from the database and verify return code
+            val retrieveResponse = retrieveUserCount()
+            assertEquals(200, retrieveResponse.status)
+
+            //After - restore the db to previous state by deleting the added user
+            deleteUser(addedUser.id)
+
+        }
+
     }
 
     @Nested
@@ -777,6 +795,10 @@ class HealthTrackerAPITest {
 
     private fun retrieveAllUsers () : HttpResponse<String> {
         return Unirest.get("$origin/api/users").asString()
+    }
+
+    private fun retrieveUserCount () : HttpResponse<String> {
+        return Unirest.get("$origin/api/users/count").asString()
     }
 
     //helper function to add a test user to the database
