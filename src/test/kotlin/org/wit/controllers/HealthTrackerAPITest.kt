@@ -472,13 +472,13 @@ class HealthTrackerAPITest {
 
         @Test
         fun `deleting an exercise by exercise id when it doesn't exist, returns a 404 response`() {
-            //Act & Assert - attempt to delete a user that doesn't exist
+            //Act & Assert - attempt to delete an exercise that doesn't exist
             assertEquals(404, deleteExercisesByExerciseId(-1).status)
         }
 
         @Test
         fun `deleting exercises by user id when it doesn't exist, returns a 404 response`() {
-            //Act & Assert - attempt to delete a user that doesn't exist
+            //Act & Assert - attempt to delete an exercise that doesn't exist
             assertEquals(404, deleteExercisesByUserId(-1).status)
         }
 
@@ -644,6 +644,33 @@ class HealthTrackerAPITest {
 
     }
 
+    @Nested
+    inner class DeleteMeals {
+
+        @Test
+        fun `deleting a meal by meal id when it doesn't exist, returns a 404 response`() {
+            //Act & Assert - attempt to delete a meal that doesn't exist
+            assertEquals(404, deleteMealsByMealId(-1).status)
+        }
+
+        @Test
+        fun `deleting a meal by id when it exists, returns a 204 response`() {
+
+            //Arrange - add a user and an associated meal that we plan to do a deleted on
+            val addedUser : UserDTO = jsonToObject(addUser(validAvatar, validFName, validLName, validEmail, validPassword, validWeight, validHeight, validAge, validGender).body.toString())
+            val addMealResponse = addMeal(meals[0].image, meals[0].name, meals[0].loves, addedUser.id)
+            assertEquals(201, addMealResponse.status)
+
+            //Act & Assert - delete the added meal and assert a 204 is returned
+            val addedMeal : MealDTO = jsonToObject(addMealResponse.body.toString())
+            assertEquals(204, deleteMealsByMealId(addedMeal.id).status)
+
+            //After - delete the user
+            deleteUser(addedUser.id)
+        }
+
+    }
+
     //--------------------------------------------------------------
     // User Helper Classes
     //-------------------------------------------------------------
@@ -755,10 +782,11 @@ class HealthTrackerAPITest {
         return Unirest.get(origin + "/api/meals/${id}").asJson()
     }
 
-//    //helper function to delete a meal by meal id
-//    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
-//        return Unirest.delete("$origin/api/meals/$id").asString()
-//    }
+    //helper function to delete a meal by meal id
+    private fun deleteMealsByMealId(id: Int): HttpResponse<String> {
+        return Unirest.delete("$origin/api/meals/$id").asString()
+    }
+
 //
 //    //helper function to update a test meal to the database
 //    private fun updateMeal(id: Int?, image: String?, name: String?, loves: Int?, userId: Int?): HttpResponse<JsonNode> {
