@@ -559,21 +559,21 @@ class HealthTrackerAPITest {
         }
 
     }
-//
-//    @Nested
-//    inner class ReadMeals {
-//
-//        @Test
-//        fun `get all meals from the database returns 200 or 404 response`() {
-//            val response = retrieveAllMeals()
-//            if (response.status == 200){
-//                val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
-//                assertNotEquals(0, retrievedMeals.size)
-//            }
-//            else{
-//                assertEquals(404, response.status)
-//            }
-//        }
+
+    @Nested
+    inner class ReadMeals {
+
+        @Test
+        fun `get all meals from the database returns 200 or 404 response`() {
+            val response = retrieveAllMeals()
+            if (response.status == 200){
+                val retrievedMeals : ArrayList<MealDTO> = jsonToObject(response.body.toString())
+                assertNotEquals(0, retrievedMeals.size)
+            }
+            else{
+                assertEquals(404, response.status)
+            }
+        }
 //
 //        @Test
 //        fun `get all meals by user id when user and meal exists returns 200 response`() {
@@ -640,8 +640,8 @@ class HealthTrackerAPITest {
 //            //After - delete the added user and assert a 204 is returned
 //            assertEquals(204, deleteUser(addedUser.id).status)
 //        }
-//
-//    }
+
+    }
 
     //--------------------------------------------------------------
     // User Helper Classes
@@ -740,9 +740,9 @@ class HealthTrackerAPITest {
     //-------------------------------------------------------------
 
     //helper function to retrieve all meals
-//    private fun retrieveAllMeals(): HttpResponse<JsonNode> {
-//        return Unirest.get("$origin/api/meals").asJson()
-//    }
+    private fun retrieveAllMeals(): HttpResponse<JsonNode> {
+        return Unirest.get("$origin/api/meals").asJson()
+    }
 //
 //    //helper function to retrieve meals by user id
 //    private fun retrieveMealsByUserId(id: Int): HttpResponse<JsonNode> {
