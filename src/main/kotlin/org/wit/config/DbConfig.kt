@@ -5,19 +5,30 @@ import org.jetbrains.exposed.sql.Database
 import mu.KotlinLogging
 import org.jetbrains.exposed.sql.name
 
-val getHost: String = checkVars("DB_HOST")
-val getPort: String = checkVars("DB_PORT")
-val getDatabase: String = checkVars("DB_DATABASE")
-val getUser: String = checkVars("DB_USER")
-val getPassword: String = checkVars("DB_PASSWORD")
-
-fun checkVars (variable: String): String {
-    val string: String = if (Env.get(variable) == null) {
-        System.getenv(variable)
-    } else {
-        Env.get(variable)
-    }
-    return string
+val getHost: String = if (Env.get("DB_HOST") != null) {
+    Env.get("DB_HOST")
+} else {
+    System.getenv("DB_HOST")
+}
+val getPort: String = if (Env.get("DB_PORT") != null) {
+    Env.get("DB_PORT")
+} else {
+    System.getenv("DB_PORT")
+}
+val getDatabase: String = if (Env.get("DB_DATABASE") != null) {
+    Env.get("DB_DATABASE")
+} else {
+    System.getenv("DB_DATABASE")
+}
+val getUser: String = if (Env.get("DB_USER") != null) {
+    Env.get("DB_USER")
+} else {
+    System.getenv("DB_USER")
+}
+val getPassword: String = if (Env.get("DB_PASSWORD") != null) {
+    Env.get("DB_PASSWORD")
+} else {
+    System.getenv("DB_PASSWORD")
 }
 
 class DbConfig{
