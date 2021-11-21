@@ -6,7 +6,6 @@ import com.harium.dotenv.Env
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
-import kotlin.math.round
 import org.wit.domain.*
 import org.wit.repository.*
 import org.wit.utilities.decryptPassword
