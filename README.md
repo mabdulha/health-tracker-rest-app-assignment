@@ -1,4 +1,4 @@
-# Assignment 1 - Agile Software Development.
+# Assignment - Agile Software Development.
 
 # Health Tracker API
 
