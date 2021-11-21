@@ -11,28 +11,20 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.wit.config.*
 import org.wit.domain.ExerciseDTO
 import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
 
-val getHost: String = Env.get("DB_HOST")
-val getPort: String = Env.get("DB_PORT")
-val getDatabase: String = Env.get("DB_DATABASE")
-val getUser: String = Env.get("DB_USER")
-val getPassword: String = Env.get("DB_PASSWORD")
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HealthTrackerAPITest {
 
     val dbConfig = Database.connect(
-        "jdbc:postgresql://$getHost:$getPort/$getDatabase?sslmode=require",
+        "jdbc:postgresql://ec2-52-16-42-185.eu-west-1.compute.amazonaws.com:5432/d76fa32est4o6b?sslmode=require",
         driver = "org.postgresql.Driver",
-        user = getUser,
-        password = getPassword
-    )
+        user = "rqpdaxtbwchwcm",
+        password = "a015d2e7982f47d42990481702f300db9be93bb16d567c60ba904315cd0082a2")
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
