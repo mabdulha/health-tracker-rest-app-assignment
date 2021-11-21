@@ -102,7 +102,7 @@ object HealthTrackerAPI {
         val mapper = jacksonObjectMapper()
         val user = mapper.readValue<UserDTO>(ctx.body())
         val existingUser = userDao.findByEmail(user.email)
-        val secret = Base64.getDecoder().decode(Env.get("JWT_SECRET"))
+        val secret = Base64.getDecoder().decode("KRqpXNatnf26SMCloDCXarVwkI04Vj22slASloZirv0=")
         if (existingUser != null) {
             if(decryptPassword(user.password, existingUser.password)) {
                 val jwt = Jwts.builder()
