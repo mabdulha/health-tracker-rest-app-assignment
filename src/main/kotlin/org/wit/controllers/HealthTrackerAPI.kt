@@ -13,7 +13,7 @@ import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
 import java.util.*
 
-val dotenv = dotenv{ filename= ".env-local" }
+val dotenv = dotenv()
 
 object HealthTrackerAPI {
 
@@ -104,7 +104,7 @@ object HealthTrackerAPI {
         val mapper = jacksonObjectMapper()
         val user = mapper.readValue<UserDTO>(ctx.body())
         val existingUser = userDao.findByEmail(user.email)
-        val secret = Base64.getDecoder().decode(Env.get("JWT_SECRET") ?: dotenv["JWT_SECRET"])
+        val secret = Base64.getDecoder().decode(Env.get("JWT_SECRET") ?: "KRqpXNatnf26SMCloDCXarVwkI04Vj22slASloZirv0=")
         if (existingUser != null) {
             if(decryptPassword(user.password, existingUser.password)) {
                 val jwt = Jwts.builder()
