@@ -1,25 +1,38 @@
 package org.wit.controllers
 
+import com.harium.dotenv.Env
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import kong.unirest.Unirest
+import org.jetbrains.exposed.sql.Database
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.wit.config.DbConfig
+import org.wit.config.*
 import org.wit.domain.ExerciseDTO
 import org.wit.domain.MealDTO
 import org.wit.domain.UserDTO
 import org.wit.helpers.*
 import org.wit.utilities.jsonToObject
 
+val getHost: String = Env.get("DB_HOST")
+val getPort: String = Env.get("DB_PORT")
+val getDatabase: String = Env.get("DB_DATABASE")
+val getUser: String = Env.get("DB_USER")
+val getPassword: String = Env.get("DB_PASSWORD")
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class HealthTrackerAPITest {
 
-    private val db = DbConfig().getDbConnection()
+    val dbConfig = Database.connect(
+        "jdbc:postgresql://$getHost:$getPort/$getDatabase?sslmode=require",
+        driver = "org.postgresql.Driver",
+        user = getUser,
+        password = getPassword
+    )
     private val app = ServerContainer.instance
     private val origin = "http://localhost:" + app.port()
 
