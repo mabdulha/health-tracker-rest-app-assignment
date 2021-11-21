@@ -13,7 +13,7 @@ import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
 import java.util.*
 
-val dotenv = dotenv()
+val dotenv = dotenv{ directory = "/healthtrackerrest/.env" }
 
 object HealthTrackerAPI {
 
