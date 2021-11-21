@@ -45,7 +45,7 @@ jobs:
       name: Deploy to Heroku
       with:
         # This will be used for authentication. You can find it in your heroku homepage account settings
-        heroku_api_key: d5d39e73-4ed0-42e1-bb20-71d5cc592be8
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         # Email that you use with heroku
         heroku_email: 20075835@mail.wit.ie
         # The appname to use for deploying/updating
