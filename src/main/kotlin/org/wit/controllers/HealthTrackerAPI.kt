@@ -3,7 +3,6 @@ package org.wit.controllers
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.harium.dotenv.Env
-import io.github.cdimascio.dotenv.dotenv
 import io.javalin.http.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
@@ -12,8 +11,6 @@ import org.wit.repository.*
 import org.wit.utilities.decryptPassword
 import org.wit.utilities.jsonToObject
 import java.util.*
-
-val dotenv = dotenv()
 
 object HealthTrackerAPI {
 
